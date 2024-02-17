@@ -25,6 +25,7 @@ type AppState struct {
 	Menu											utils.Data
 	LoopTime									time.Duration
 	AppStarted								time.Time
+	CombatStarted							time.Time
 	IsInMenus									bool
 	IsGatewayConnected				bool
 	IsOCRInitialized					bool
@@ -161,6 +162,7 @@ func getMenu(menus []utils.Data, value string) utils.Data {
 func (app *App) CaptureGameMenu() {
 	escText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.EscCoord, "esc_menu")
 	menuText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.MenusCoord, "menus")
+	combatText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CombatCoord, "combat")
 
 	escTextPrediction := utils.FindClosestCorrespondence(escText, utils.GameData.Menus)
 	menuTextPrediction := utils.FindClosestCorrespondence(menuText, utils.GameData.Menus)
@@ -175,6 +177,14 @@ func (app *App) CaptureGameMenu() {
 		menu := getMenu(utils.GameData.Menus, menuTextPrediction.Value)
 		app.setMenu(menu.AssetID, menu.Message, true)
 		return
+	}
+
+	if combatText != "" && app.AppState.CombatStarted.IsZero() {
+		app.setMenu("menu_combat", "In combat", true)
+		app.AppState.CombatStarted = time.Now()
+		return
+	} else if combatText == "" && !app.AppState.CombatStarted.IsZero() {
+		app.AppState.CombatStarted = time.Time{}
 	}
 
 	app.setMenu("menu_lost", "Lost in the space-time continuum", true)
@@ -298,6 +308,12 @@ func (app *App) UpdateDiscordPresence() {
 
 // Util to sets the Discord presence
 func (app *App) SetPresence(rich client.Activity) {
+	var time time.Time
+	if app.AppState.CombatStarted.IsZero() {
+		time = app.AppState.AppStarted
+	} else {
+		time = app.AppState.CombatStarted
+	}
 	err := client.SetActivity(client.Activity{
 		State:			rich.State,
 		Details:		rich.Details,
@@ -306,7 +322,7 @@ func (app *App) SetPresence(rich client.Activity) {
 		SmallImage:	rich.SmallImage,
 		SmallText:	rich.SmallText,
 		Timestamps:	&client.Timestamps{
-			Start:	&app.AppState.AppStarted,
+			Start:	&time,
 		},
 	})
 

@@ -9,6 +9,7 @@ import (
 type GUICoordsConfig struct {
 	EscCoord						utils.Rect
 	MenusCoord					utils.Rect
+	CombatCoord					utils.Rect
 }
 
 type AppConfig struct {
@@ -84,6 +85,12 @@ func (c *AppConfig) setGUICoords() {
 				Y: 35,
 				Width: 300,
 				Height: 25,
+			},
+			CombatCoord: utils.Rect{
+				X: 2100,
+				Y: 25,
+				Width: 85,
+				Height: 40,
 			},
 		}
 		return
