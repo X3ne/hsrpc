@@ -8,7 +8,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
 	rpcApp "github.com/X3ne/hsrpc/src"
-	"go.uber.org/zap"
+	"github.com/X3ne/hsrpc/src/logger"
 )
 
 type GUI struct {
@@ -17,16 +17,9 @@ type GUI struct {
 	RPCApp	*rpcApp.App
 }
 
-var Logger *zap.SugaredLogger
-
 func CreateGUI(rpcApp *rpcApp.App) {
 	a := app.New()
 	w := a.NewWindow("Honkai RPC")
-
-	logger, _ := zap.NewProduction()
-	defer logger.Sync()
-
-	Logger = logger.Sugar()
 
 	g := &GUI{
 		App:		a,
@@ -43,19 +36,19 @@ func CreateGUI(rpcApp *rpcApp.App) {
 func (g *GUI) importIcon() []byte {
 	icon, err := os.Open("assets/icon.png")
 	if err != nil {
-		Logger.Fatal(err)
+		logger.Logger.Fatal(err)
 	}
 	defer icon.Close()
 
 	info, err := icon.Stat()
 	if err != nil {
-		Logger.Fatal(err)
+		logger.Logger.Fatal(err)
 	}
 
 	data := make([]byte, info.Size())
 	_, err = icon.Read(data)
 	if err != nil {
-		Logger.Fatal(err)
+		logger.Logger.Fatal(err)
 	}
 
 	return data
@@ -85,7 +78,6 @@ func (g *GUI) ConfigApp() {
 }
 
 func (g *GUI) MainScreen() {
-	// TODO: Add store to save the config
 	tabs := container.NewAppTabs(
 		container.NewTabItem("Presence", container.NewVBox(
 			g.createPresenceTab(),

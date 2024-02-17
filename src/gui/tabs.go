@@ -8,6 +8,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
+	"github.com/X3ne/hsrpc/src/logger"
 	"github.com/lxn/walk"
 )
 
@@ -147,7 +148,7 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 	timeEntry.OnChanged = debounce(func(s string) {
 		loopTime, err := strconv.Atoi(s)
 		if err != nil {
-			Logger.Error(err)
+			logger.Logger.Error(err)
 		}
 		g.RPCApp.Config.LoopTime = time.Duration(loopTime)
 		g.saveConfig()

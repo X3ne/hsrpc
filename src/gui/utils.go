@@ -6,6 +6,7 @@ import (
 
 	"fyne.io/fyne/v2/widget"
 	"github.com/X3ne/hsrpc/src/config"
+	"github.com/X3ne/hsrpc/src/logger"
 	"github.com/X3ne/hsrpc/src/utils"
 )
 
@@ -67,7 +68,7 @@ func createRectForm(rect *utils.Rect, onChanged func()) *widget.Form {
 
 func (g *GUI) saveConfig() {
 	if err := config.SaveConfig(g.RPCApp.Config); err != nil {
-		Logger.Error(err)
+		logger.Logger.Error(err)
 	}
 }
 
@@ -81,7 +82,7 @@ func getPresenceString(isGatewayConnected bool) string {
 func stringToInt(s string) int {
 	i, err := strconv.Atoi(s)
 	if err != nil {
-		Logger.Error(err)
+		logger.Logger.Error(err)
 	}
 	return i
 }
