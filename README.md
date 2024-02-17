@@ -1,4 +1,4 @@
-<p align="center"><img src="https://socialify.git.ci/X3ne/hsrpc/image?description=1&font=Inter&language=1&logo=https%3A%2F%2Fgithub.com%2FX3ne%2Fhrpc%2Fblob%2Fmain%2Fassets%2Ficon.png%3Fraw%3Dtrue&name=1&owner=1&stargazers=1&theme=Auto" alt="project-image"></p>
+<p align="center"><img src="https://socialify.git.ci/X3ne/hsrpc/image?description=1&font=Inter&language=1&logo=https%3A%2F%2Fgithub.com%2FX3ne%2Fhsrpc%2Fblob%2Fmain%2Fassets%2Ficon.png%3Fraw%3Dtrue&name=1&owner=1&stargazers=1&theme=Auto" alt="project-image"></p>
 
 <p id="description">This project is still in the very early stages of development. It still lacks many features and probably has a few bugs and performance problems.</p>
 
