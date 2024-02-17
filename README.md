@@ -97,7 +97,7 @@ Menus:
 
 <h2>🎨 Credits:</h2>
 
-The assets and data for the discord presence come from the [Genshin Impact wiki](https://honkai-star-rail.fandom.com/wiki/Honkai:_Star_Rail_Wiki)
+The assets and data for the discord presence come from the [Honkai Star Rail wiki](https://honkai-star-rail.fandom.com/wiki/Honkai:_Star_Rail_Wiki)
 
 The [app icon](https://www.deviantart.com/mhesagnta/art/Chibi-Silver-Wolf-Honkai-StarRail-Render-965316702) by mhesagnta
 
