@@ -91,7 +91,7 @@ func (app *App) GetWindow() {
 	}
 	app.HWND = win.FindWindow(winClassPtr, winTitlePtr)
 	if app.HWND == 0 {
-		app.AppState.LoopTime = 20 * time.Second
+		app.AppState.LoopTime = 20000
 		logger.Logger.Info("No Honkai window found")
 		return
 	}
@@ -101,13 +101,13 @@ func (app *App) GetWindow() {
 
 // Detect the current character currently selected
 func (app *App) CaptureCharacter() {
-	pos := utils.FindCurrentCharacter(app.Config.CharacterBoxCoords)
+	pos := utils.FindCurrentCharacter(app.Config.GUICoordsConfig.CharactersBoxCoords)
 	if pos == -1 {
 		return
 	}
 	app.AppState.CharacterPos = pos
 
-	characterText, _ := utils.OcrManager.WindowOcr(app.Config.CharactersCoords[pos], "char", true)
+	characterText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CharactersCoords[pos], "char", true)
 	if characterText == "" {
 		return
 	}
@@ -121,7 +121,7 @@ func (app *App) CaptureCharacter() {
 
 // Detect the current location of the player
 func (app *App) CaptureLocation() {
-	locationText, _ := utils.OcrManager.WindowOcr(app.Config.LocationCoord, "location", true)
+	locationText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.LocationCoord, "location", true)
 	if locationText == "" {
 		app.AppState.IsInMenus = true
 		return
@@ -195,7 +195,7 @@ func (app *App) CaptureGameMenu() {
 // Main loop of the app
 func (app *App) StartLoop() {
 	for {
-		<-time.After(app.AppState.LoopTime)
+		<-time.After(app.AppState.LoopTime * time.Millisecond)
 		// Reconnect to Discord gateway if not connected
 		if !app.AppState.IsGatewayConnected {
 			app.ConnectToDiscordGateway()
@@ -237,7 +237,7 @@ func (app *App) StartLoop() {
 func (app *App) HandleWindowClosed() {
 	if app.HWND != 0 {
 		app.HWND = 0
-		app.AppState.LoopTime = 20 * time.Second
+		app.AppState.LoopTime = 20000
 		app.ResetAppState()
 		app.DisconnectFromDiscordGateway()
 	}
@@ -247,7 +247,7 @@ func (app *App) HandleWindowClosed() {
 func (app *App) IsWindowFocused() bool {
 	foregroundWindow := win.GetForegroundWindow()
 	if foregroundWindow != app.HWND {
-		app.AppState.LoopTime = 5 * time.Second
+		app.AppState.LoopTime = 5000
 		logger.Logger.Info("Honkai window not focused")
 		return false
 	}
@@ -258,7 +258,7 @@ func (app *App) IsWindowFocused() bool {
 // Initializes OCR for capturing game data
 func (app *App) InitializeOCR() {
 	utils.InitOcr(utils.OCRConfig{
-		ExecutablePath: app.Config.TesseractPath,
+		ExecutablePath: &app.Config.TesseractPath,
 	}, app.HWND)
 
 	app.AppState.IsOCRInitialized = true

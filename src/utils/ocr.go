@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bytes"
+	"errors"
 	"image"
 	"image/color"
 	"image/png"
@@ -17,7 +18,7 @@ import (
 )
 
 type OCRConfig struct {
-	ExecutablePath	string
+	ExecutablePath	*string
 }
 
 type OCRManager struct {
@@ -57,7 +58,11 @@ func preprocessImage(img image.Image) image.Image {
 }
 
 func (m *OCRManager) StartOcr(imageBytes []byte) (string, error) {
-	cmd := exec.Command(m.config.ExecutablePath, "-l", "eng", "-c", "tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, ", "stdin", "stdout")
+	if *m.config.ExecutablePath == "" {
+		return "", errors.New("tesseract executable path not set")
+	}
+
+	cmd := exec.Command(*m.config.ExecutablePath, "-l", "eng", "-c", "tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, ", "stdin", "stdout")
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
 	stdinPipe, err := cmd.StdinPipe()
@@ -119,10 +124,12 @@ func (m *OCRManager) WindowOcr(rect Rect, job string, preprocess bool) (string, 
 	err := png.Encode(buf, image)
 	if err != nil {
 		logger.Logger.Errorf("["+job+"] "+"Error: %s", err)
+		return "", nil
 	}
 	text, err := m.StartOcr(buf.Bytes())
 	if err != nil {
 		logger.Logger.Errorf("["+job+"] "+"Error: %s", err)
+		return "", nil
 	}
 
 	text = strings.TrimSpace(text)

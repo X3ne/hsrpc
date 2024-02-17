@@ -91,10 +91,15 @@ Menus:
 - [ ] Add support for Echo of war
 - [ ] Add support for cut scenes
 - [ ] Add support for the Trailblazer
-- [ ] Add persistent state to GUI configuration
 - [ ] Maybe create a location selector to simplify the configuration of coordinates
 - [ ] Remove the tesseract install step (maybe try to use [GetText](https://pkg.go.dev/github.com/go-vgo/robotgo#GetText) from robotgo)
 - [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
+- [ ] Auto calculate coords based on app resolution
+
+GUI app:
+- [x] Add persistent state to GUI configuration
+- [ ] Add field validation
+
 
 <h2>🎨 Credits:</h2>
 
