@@ -8,6 +8,15 @@ Messages,Viewing messages,menu_messages
 Nameless Honor,Viewing nameless honor,menu_nameless
 Wrap,Invocate,menu_wrap
 Character Details,Viewing character details,menu_character
+Light Cone,Viewing the character's light cone,menu_character
+Switch Light Cone,Switching light cone,menu_character
+Traces,Viewing the character's traces,menu_character
+Equipping Relics,Equipping relics,menu_character
+Replace Relic,Replacing a relic,menu_character
+Eidolon Resonance,Viewing eidolon,menu_character
+Information,Viewing character information,menu_character
+Voice,Listening to the character's voice,menu_character
+Story,Reading character's story,menu_character
 Interastral Piece Guide,Viewing interastral piece guide,menu_interastral
 Data Bank,Viewing data bank,menu_databank
 Bookshelf,Viewing bookshelf,menu_bookshelf

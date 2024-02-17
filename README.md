@@ -94,6 +94,7 @@ Menus:
 - [ ] Add persistent state to GUI configuration
 - [ ] Maybe create a location selector to simplify the configuration of coordinates
 - [ ] Remove the tesseract install step (maybe try to use [GetText](https://pkg.go.dev/github.com/go-vgo/robotgo#GetText) from robotgo)
+- [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
 
 <h2>🎨 Credits:</h2>
 
