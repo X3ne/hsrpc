@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
-)
 
-const (
-	appDataDir = "hsrpc"
-	configFile = "config.txt"
+	"github.com/X3ne/hsrpc/src/consts"
 )
 
 func LoadConfig() (AppConfig, error) {
-	appDataPath := filepath.Join(os.Getenv("APPDATA"), appDataDir, configFile)
+	appData, err := os.UserConfigDir()
+	if err != nil {
+		return AppConfig{}, err
+	}
+	appDataPath := filepath.Join(appData, consts.AppDataDir, consts.ConfigFile)
 
 	// Config file does not exist, create a new one with default values
 	if _, err := os.Stat(appDataPath); os.IsNotExist(err) {
@@ -39,7 +40,11 @@ func LoadConfig() (AppConfig, error) {
 }
 
 func SaveConfig(config AppConfig) error {
-	appDataPath := filepath.Join(os.Getenv("APPDATA"), appDataDir, configFile)
+	appData, err := os.UserConfigDir()
+	if err != nil {
+		return err
+	}
+	appDataPath := filepath.Join(appData, consts.AppDataDir, consts.ConfigFile)
 	configJSON, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
 		return err
