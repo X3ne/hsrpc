@@ -187,11 +187,6 @@ func (app *App) CaptureGameMenu() {
 		app.setMenu("menu_combat", "In combat", true)
 		app.AppState.CombatStarted = time.Now()
 		return
-	} else if combatText == "" && !app.AppState.CombatStarted.IsZero() {
-		if time.Since(app.AppState.CombatStarted) > 5*time.Second {
-			app.AppState.CombatStarted = time.Time{}
-		}
-		return
 	}
 
 	app.setMenu("menu_lost", "Lost in the space-time continuum", true)
