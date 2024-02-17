@@ -132,6 +132,7 @@ func (app *App) CaptureLocation() {
 	if locationPred.Value != "" {
 		app.AppState.IsInMenus = false
 		app.AppState.Menu = utils.Data{}
+		app.AppState.CombatStarted = time.Time{}
 		app.AppState.Location = locationPred
 		return
 	}
@@ -179,12 +180,18 @@ func (app *App) CaptureGameMenu() {
 		return
 	}
 
-	if combatText != "" && app.AppState.CombatStarted.IsZero() {
+	if !app.AppState.CombatStarted.IsZero() {
+		app.setMenu("menu_combat", "In combat", true)
+		return
+	} else if combatText != "" && app.AppState.CombatStarted.IsZero() {
 		app.setMenu("menu_combat", "In combat", true)
 		app.AppState.CombatStarted = time.Now()
 		return
 	} else if combatText == "" && !app.AppState.CombatStarted.IsZero() {
-		app.AppState.CombatStarted = time.Time{}
+		if time.Since(app.AppState.CombatStarted) > 5*time.Second {
+			app.AppState.CombatStarted = time.Time{}
+		}
+		return
 	}
 
 	app.setMenu("menu_lost", "Lost in the space-time continuum", true)
