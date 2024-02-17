@@ -1,7 +1,6 @@
 package app
 
 import (
-	"log"
 	"syscall"
 	"time"
 
@@ -123,19 +122,19 @@ func (app *App) CaptureCharacter() {
 func (app *App) CaptureLocation() {
 	locationText, _ := utils.OcrManager.WindowOcr(app.Config.LocationCoord, "location")
 	if locationText == "" {
+		app.AppState.IsInMenus = true
 		return
 	}
 
 	locationPred := utils.FindClosestCorrespondence(locationText, utils.GameData.Locations)
 
-	log.Println(locationPred)
-
 	if locationPred.Value != "" {
+		app.AppState.IsInMenus = false
+		app.AppState.Menu = utils.Data{}
 		app.AppState.Location = locationPred
 		return
 	}
 
-	app.AppState.IsInMenus = true
 	app.setMenu("menu_lost", "Lost in the space-time continuum", true)
 }
 
@@ -178,7 +177,7 @@ func (app *App) CaptureGameMenu() {
 		return
 	}
 
-	app.AppState.IsInMenus = false
+	app.setMenu("menu_lost", "Lost in the space-time continuum", true)
 }
 
 // Main loop of the app
@@ -256,11 +255,12 @@ func (app *App) InitializeOCR() {
 // Captures game data such as character and location
 func (app *App) CaptureGameData() {
 	// TODO: view the possibility of running these in parallel
-	if !app.AppState.IsInMenus {
-		go app.CaptureCharacter()
-		go app.CaptureLocation()
+	app.CaptureLocation()
+	if app.AppState.IsInMenus {
+		app.CaptureGameMenu()
+		return
 	}
-	go app.CaptureGameMenu()
+	app.CaptureCharacter()
 }
 
 // Updates the Discord presence based on game data
@@ -284,7 +284,7 @@ func (app *App) UpdateDiscordPresence() {
 
 	// TODO: prevent update the presence if the data is the same
 
-	if character.Value != "" || app.AppState.IsInMenus {
+	if character.Value != "" || app.AppState.Menu.Value != "" {
 		app.SetPresence(client.Activity{
 			State:      location.Value,
 			LargeImage: location.AssetID,
