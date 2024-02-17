@@ -107,7 +107,7 @@ func (app *App) CaptureCharacter() {
 	}
 	app.AppState.CharacterPos = pos
 
-	characterText, _ := utils.OcrManager.WindowOcr(app.Config.CharactersCoords[pos], "char")
+	characterText, _ := utils.OcrManager.WindowOcr(app.Config.CharactersCoords[pos], "char", true)
 	if characterText == "" {
 		return
 	}
@@ -121,7 +121,7 @@ func (app *App) CaptureCharacter() {
 
 // Detect the current location of the player
 func (app *App) CaptureLocation() {
-	locationText, _ := utils.OcrManager.WindowOcr(app.Config.LocationCoord, "location")
+	locationText, _ := utils.OcrManager.WindowOcr(app.Config.LocationCoord, "location", true)
 	if locationText == "" {
 		app.AppState.IsInMenus = true
 		return
@@ -161,9 +161,9 @@ func getMenu(menus []utils.Data, value string) utils.Data {
 
 // Capture the current game menu
 func (app *App) CaptureGameMenu() {
-	escText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.EscCoord, "esc_menu")
-	menuText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.MenusCoord, "menus")
-	combatText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CombatCoord, "combat")
+	escText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.EscCoord, "esc_menu", false)
+	menuText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.MenusCoord, "menus", false)
+	combatText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CombatCoord, "combat", false)
 
 	escTextPrediction := utils.FindClosestCorrespondence(escText, utils.GameData.Menus)
 	menuTextPrediction := utils.FindClosestCorrespondence(menuText, utils.GameData.Menus)

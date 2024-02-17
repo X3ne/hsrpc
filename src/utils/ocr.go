@@ -3,6 +3,7 @@ package utils
 import (
 	"bytes"
 	"image"
+	"image/color"
 	"image/png"
 	"io"
 	"os/exec"
@@ -31,8 +32,32 @@ func InitOcr(cfg OCRConfig, hWnd win.HWND) {
 	}
 }
 
+func preprocessImage(img image.Image) image.Image {
+	grayImg := image.NewGray(img.Bounds())
+	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
+		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
+			grayColor := color.GrayModel.Convert(img.At(x, y)).(color.Gray)
+			grayImg.Set(x, y, grayColor)
+		}
+	}
+
+	threshold := 180
+	binarizedImg := image.NewGray(img.Bounds())
+	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
+		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
+			if grayImg.GrayAt(x, y).Y > uint8(threshold) {
+				binarizedImg.SetGray(x, y, color.Gray{Y: 255})
+			} else {
+				binarizedImg.SetGray(x, y, color.Gray{Y: 0})
+			}
+		}
+	}
+
+	return binarizedImg
+}
+
 func (m *OCRManager) StartOcr(imageBytes []byte) (string, error) {
-	cmd := exec.Command(m.config.ExecutablePath, "-c", "tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, ", "stdin", "stdout")
+	cmd := exec.Command(m.config.ExecutablePath, "-l", "eng", "-c", "tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, ", "stdin", "stdout")
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
 	stdinPipe, err := cmd.StdinPipe()
@@ -76,18 +101,22 @@ func (m *OCRManager) StartOcr(imageBytes []byte) (string, error) {
 	return outputText, nil
 }
 
-func (m *OCRManager) WindowOcr(rect Rect, job string) (string, image.Image) {
+func (m *OCRManager) WindowOcr(rect Rect, job string, preprocess bool) (string, image.Image) {
 	image := robotgo.CaptureImg(rect.X, rect.Y, rect.Width, rect.Height)
 	if image == nil {
 		return "", nil
 	}
 
-	grayImg := ConvertToGrayscale(image)
+	if preprocess {
+		image = preprocessImage(image)
+	}
 
-	SaveImg(grayImg, "tmp/" + job + ".png") // Save the image for debugging purposes
+	// grayImg := ConvertToGrayscale(image)
+
+	SaveImg(image, "tmp/" + job + ".png") // Save the image for debugging purposes
 
 	buf := new(bytes.Buffer)
-	err := png.Encode(buf, grayImg)
+	err := png.Encode(buf, image)
 	if err != nil {
 		logger.Logger.Errorf("["+job+"] "+"Error: %s", err)
 	}
@@ -96,5 +125,7 @@ func (m *OCRManager) WindowOcr(rect Rect, job string) (string, image.Image) {
 		logger.Logger.Errorf("["+job+"] "+"Error: %s", err)
 	}
 
-	return text, grayImg
+	text = strings.TrimSpace(text)
+
+	return text, image
 }

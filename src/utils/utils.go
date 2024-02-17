@@ -37,28 +37,13 @@ func FindClosestCorrespondence(text string, candidates []Data) Data {
 }
 
 func GetPixelColor(rect *Rect) (color.RGBA, error) {
-	img := robotgo.CaptureImg(rect.X, rect.Y, rect.Width, rect.Height)
+	img := robotgo.CaptureImg(rect.X, rect.Y, 1, 1)
 	if img == nil {
 		return color.RGBA{}, nil
 	}
 
 	pixelColor := img.At(0, 0).(color.RGBA)
 	return pixelColor, nil
-}
-
-func ConvertToGrayscale(src image.Image) image.Image {
-	bounds := src.Bounds()
-	grayImg := image.NewGray(bounds)
-
-	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			originalColor := src.At(x, y)
-			grayColor := color.GrayModel.Convert(originalColor).(color.Gray)
-			grayImg.Set(x, y, grayColor)
-		}
-	}
-
-	return grayImg
 }
 
 func SaveImg(img image.Image, fileName string) error {
