@@ -28,7 +28,7 @@ This program works with [tesseract](https://github.com/tesseract-ocr/tesseract),
 <p>1. Clone this project</p>
 
 ```
-git clone https://github.com/X3ne/hrpc
+git clone https://github.com/X3ne/hsrpc
 ```
 
 <p>2. Install tesseract-ocr</p>
@@ -48,7 +48,7 @@ go run main.go
 <p>1. Clone this project</p>
 
 ```
-git clone https://github.com/X3ne/hrpc
+git clone https://github.com/X3ne/hsrpc
 ```
 
 <p>2. Install go-winres</p>
