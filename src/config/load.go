@@ -52,13 +52,13 @@ func SaveConfig(config AppConfig) error {
 
 	dir := filepath.Dir(appDataPath)
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		err := os.MkdirAll(dir, 0755)
+		err := os.MkdirAll(dir, 0750)
 		if err != nil {
 			return err
 		}
 	}
 
-	err = os.WriteFile(appDataPath, configJSON, 0644)
+	err = os.WriteFile(appDataPath, configJSON, 0600)
 	if err != nil {
 		return err
 	}

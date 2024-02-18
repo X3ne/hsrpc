@@ -58,11 +58,21 @@ func preprocessImage(img image.Image) image.Image {
 }
 
 func (m *OCRManager) StartOcr(imageBytes []byte) (string, error) {
-	if *m.config.ExecutablePath == "" {
-		return "", errors.New("tesseract executable path not set")
+	executablePath := *m.config.ExecutablePath
+	if executablePath == "" {
+		return "", errors.New("tesseract executable path is not set")
 	}
 
-	cmd := exec.Command(*m.config.ExecutablePath, "-l", "eng", "-c", "tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, ", "stdin", "stdout")
+	whitelistChars := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, "
+
+	cmdArgs := []string{
+		"-l", "eng",
+		"-c", "tessedit_char_whitelist=" + whitelistChars,
+		"stdin", "stdout",
+	}
+
+	cmd := exec.Command(executablePath, cmdArgs...)
+
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
 	stdinPipe, err := cmd.StdinPipe()
@@ -86,7 +96,10 @@ func (m *OCRManager) StartOcr(imageBytes []byte) (string, error) {
 		return "", err
 	}
 
-	stdinPipe.Close()
+	err = stdinPipe.Close()
+	if err != nil {
+		return "", err
+	}
 
 	var outputBuf bytes.Buffer
 	_, err = io.Copy(&outputBuf, stdoutPipe)

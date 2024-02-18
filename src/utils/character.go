@@ -11,7 +11,7 @@ func FindCurrentCharacter(coords []Rect) int32 {
 	minBrightness := 450 // TODO: determine this value to prevent false results
 
 	for i, coord := range coords {
-		pixel, err := GetPixelColor(&coord) // TODO: replace this function by this one https://pkg.go.dev/github.com/go-vgo/robotgo#GetPixelColor
+		pixel, err := GetPixelColor(coord) // TODO: replace this function by this one https://pkg.go.dev/github.com/go-vgo/robotgo#GetPixelColor
 		if err != nil {
 			logger.Logger.Error(err)
 			continue

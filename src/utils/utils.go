@@ -42,7 +42,7 @@ func FindClosestCorrespondence(text string, candidates []Data) Data {
 	return closest
 }
 
-func GetPixelColor(rect *Rect) (color.RGBA, error) {
+func GetPixelColor(rect Rect) (color.RGBA, error) {
 	img := robotgo.CaptureImg(rect.X, rect.Y, 1, 1)
 	if img == nil {
 		return color.RGBA{}, nil
@@ -79,7 +79,7 @@ func PanicRecover(r interface{}) {
 
 	dir := filepath.Dir(logFilePath)
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		err := os.MkdirAll(dir, 0755)
+		err := os.MkdirAll(dir, 0750)
 		if err != nil {
 			logger.Logger.Error("Error creating crash log directory:", err)
 			return
