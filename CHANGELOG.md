@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.2](https://github.com/X3ne/hsrpc/compare/v1.0.1...v1.0.2) (2024-02-18)
+
+
+### Bug Fixes
+
+* moved go-winres to go:generate ([af29c3b](https://github.com/X3ne/hsrpc/commit/af29c3ba2fb96b809508dc72e3dbbb2373fe52e4))
+
+
+### Miscellaneous Chores
+
+* release 1.0.2 ([f5bfe8a](https://github.com/X3ne/hsrpc/commit/f5bfe8a48e1d8fa4d1e657c914948c787e967ec3))
+
 ## [1.0.1](https://github.com/X3ne/hsrpc/compare/v1.0.0...v1.0.1) (2024-02-18)
 
 
