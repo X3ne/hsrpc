@@ -1,12 +1,12 @@
 package gui
 
 import (
-	"os"
 	"strconv"
 	"time"
 
 	"fyne.io/fyne/v2/widget"
 	"github.com/X3ne/hsrpc/src/config"
+	"github.com/X3ne/hsrpc/src/internal/bundle"
 	"github.com/X3ne/hsrpc/src/logger"
 	"github.com/X3ne/hsrpc/src/utils"
 )
@@ -89,22 +89,5 @@ func stringToInt(s string) int {
 }
 
 func ImportIcon() []byte {
-	icon, err := os.Open("assets/icon.png")
-	if err != nil {
-		logger.Logger.Fatal(err)
-	}
-	defer icon.Close()
-
-	info, err := icon.Stat()
-	if err != nil {
-		logger.Logger.Fatal(err)
-	}
-
-	data := make([]byte, info.Size())
-	_, err = icon.Read(data)
-	if err != nil {
-		logger.Logger.Fatal(err)
-	}
-
-	return data
+	return bundle.Get("embeds/icon.png")
 }

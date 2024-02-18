@@ -37,10 +37,16 @@ git clone https://github.com/X3ne/hsrpc
 choco install tesseract
 ```
 
-<p>3. Launch</p>
+<p>3. Bundle static files</p>
 
 ```
-go run main.go
+go generate ./...
+```
+
+<p>4. Launch</p>
+
+```
+go run .
 ```
 
 <h2>🏗️ Build Steps:</h2>
@@ -63,7 +69,13 @@ go install github.com/tc-hib/go-winres@latest
 go-winres simply --icon assets/icon.png --manifest gui
 ```
 
-<p>4. Build</p>
+<p>4. Bundle static files</p>
+
+```
+go generate ./...
+```
+
+<p>5. Build</p>
 
 ```
 go build -ldflags="-X github.com/X3ne/hsrpc/src/consts.Version=X.X.X -H=windowsgui"
@@ -77,6 +89,8 @@ go build -ldflags="-X github.com/X3ne/hsrpc/src/consts.Version=X.X.X -H=windowsg
 Menus:
 - [ ] Data bank tab is not detected
 - [ ] Achievements tab is not detected
+
+- [ ] Fix gosec errors
 
 <h2>⚒️ Improvements:</h2>
 

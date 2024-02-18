@@ -1,9 +1,11 @@
 package utils
 
 import (
+	"bytes"
 	"encoding/csv"
-	"os"
+	"log"
 
+	"github.com/X3ne/hsrpc/src/internal/bundle"
 	"github.com/X3ne/hsrpc/src/logger"
 )
 
@@ -44,27 +46,29 @@ func LoadGameData() {
 }
 
 func loadCharacters() ([]Data, error) {
-	file, err := os.Open("data/characters.csv")
-	if err != nil {
-		return []Data{}, err
-	}
-	defer file.Close()
+	var characters []Data
 
-	reader := csv.NewReader(file)
+	log.Println("Loading characters")
+
+	data := bundle.Get("embeds/characters.csv")
+
+	reader := csv.NewReader(bytes.NewReader(data))
 
 	records, err := reader.ReadAll()
 	if err != nil {
 		return []Data{}, err
 	}
 
-	var characters []Data
-
+	var loadedCharacters int
 	for _, record := range records {
 		characters = append(characters, Data{
 			AssetID:	record[1],
 			Value:		record[0],
 		})
+		loadedCharacters++
 	}
+
+	log.Println("Loaded", loadedCharacters, "characters")
 
 	return characters, nil
 }
@@ -72,19 +76,18 @@ func loadCharacters() ([]Data, error) {
 func loadLocations() ([]Data, error) {
 	var locations []Data
 
-	file, err := os.Open("data/locations.csv")
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
+	log.Println("Loading locations")
 
-	reader := csv.NewReader(file)
+	data := bundle.Get("embeds/locations.csv")
+
+	reader := csv.NewReader(bytes.NewReader(data))
 
 	records, err := reader.ReadAll()
 	if err != nil {
 		return nil, err
 	}
 
+	var loadedLocations int
 	for _, record := range records {
 		location := Data{
 			AssetID:	record[3],
@@ -94,7 +97,10 @@ func loadLocations() ([]Data, error) {
 		}
 
 		locations = append(locations, location)
+		loadedLocations++
 	}
+
+	log.Println("Loaded", loadedLocations, "locations")
 
 	return locations, nil
 }
@@ -102,19 +108,18 @@ func loadLocations() ([]Data, error) {
 func loadGameMenus() ([]Data, error) {
 	var menus []Data
 
-	file, err := os.Open("data/menus.csv")
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
+	log.Println("Loading game menus")
 
-	reader := csv.NewReader(file)
+	data := bundle.Get("embeds/menus.csv")
+
+	reader := csv.NewReader(bytes.NewReader(data))
 
 	records, err := reader.ReadAll()
 	if err != nil {
 		return nil, err
 	}
 
+	var loadedMenus int
 	for _, record := range records {
 		menu := Data{
 			AssetID:	record[2],
@@ -123,7 +128,10 @@ func loadGameMenus() ([]Data, error) {
 		}
 
 		menus = append(menus, menu)
+		loadedMenus++
 	}
+
+	log.Println("Loaded", loadedMenus, "game menus")
 
 	return menus, nil
 }

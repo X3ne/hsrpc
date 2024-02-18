@@ -7,7 +7,7 @@ type ScriptConfig struct {
 
 func InitConfig() *ScriptConfig {
 	return &ScriptConfig{
-		OutputPath: "../data/",
+		OutputPath: "../embeds/",
 		AssetsPath: "assets/",
 	}
 }
