@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.3](https://github.com/X3ne/hsrpc/compare/v1.0.2...v1.0.3) (2024-02-18)
+
+
+### Bug Fixes
+
+* fixed a bug with static file import names (only when the application is built on linux) ([802dd00](https://github.com/X3ne/hsrpc/commit/802dd00213a7381d3e8302622bf5b3f38e085794))
+
+
+### Miscellaneous Chores
+
+* release 1.0.3 ([b2b5916](https://github.com/X3ne/hsrpc/commit/b2b5916cd3e7708399d70b8863d6e09ee4e4c5f8))
+
 ## [1.0.2](https://github.com/X3ne/hsrpc/compare/v1.0.1...v1.0.2) (2024-02-18)
 
 
