@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.1](https://github.com/X3ne/hsrpc/compare/v1.0.0...v1.0.1) (2024-02-18)
+
+
+### Bug Fixes
+
+* fixed an issue with the build workflow ([7fe1802](https://github.com/X3ne/hsrpc/commit/7fe1802366a804515d52bbf528005a9583fe1f5b))
+
+
+### Miscellaneous Chores
+
+* release 1.0.1 ([6bd5c64](https://github.com/X3ne/hsrpc/commit/6bd5c647fcd363e23cd4b64f9d05c41baeeb91c6))
+
 ## 1.0.0 (2024-02-18)
 
 
