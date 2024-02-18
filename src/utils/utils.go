@@ -1,11 +1,17 @@
 package utils
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/png"
 	"os"
+	"path/filepath"
+	"runtime"
+	"time"
 
+	"github.com/X3ne/hsrpc/src/consts"
+	"github.com/X3ne/hsrpc/src/logger"
 	"github.com/go-vgo/robotgo"
 	"github.com/texttheater/golang-levenshtein/levenshtein"
 )
@@ -61,3 +67,33 @@ func SaveImg(img image.Image, fileName string) error {
 	return nil
 }
 
+func PanicRecover(r interface{}) {
+	appDataDir, err := os.UserConfigDir()
+	if err != nil {
+		fmt.Println("Error getting user config dir:", err)
+		return
+	}
+	timestamp := time.Now().Format("2006-01-02_15-04-05")
+	filename := fmt.Sprintf("crash_%s.log", timestamp)
+	logFilePath := filepath.Join(appDataDir, consts.AppDataDir, "crash", filename)
+
+	dir := filepath.Dir(logFilePath)
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		err := os.MkdirAll(dir, 0755)
+		if err != nil {
+			logger.Logger.Error("Error creating crash log directory:", err)
+			return
+		}
+	}
+
+	file, err := os.Create(logFilePath)
+	if err != nil {
+		logger.Logger.Error("Error creating crash log file:", err)
+		return
+	}
+	defer file.Close()
+
+	buf := make([]byte, 1<<16)
+	stackLen := runtime.Stack(buf, true)
+	fmt.Fprintf(file, "=== STACK TRACE ===\n%s\n", buf[:stackLen])
+}
