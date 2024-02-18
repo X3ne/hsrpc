@@ -89,5 +89,5 @@ func stringToInt(s string) int {
 }
 
 func ImportIcon() []byte {
-	return bundle.Get("embeds/icon.png")
+	return bundle.Get("icon.png")
 }

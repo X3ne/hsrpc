@@ -3,7 +3,6 @@ package utils
 import (
 	"bytes"
 	"encoding/csv"
-	"log"
 
 	"github.com/X3ne/hsrpc/src/internal/bundle"
 	"github.com/X3ne/hsrpc/src/logger"
@@ -48,9 +47,9 @@ func LoadGameData() {
 func loadCharacters() ([]Data, error) {
 	var characters []Data
 
-	log.Println("Loading characters")
+	logger.Logger.Info("Loading characters")
 
-	data := bundle.Get("embeds/characters.csv")
+	data := bundle.Get("characters.csv")
 
 	reader := csv.NewReader(bytes.NewReader(data))
 
@@ -68,7 +67,7 @@ func loadCharacters() ([]Data, error) {
 		loadedCharacters++
 	}
 
-	log.Println("Loaded", loadedCharacters, "characters")
+	logger.Logger.Info("Loaded", loadedCharacters, "characters")
 
 	return characters, nil
 }
@@ -76,9 +75,9 @@ func loadCharacters() ([]Data, error) {
 func loadLocations() ([]Data, error) {
 	var locations []Data
 
-	log.Println("Loading locations")
+	logger.Logger.Info("Loading locations")
 
-	data := bundle.Get("embeds/locations.csv")
+	data := bundle.Get("locations.csv")
 
 	reader := csv.NewReader(bytes.NewReader(data))
 
@@ -100,7 +99,7 @@ func loadLocations() ([]Data, error) {
 		loadedLocations++
 	}
 
-	log.Println("Loaded", loadedLocations, "locations")
+	logger.Logger.Info("Loaded", loadedLocations, "locations")
 
 	return locations, nil
 }
@@ -108,9 +107,9 @@ func loadLocations() ([]Data, error) {
 func loadGameMenus() ([]Data, error) {
 	var menus []Data
 
-	log.Println("Loading game menus")
+	logger.Logger.Info("Loading game menus")
 
-	data := bundle.Get("embeds/menus.csv")
+	data := bundle.Get("menus.csv")
 
 	reader := csv.NewReader(bytes.NewReader(data))
 
@@ -131,7 +130,7 @@ func loadGameMenus() ([]Data, error) {
 		loadedMenus++
 	}
 
-	log.Println("Loaded", loadedMenus, "game menus")
+	logger.Logger.Info("Loaded", loadedMenus, "game menus")
 
 	return menus, nil
 }

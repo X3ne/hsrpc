@@ -21,8 +21,8 @@ const (
 )
 
 var tmpl = template.Must(template.New("").Funcs(template.FuncMap{
-	"removeParentDirectories": func(name string) string {
-		return strings.Replace(name, "../", "", -1)
+	"extractFileName": func(path string) string {
+		return filepath.Base(path)
 	},
 	"conv": func(s []byte) string {
 		return fmtByteSlice(s)
@@ -33,7 +33,7 @@ var tmpl = template.Must(template.New("").Funcs(template.FuncMap{
 
 func init() {
 	{{- range $name, $file := . }}
-		Add("{{ removeParentDirectories $name }}", []byte{ {{ conv $file }} })
+		Add("{{ extractFileName $name }}", []byte{ {{ conv $file }} })
 	{{- end }}
 }`),
 )
