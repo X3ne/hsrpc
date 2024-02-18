@@ -1,3 +1,5 @@
+//go:generate go-winres simply --icon assets/icon.png --manifest gui
+
 package main
 
 import (
