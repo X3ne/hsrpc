@@ -1,0 +1,49 @@
+name: Build and Release
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.22'
+
+    - name: Install go-winres
+      run: go install github.com/tc-hib/go-winres@latest
+
+    - name: Update resources
+      run: go-winres simply --icon assets/icon.png --manifest gui
+
+    - name: Bundle assets
+      run: go generate ./...
+
+    - name: Get latest Git tag
+      id: get_version
+      run: echo "VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+
+    - name: Install MinGW-w64
+      run: sudo apt-get install -y gcc-mingw-w64
+
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v5
+      with:
+        distribution: goreleaser
+        version: latest
+        args: release --clean
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}

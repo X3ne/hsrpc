@@ -1,0 +1,18 @@
+builds:
+  - id: "hsrpc_windows_amd64"
+    env:
+      - CGO_ENABLED=1
+      - CC=x86_64-w64-mingw32-gcc
+    goos:
+      - windows
+    goarch:
+      - amd64
+    ldflags: -s -w -X github.com/X3ne/hsrpc/src/consts.Version={{.Version}} -H=windowsgui
+archives:
+  - format: zip
+    builds:
+      - hsrpc_windows_amd64
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: "checksums.txt"
