@@ -96,6 +96,7 @@ func CreateGUI(rpcApp *rpcApp.App) {
 		time.Sleep(1 * time.Second)
 
 		g.MainScreen()
+		g.Window.CenterOnScreen()
 	}()
 
 	w.ShowAndRun()
