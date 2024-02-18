@@ -66,7 +66,7 @@ go-winres simply --icon assets/icon.png --manifest gui
 <p>4. Build</p>
 
 ```
-go build -ldflags -H=windowsgui
+go build -ldflags="-X github.com/X3ne/hsrpc/src/consts.Version=X.X.X -H=windowsgui"
 ```
 
 <h2>🪲 Known issues:</h2>

@@ -1,6 +1,7 @@
 package gui
 
 import (
+	"os"
 	"strconv"
 	"time"
 
@@ -85,4 +86,25 @@ func stringToInt(s string) int {
 		logger.Logger.Error(err)
 	}
 	return i
+}
+
+func ImportIcon() []byte {
+	icon, err := os.Open("assets/icon.png")
+	if err != nil {
+		logger.Logger.Fatal(err)
+	}
+	defer icon.Close()
+
+	info, err := icon.Stat()
+	if err != nil {
+		logger.Logger.Fatal(err)
+	}
+
+	data := make([]byte, info.Size())
+	_, err = icon.Read(data)
+	if err != nil {
+		logger.Logger.Fatal(err)
+	}
+
+	return data
 }
