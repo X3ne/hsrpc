@@ -26,12 +26,6 @@ jobs:
     - name: Install go-winres
       run: go install github.com/tc-hib/go-winres@latest
 
-    - name: Update resources
-      run: go-winres simply --icon assets/icon.png --manifest gui
-
-    - name: Bundle assets
-      run: go generate ./...
-
     - name: Get latest Git tag
       id: get_version
       run: echo "VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
