@@ -25,29 +25,25 @@ This program works with [tesseract](https://github.com/tesseract-ocr/tesseract),
 
 <h2>🛠️ Installation Steps:</h2>
 
-<p>1. Clone this project</p>
+<p>1. Install tesseract-ocr</p>
 
-```
-git clone https://github.com/X3ne/hsrpc
-```
+[tesseract github](https://github.com/tesseract-ocr/tesseract?tab=readme-ov-file#installing-tesseract)
 
-<p>2. Install tesseract-ocr</p>
+or with choco
 
 ```
 choco install tesseract
 ```
 
-<p>3. Bundle static files</p>
+<p>2. Download hsrpc.exe</p>
 
-```
-go generate ./...
-```
+Download the file named `hsrpc_windows_amd64.zip` and extract the executable (.exe) to the desired location
 
-<p>4. Launch</p>
+[Latest release](https://github.com/X3ne/hsrpc/releases/latest)
 
-```
-go run .
-```
+<p>3. Launch</p>
+
+Just run the executable and off you go
 
 <h2>🏗️ Build Steps:</h2>
 
@@ -63,19 +59,13 @@ git clone https://github.com/X3ne/hsrpc
 go install github.com/tc-hib/go-winres@latest
 ```
 
-<p>3. Embed icon</p>
-
-```
-go-winres simply --icon assets/icon.png --manifest gui
-```
-
-<p>4. Bundle static files</p>
+<p>3. Run go generate (used to bundle static files and set executable icon)</p>
 
 ```
 go generate ./...
 ```
 
-<p>5. Build</p>
+<p>4. Build</p>
 
 ```
 go build -ldflags="-X github.com/X3ne/hsrpc/src/consts.Version=X.X.X -H=windowsgui"
