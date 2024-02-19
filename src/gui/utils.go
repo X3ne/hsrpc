@@ -1,14 +1,21 @@
 package gui
 
 import (
+	"context"
+	"fmt"
+	"os"
+	"os/exec"
 	"strconv"
 	"time"
 
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 	"github.com/X3ne/hsrpc/src/config"
+	"github.com/X3ne/hsrpc/src/consts"
 	"github.com/X3ne/hsrpc/src/internal/bundle"
 	"github.com/X3ne/hsrpc/src/logger"
 	"github.com/X3ne/hsrpc/src/utils"
+	"github.com/creativeprojects/go-selfupdate"
 )
 
 func debounce(callback func(string), duration time.Duration) func(string) {
@@ -90,4 +97,63 @@ func stringToInt(s string) int {
 
 func ImportIcon() []byte {
 	return bundle.Get("icon.png")
+}
+
+func Restart() {
+	executable, err := os.Executable()
+	if err != nil {
+		logger.Logger.Fatalf("Failed to get executable path: %v", err)
+	}
+
+	cmd := exec.Command(executable)
+
+	cmd.Args = append(cmd.Args, os.Args[1:]...)
+
+	cmd.Env = os.Environ()
+
+	cmd.Dir, err = os.Getwd()
+	if err != nil {
+		logger.Logger.Fatalf("Failed to get working directory: %v", err)
+	}
+
+	err = cmd.Start()
+	if err != nil {
+		logger.Logger.Fatalf("Failed to restart: %v", err)
+	}
+
+	os.Exit(0)
+}
+
+func HandleUpdateError(message string, err error, label *widget.Label, updateCompleted chan bool, window fyne.Window) {
+	if err != nil {
+		logger.Logger.Errorf(message, err)
+	} else {
+		logger.Logger.Errorf(message)
+	}
+	label.SetText(message)
+	window.SetFixedSize(false)
+	updateCompleted <- false
+}
+
+func GetLatestUpdate() (*selfupdate.Release, error) {
+	if consts.Version == "" {
+		logger.Logger.Errorf("Version is not set")
+		return nil, fmt.Errorf("version is not set")
+	}
+
+	latest, found, err := selfupdate.DetectLatest(context.Background(), selfupdate.ParseSlug("X3ne/hsrpc"))
+	if err != nil {
+		return nil, fmt.Errorf("error occurred while checking for updates: %s", err)
+	}
+	if !found {
+		return nil, fmt.Errorf("no update found")
+	}
+
+	if latest.LessOrEqual(consts.Version) {
+		logger.Logger.Infof("Current version (%s) is the latest", latest)
+		return nil, nil
+	}
+
+	logger.Logger.Infof("Update available: %s", latest.Version)
+	return latest, nil
 }
