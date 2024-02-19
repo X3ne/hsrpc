@@ -88,7 +88,7 @@ Menus:
 - [x] Add more game menus status
 - [ ] Clean some code
 - [x] Create scripts to create data csv
-- [ ] Build to .exe
+- [x] Build to .exe
 - [ ] Add support for Simulated Universe
 - [ ] Add support for Calyx
 - [ ] Add support for Cavern of corrosion
