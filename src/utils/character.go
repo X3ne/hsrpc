@@ -2,16 +2,17 @@ package utils
 
 import (
 	"github.com/X3ne/hsrpc/src/logger"
+	"github.com/lxn/win"
 )
 
 // This function check the brightness of the pixels in the given coordinates to determine the current character
-func FindCurrentCharacter(coords []Rect) int32 {
+func FindCurrentCharacter(hWnd win.HWND, coords []Rect) int32 {
 	whitestPosition := -1
 	whitestValue := 0
 	minBrightness := 450 // TODO: determine this value to prevent false results
 
 	for i, coord := range coords {
-		pixel, err := GetPixelColor(coord) // TODO: replace this function by this one https://pkg.go.dev/github.com/go-vgo/robotgo#GetPixelColor
+		pixel, err := GetPixelColor(hWnd, coord) // TODO: replace this function by this one https://pkg.go.dev/github.com/go-vgo/robotgo#GetPixelColor
 		if err != nil {
 			logger.Logger.Error(err)
 			continue

@@ -23,6 +23,7 @@ type OCRConfig struct {
 
 type OCRManager struct {
 	config	OCRConfig
+	HWND		win.HWND
 }
 
 var OcrManager *OCRManager
@@ -30,6 +31,7 @@ var OcrManager *OCRManager
 func InitOcr(cfg OCRConfig, hWnd win.HWND) {
 	OcrManager = &OCRManager{
 		config: cfg,
+		HWND: hWnd,
 	}
 }
 
@@ -120,7 +122,10 @@ func (m *OCRManager) StartOcr(imageBytes []byte) (string, error) {
 }
 
 func (m *OCRManager) WindowOcr(rect Rect, job string, preprocess bool) (string, image.Image) {
-	image := robotgo.CaptureImg(rect.X, rect.Y, rect.Width, rect.Height)
+	var winRect win.RECT
+	win.GetWindowRect(m.HWND, &winRect)
+	// TODO: detect if the window is in fullscreen. if not add title bar height to the top
+	image := robotgo.CaptureImg(int(winRect.Left) + rect.X, int(winRect.Top) + rect.Y, rect.Width, rect.Height)
 	if image == nil {
 		return "", nil
 	}

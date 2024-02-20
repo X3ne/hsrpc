@@ -3,6 +3,7 @@ package app
 import (
 	"syscall"
 	"time"
+	"unsafe"
 
 	"github.com/lxn/win"
 
@@ -16,6 +17,7 @@ type App struct {
 	Config			config.AppConfig
 	HWND				win.HWND
 	AppState		AppState
+	AppSize			config.Resolution
 }
 
 type AppState struct {
@@ -101,7 +103,7 @@ func (app *App) GetWindow() {
 
 // Detect the current character currently selected
 func (app *App) CaptureCharacter() {
-	pos := utils.FindCurrentCharacter(app.Config.GUICoordsConfig.CharactersBoxCoords)
+	pos := utils.FindCurrentCharacter(app.HWND, app.Config.GUICoordsConfig.CharactersBoxCoords)
 	if pos == -1 {
 		return
 	}
@@ -117,6 +119,41 @@ func (app *App) CaptureCharacter() {
 	if characterPred.Value != "" {
 		app.AppState.Character = characterPred
 	}
+}
+
+// Set App size
+func (app *App) SetSize() {
+	w, h := getWindowSize(app.HWND)
+
+	if w == int32(app.AppSize.Width) && h == int32(app.AppSize.Height) {
+		return
+	}
+
+	app.AppSize = config.Resolution{Width: uint32(w), Height: uint32(h)}
+
+	logger.Logger.Info("Window size:", w, h)
+
+	monitor := win.MonitorFromWindow(app.HWND, win.MONITOR_DEFAULTTONEAREST)
+
+	var monitorInfo win.MONITORINFO
+	monitorInfo.CbSize = uint32(unsafe.Sizeof(monitorInfo))
+	win.GetMonitorInfo(monitor, &monitorInfo)
+
+	isFullscreen := monitorInfo.RcMonitor.Right - monitorInfo.RcMonitor.Left == w && monitorInfo.RcMonitor.Bottom - monitorInfo.RcMonitor.Top == h
+	logger.Logger.Info("Fullscreen:", isFullscreen)
+
+	xAdjustment := 0
+	if w <= 1920 {
+		xAdjustment = -100
+	}
+
+	yAdjustment := 0
+	if !isFullscreen {
+		yAdjustment = 33
+	}
+
+	app.Config.GUICoordsConfig = config.GetGUICoords(config.Resolution{Width: uint32(w), Height: uint32(h)}, xAdjustment, yAdjustment)
+	config.SaveConfig(app.Config)
 }
 
 // Detect the current location of the player
@@ -224,6 +261,9 @@ func (app *App) StartLoop() {
 			app.InitializeOCR()
 		}
 
+		// Set the app size
+		app.SetSize()
+
 		if app.AppState.LoopTime != app.Config.LoopTime {
 			app.AppState.LoopTime = app.Config.LoopTime
 		}
@@ -231,6 +271,14 @@ func (app *App) StartLoop() {
 		app.CaptureGameData()
 		app.UpdateDiscordPresence()
 	}
+}
+
+func getWindowSize(hwnd win.HWND) (int32, int32) {
+	var rect win.RECT
+	win.GetClientRect(hwnd, &rect)
+	width := rect.Right - rect.Left
+	height := rect.Bottom - rect.Top
+	return width, height
 }
 
 // Handles the scenario when the Honkai window is closed

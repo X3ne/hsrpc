@@ -13,6 +13,7 @@ import (
 	"github.com/X3ne/hsrpc/src/consts"
 	"github.com/X3ne/hsrpc/src/logger"
 	"github.com/go-vgo/robotgo"
+	"github.com/lxn/win"
 	"github.com/texttheater/golang-levenshtein/levenshtein"
 )
 
@@ -42,8 +43,11 @@ func FindClosestCorrespondence(text string, candidates []Data) Data {
 	return closest
 }
 
-func GetPixelColor(rect Rect) (color.RGBA, error) {
-	img := robotgo.CaptureImg(rect.X, rect.Y, 1, 1)
+func GetPixelColor(hWnd win.HWND, rect Rect) (color.RGBA, error) {
+	var winRect win.RECT
+	win.GetWindowRect(hWnd, &winRect)
+
+	img := robotgo.CaptureImg(rect.X + int(winRect.Left), rect.Y + int(winRect.Top), 100, 1)
 	if img == nil {
 		return color.RGBA{}, nil
 	}

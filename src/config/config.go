@@ -15,59 +15,68 @@ type GUICoordsConfig struct {
 	CharactersBoxCoords	[]utils.Rect
 }
 
+type Resolution struct {
+	Width  uint32
+	Height uint32
+}
+
 type AppConfig struct {
 	WindowName					string
 	WindowClass					string
 	LoopTime						time.Duration
 	TesseractPath				string
 	DiscordAppId				string
-	Resolution					uint32
-	Ultrawide						bool
+	Resolution					Resolution
 	Debug								bool
 	StartWithWindows		bool
 	GUICoordsConfig			*GUICoordsConfig
 }
 
-func (c *AppConfig) setGUICoords() {
-	if c.Ultrawide {
-		c.GUICoordsConfig = &GUICoordsConfig{
-			EscCoord: utils.Rect{X: 1925, Y: 250, Width: 180, Height: 30},
-			MenusCoord: utils.Rect{X: 100, Y: 35, Width: 300, Height: 25},
-			CombatCoord: utils.Rect{X: 2100, Y: 25, Width: 85, Height: 40},
-			LocationCoord: utils.Rect{X: 55, Y: 15, Width: 320, Height: 25},
-			CharactersCoords: []utils.Rect{
-				{X: 2250, Y: 305, Width: 170, Height: 30},
-				{X: 2250, Y: 400, Width: 170, Height: 30},
-				{X: 2250, Y: 495, Width: 170, Height: 30},
-				{X: 2250, Y: 585, Width: 170, Height: 30},
-			},
-			CharactersBoxCoords: []utils.Rect{
-				{X: 2400, Y: 351},
-				{X: 2400, Y: 445},
-				{X: 2400, Y: 538},
-				{X: 2400, Y: 632},
-			},
-		}
-		return
-	}
-	c.GUICoordsConfig = &GUICoordsConfig{
-		EscCoord: utils.Rect{X: 0, Y: 0, Width: 0, Height: 0},
-		MenusCoord: utils.Rect{X: 0, Y: 0, Width: 0, Height: 0},
-		CombatCoord: utils.Rect{X: 0, Y: 0, Width: 0, Height: 0},
-		LocationCoord: utils.Rect{X: 55, Y: 15, Width: 320, Height: 25},
+func GetGUICoords(gameResolution Resolution, xAdjustment, yAjustment int) *GUICoordsConfig {
+	referenceResolution := Resolution{Width: 2560, Height: 1080}
+	scaleX := float64(gameResolution.Width) / float64(referenceResolution.Width)
+	scaleY := float64(gameResolution.Height) / float64(referenceResolution.Height)
+
+	config := &GUICoordsConfig{
+		EscCoord: utils.Rect{
+			X:      int(float64(1925+(xAdjustment*2)) * scaleX),
+			Y:      int(float64(250+yAjustment) * scaleY),
+			Width:  180,
+			Height: 30,
+		},
+		MenusCoord: utils.Rect{
+			X:      int(float64(100) * scaleX),
+			Y:      int(float64(35+yAjustment) * scaleY),
+			Width:  300,
+			Height: 25,
+		},
+		CombatCoord: utils.Rect{
+			X:      int(float64(2100+xAdjustment) * scaleX),
+			Y:      int(float64(25+yAjustment) * scaleY),
+			Width:  85,
+			Height: 40,
+		},
+		LocationCoord: utils.Rect{
+			X:      int(float64(55) * scaleX),
+			Y:      int(float64(15+yAjustment) * scaleY),
+			Width:  320,
+			Height: 25,
+		},
 		CharactersCoords: []utils.Rect{
-			{X: 1620, Y: 240, Width: 140, Height: 60},
-			{X: 1620, Y: 330, Width: 140, Height: 60},
-			{X: 1620, Y: 430, Width: 140, Height: 60},
-			{X: 1620, Y: 530, Width: 140, Height: 60},
+			{X: int(float64(2250+xAdjustment) * scaleX), Y: int(float64(305+yAjustment) * scaleY), Width: 170, Height: 30},
+			{X: int(float64(2250+xAdjustment) * scaleX), Y: int(float64(400+yAjustment) * scaleY), Width: 170, Height: 30},
+			{X: int(float64(2250+xAdjustment) * scaleX), Y: int(float64(495+yAjustment) * scaleY), Width: 170, Height: 30},
+			{X: int(float64(2250+xAdjustment) * scaleX), Y: int(float64(585+yAjustment) * scaleY), Width: 170, Height: 30},
 		},
 		CharactersBoxCoords: []utils.Rect{
-			{X: 1860, Y: 260},
-			{X: 1860, Y: 360},
-			{X: 1860, Y: 460},
-			{X: 1860, Y: 560},
+			{X: int(float64(2400+xAdjustment) * scaleX), Y: int(float64(351+yAjustment) * scaleY)},
+			{X: int(float64(2400+xAdjustment) * scaleX), Y: int(float64(445+yAjustment) * scaleY)},
+			{X: int(float64(2400+xAdjustment) * scaleX), Y: int(float64(538+yAjustment) * scaleY)},
+			{X: int(float64(2400+xAdjustment) * scaleX), Y: int(float64(632+yAjustment) * scaleY)},
 		},
 	}
+
+	return config
 }
 
 func NewConfig() AppConfig {
@@ -76,14 +85,11 @@ func NewConfig() AppConfig {
 		WindowClass:				"UnityWndClass",
 		LoopTime:						2000,
 		TesseractPath:			`C:\Program Files\Tesseract-OCR\tesseract.exe`,
-		Resolution:					1080,
-		Ultrawide:					true,
+		Resolution:					Resolution{Width: 1920, Height: 1080},
 		DiscordAppId:				"1208212792574869544",
 		Debug:							false,
 		StartWithWindows:		false,
 	}
-
-	config.setGUICoords()
 
 	return config
 }

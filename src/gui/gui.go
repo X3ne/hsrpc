@@ -151,12 +151,12 @@ func (g *GUI) MainScreen(update ...*selfupdate.Release) {
 		container.NewTabItem("Config", container.NewVBox(
 			g.createGlobalConfigTab(),
 		)),
-		container.NewTabItem("Characters", container.NewVBox(
-			g.createCharactersTab(),
-		)),
-		container.NewTabItem("Locations", container.NewVBox(
-			g.createGuiCoordsConfigTab(),
-		)),
+		// container.NewTabItem("Characters", container.NewVBox(
+		// 	g.createCharactersTab(),
+		// )),
+		// container.NewTabItem("Locations", container.NewVBox(
+		// 	g.createGuiCoordsConfigTab(),
+		// )),
 	)
 
 	if len(update) > 0 && update[0] != nil {

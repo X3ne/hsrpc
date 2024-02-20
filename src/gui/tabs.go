@@ -25,14 +25,14 @@ func (g *GUI) createCharactersTab() *fyne.Container {
 
 	container := container.NewVBox(
 		container.NewAdaptiveGrid(
-			2,
+			4,
 			container.NewVBox(widget.NewLabel("Character 1 coords"), char1),
 			container.NewVBox(widget.NewLabel("Character 2 coords"), char2),
 			container.NewVBox(widget.NewLabel("Character 3 coords"), char3),
 			container.NewVBox(widget.NewLabel("Character 4 coords"), char4),
 		),
 		container.NewAdaptiveGrid(
-			2,
+			4,
 			container.NewVBox(widget.NewLabel("Character 1 box coords"), box1),
 			container.NewVBox(widget.NewLabel("Character 2 box coords"), box2),
 			container.NewVBox(widget.NewLabel("Character 3 box coords"), box3),
@@ -124,10 +124,10 @@ func (g *GUI) createGuiCoordsConfigTab() *fyne.Container {
 }
 
 func (g *GUI) createGlobalConfigTab() *fyne.Container {
-	startupCheckbox := widget.NewCheck("Start with Windows", func(b bool) {
-		g.RPCApp.Config.StartWithWindows = b
-		g.saveConfig()
-	})
+	// startupCheckbox := widget.NewCheck("Start with Windows", func(b bool) {
+	// 	g.RPCApp.Config.StartWithWindows = b
+	// 	g.saveConfig()
+	// })
 	timeEntry := widget.NewEntry()
 	tesseractPath := widget.NewEntry()
 	tesseractPathButton := widget.NewButton("Browse", func() {
@@ -169,7 +169,7 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 	}
 
 	container := container.NewVBox(
-		startupCheckbox,
+		// startupCheckbox,
 		container.NewVBox(form),
 	)
 
