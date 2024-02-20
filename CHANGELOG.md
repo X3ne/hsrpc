@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/X3ne/hsrpc/compare/v1.1.0...v1.2.0) (2024-02-20)
+
+
+### Features
+
+* the program now detects window size and automatically adapts the coordinates of the game's ui, now supports multiple screens ([48ed306](https://github.com/X3ne/hsrpc/commit/48ed306a5b792d4836b0807b27d4d63baddfa1bf))
+
 ## [1.1.0](https://github.com/X3ne/hsrpc/compare/v1.0.3...v1.1.0) (2024-02-19)
 
 
