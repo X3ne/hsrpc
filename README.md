@@ -84,7 +84,7 @@ Menus:
 
 <h2>⚒️ Improvements:</h2>
 
-- [ ] Add support for more game resolution (currently support 2560x1080)
+- [x] Add support for more game resolution (tested with fullscreen 1920x1080, 2560x1080 & windowed 1768x992)
 - [x] Add more game menus status
 - [ ] Clean some code
 - [x] Create scripts to create data csv
@@ -95,10 +95,10 @@ Menus:
 - [ ] Add support for Echo of war
 - [ ] Add support for cut scenes
 - [ ] Add support for the Trailblazer
-- [ ] Maybe create a location selector to simplify the configuration of coordinates
 - [ ] Remove the tesseract install step (maybe try to use [GetText](https://pkg.go.dev/github.com/go-vgo/robotgo#GetText) from robotgo)
 - [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
-- [ ] Auto calculate coords based on app resolution
+- [x] Auto calculate coords based on app resolution
+- [ ] Reimplement the personalization of coordinates in GUI
 
 GUI app:
 - [x] Add persistent state to GUI configuration
