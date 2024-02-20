@@ -82,6 +82,7 @@ IMPORTANT:
 Menus:
 - [ ] Data bank tab is not detected
 - [ ] Achievements tab is not detected
+- [ ] Unfortunately, the new update has broken other menus for no reason (only on resolutions below 2560)
 
 - [ ] Fix gosec errors
 
