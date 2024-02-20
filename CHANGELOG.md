@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/X3ne/hsrpc/compare/v1.0.3...v1.1.0) (2024-02-19)
+
+
+### Features
+
+* added update checking & a modal to automatically download and update the .exe file ([8a42d43](https://github.com/X3ne/hsrpc/commit/8a42d43fc6de2def74c19269613d573da0737e4d))
+
 ## [1.0.3](https://github.com/X3ne/hsrpc/compare/v1.0.2...v1.0.3) (2024-02-18)
 
 
