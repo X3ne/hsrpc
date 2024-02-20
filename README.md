@@ -73,6 +73,9 @@ go build -ldflags="-X github.com/X3ne/hsrpc/src/consts.Version=X.X.X -H=windowsg
 
 <h2>🪲 Known issues:</h2>
 
+IMPORTANT:
+- [ ] Merge config file to avoid application crashes when config changes between different versions
+
 - [ ] Sometimes, the position of the selected character is not the right one (especially when the background is too bright, e.g. on Jarilo-VI when there's snow in the background)
 - [ ] I don't have these characters, but `Dan Heng Imbibitor Lunae` and `Topaz and Numby` seem sus names for ocr detection.
 
