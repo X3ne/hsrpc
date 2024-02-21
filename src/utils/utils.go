@@ -72,27 +72,24 @@ func SaveImg(img image.Image, fileName string) error {
 }
 
 func PanicRecover(r interface{}) {
-	appDataDir, err := os.UserConfigDir()
+	appDataDir, err := GetAppPath()
 	if err != nil {
 		fmt.Println("Error getting user config dir:", err)
 		return
 	}
 	timestamp := time.Now().Format("2006-01-02_15-04-05")
 	filename := fmt.Sprintf("crash_%s.log", timestamp)
-	logFilePath := filepath.Join(appDataDir, consts.AppDataDir, "crash", filename)
+	logFilePath := filepath.Join(appDataDir, consts.CrashDir, filename)
 
-	dir := filepath.Dir(logFilePath)
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		err := os.MkdirAll(dir, 0750)
-		if err != nil {
-			logger.Logger.Error("Error creating crash log directory:", err)
-			return
-		}
+	err = CreateDir(logFilePath)
+	if err != nil {
+		logger.Logger.Error(err)
+		return
 	}
 
 	file, err := os.Create(logFilePath)
 	if err != nil {
-		logger.Logger.Error("Error creating crash log file:", err)
+		logger.Logger.Error("error creating crash log file:", err)
 		return
 	}
 	defer file.Close()
@@ -100,4 +97,25 @@ func PanicRecover(r interface{}) {
 	buf := make([]byte, 1<<16)
 	stackLen := runtime.Stack(buf, true)
 	fmt.Fprintf(file, "=== STACK TRACE ===\n%s\n", buf[:stackLen])
+}
+
+func GetAppPath() (string, error) {
+	appDataDir, err := os.UserConfigDir()
+	if err != nil {
+		return "", fmt.Errorf("error getting user config dir: %w", err)
+	}
+
+	return filepath.Join(appDataDir, consts.AppDataDir), nil
+}
+
+func CreateDir(path string) error {
+	dir := filepath.Dir(path)
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		err := os.MkdirAll(dir, 0750)
+		if err != nil {
+			return fmt.Errorf("error creating directory: %w", err)
+		}
+	}
+
+	return nil
 }

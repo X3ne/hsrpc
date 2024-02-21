@@ -102,7 +102,7 @@ func ImportIcon() []byte {
 func Restart() {
 	executable, err := os.Executable()
 	if err != nil {
-		logger.Logger.Fatalf("Failed to get executable path: %v", err)
+		logger.Logger.Fatalf("failed to get executable path: %v", err)
 	}
 
 	cmd := exec.Command(executable)
@@ -113,12 +113,12 @@ func Restart() {
 
 	cmd.Dir, err = os.Getwd()
 	if err != nil {
-		logger.Logger.Fatalf("Failed to get working directory: %v", err)
+		logger.Logger.Fatalf("failed to get working directory: %v", err)
 	}
 
 	err = cmd.Start()
 	if err != nil {
-		logger.Logger.Fatalf("Failed to restart: %v", err)
+		logger.Logger.Fatalf("failed to restart: %v", err)
 	}
 
 	os.Exit(0)
@@ -137,7 +137,6 @@ func HandleUpdateError(message string, err error, label *widget.Label, updateCom
 
 func GetLatestUpdate() (*selfupdate.Release, error) {
 	if consts.Version == "" {
-		logger.Logger.Errorf("Version is not set")
 		return nil, fmt.Errorf("version is not set")
 	}
 
@@ -150,10 +149,10 @@ func GetLatestUpdate() (*selfupdate.Release, error) {
 	}
 
 	if latest.LessOrEqual(consts.Version) {
-		logger.Logger.Infof("Current version (%s) is the latest", latest)
+		logger.Logger.Infof("current version (%s) is the latest", latest)
 		return nil, nil
 	}
 
-	logger.Logger.Infof("Update available: %s", latest.Version)
+	logger.Logger.Infof("update available: %s", latest.Version)
 	return latest, nil
 }

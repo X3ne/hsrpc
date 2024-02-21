@@ -6,14 +6,15 @@ import (
 	"path/filepath"
 
 	"github.com/X3ne/hsrpc/src/consts"
+	"github.com/X3ne/hsrpc/src/utils"
 )
 
 func LoadConfig() (AppConfig, error) {
-	appData, err := os.UserConfigDir()
+	appData, err := utils.GetAppPath()
 	if err != nil {
 		return AppConfig{}, err
 	}
-	appDataPath := filepath.Join(appData, consts.AppDataDir, consts.ConfigFile)
+	appDataPath := filepath.Join(appData, consts.ConfigFile)
 
 	// Config file does not exist, create a new one with default values
 	if _, err := os.Stat(appDataPath); os.IsNotExist(err) {
@@ -40,22 +41,19 @@ func LoadConfig() (AppConfig, error) {
 }
 
 func SaveConfig(config AppConfig) error {
-	appData, err := os.UserConfigDir()
+	appData, err := utils.GetAppPath()
 	if err != nil {
 		return err
 	}
-	appDataPath := filepath.Join(appData, consts.AppDataDir, consts.ConfigFile)
+	appDataPath := filepath.Join(appData, consts.ConfigFile)
 	configJSON, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
 		return err
 	}
 
-	dir := filepath.Dir(appDataPath)
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		err := os.MkdirAll(dir, 0750)
-		if err != nil {
-			return err
-		}
+	err = utils.CreateDir(appDataPath)
+	if err != nil {
+		return err
 	}
 
 	err = os.WriteFile(appDataPath, configJSON, 0600)

@@ -15,7 +15,7 @@ var Logger *zap.SugaredLogger
 func init() {
 	appDataDir, err := os.UserConfigDir()
 	if err == nil {
-		logFilePath := filepath.Join(appDataDir, consts.AppDataDir, "logs", "errors.log")
+		logFilePath := filepath.Join(appDataDir, consts.AppDataDir, consts.LogsDir, "errors.log")
 
     lumberjackSink := zapcore.AddSync(&lumberjack.Logger{
 			Filename:		logFilePath,
