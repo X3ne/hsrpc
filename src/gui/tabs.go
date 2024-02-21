@@ -69,12 +69,14 @@ func (g *GUI) createPresenceTab() *fyne.Container {
 	container := container.NewVBox(
 		widget.NewButton("Reconnect to Discord", func() {
 			gatewayStatus.Set("Connecting to Discord Gateway...")
-			time.Sleep(1 * time.Second)
-			if err := g.RPCApp.ConnectToDiscordGateway(); err != nil {
-				gatewayStatus.Set("Error when connecting to Discord Gateway")
-			} else {
-				gatewayStatus.Set("Connected to Discord Gateway")
-			}
+			go func() {
+				time.Sleep(1 * time.Second)
+				if err := g.RPCApp.ConnectToDiscordGateway(); err != nil {
+					gatewayStatus.Set("Error when connecting to Discord Gateway")
+				} else {
+					gatewayStatus.Set("Connected to Discord Gateway")
+				}
+			}()
 		}),
 		widget.NewLabelWithData(gatewayStatus),
 		container.NewHBox(
