@@ -45,8 +45,8 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAjustment int) *GUICo
 			Height: 30,
 		},
 		MenusCoord: utils.Rect{
-			X:      int(float64(100) * scaleX),
-			Y:      int(float64(35+yAjustment) * scaleY),
+			X:      100,
+			Y:      int(float64(40+yAjustment) * scaleY),
 			Width:  300,
 			Height: 25,
 		},
@@ -57,7 +57,7 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAjustment int) *GUICo
 			Height: 40,
 		},
 		LocationCoord: utils.Rect{
-			X:      int(float64(55) * scaleX),
+			X:      int(55 * scaleX),
 			Y:      int(float64(15+yAjustment) * scaleY),
 			Width:  320,
 			Height: 25,
