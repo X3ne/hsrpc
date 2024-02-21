@@ -110,6 +110,8 @@ func (g *GUI) ConfigApp() {
 	g.Window.SetCloseIntercept(func() {
 		g.Window.Hide()
 	})
+
+	g.App.Settings().SetTheme(&appTheme{})
 }
 
 func (g *GUI) updateApp(confirm bool) {
