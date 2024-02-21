@@ -145,10 +145,10 @@ func (g *GUI) updateApp(confirm bool) {
 
 func (g *GUI) MainScreen(update ...*selfupdate.Release) {
 	tabs := container.NewAppTabs(
-		container.NewTabItem("Presence", container.NewVBox(
+		container.NewTabItem("Presence", container.NewPadded(
 			g.createPresenceTab(),
 		)),
-		container.NewTabItem("Config", container.NewVBox(
+		container.NewTabItem("Config", container.NewPadded(
 			g.createGlobalConfigTab(),
 		)),
 		// container.NewTabItem("Characters", container.NewVBox(
