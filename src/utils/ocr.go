@@ -1,17 +1,14 @@
 package utils
 
 import (
-	"bytes"
 	"errors"
 	"image"
 	"image/color"
-	"image/png"
-	"io"
 	"os/exec"
-	"regexp"
+	"path/filepath"
 	"strings"
-	"syscall"
 
+	"github.com/X3ne/hsrpc/src/consts"
 	"github.com/X3ne/hsrpc/src/logger"
 	"github.com/go-vgo/robotgo"
 	"github.com/lxn/win"
@@ -59,7 +56,7 @@ func preprocessImage(img image.Image) image.Image {
 	return binarizedImg
 }
 
-func (m *OCRManager) StartOcr(imageBytes []byte) (string, error) {
+func (m *OCRManager) StartOcr(path string) (string, error) {
 	executablePath := *m.config.ExecutablePath
 	if executablePath == "" {
 		return "", errors.New("tesseract executable path is not set")
@@ -67,56 +64,14 @@ func (m *OCRManager) StartOcr(imageBytes []byte) (string, error) {
 
 	whitelistChars := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, "
 
-	cmdArgs := []string{
-		"-l", "eng",
-		"-c", "tessedit_char_whitelist=" + whitelistChars,
-		"stdin", "stdout",
-	}
-
-	cmd := exec.Command(executablePath, cmdArgs...)
-
-	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-
-	stdinPipe, err := cmd.StdinPipe()
-	if err != nil {
-		return "", err
-	}
-	defer stdinPipe.Close()
-
-	stdoutPipe, err := cmd.StdoutPipe()
+	body, err := exec.Command(executablePath, path, "stdout", "-l", "eng", "-c", "tessedit_char_whitelist=" + whitelistChars).Output()
 	if err != nil {
 		return "", err
 	}
 
-	err = cmd.Start()
-	if err != nil {
-		return "", err
-	}
-
-	_, err = io.Copy(stdinPipe, bytes.NewReader(imageBytes))
-	if err != nil {
-		return "", err
-	}
-
-	err = stdinPipe.Close()
-	if err != nil {
-		return "", err
-	}
-
-	var outputBuf bytes.Buffer
-	_, err = io.Copy(&outputBuf, stdoutPipe)
-	if err != nil {
-		return "", err
-	}
-
-	err = cmd.Wait()
-	if err != nil {
-		return "", err
-	}
-
-	outputText := strings.ReplaceAll(outputBuf.String(), "\n", " ")
+	outputText := strings.ReplaceAll(string(body), "\n", " ")
 	outputText = strings.ReplaceAll(outputText, "\r", " ")
-	outputText = regexp.MustCompile(`\s+`).ReplaceAllString(outputText, " ")
+	outputText = strings.ReplaceAll(outputText, "\t", " ")
 
 	return outputText, nil
 }
@@ -124,7 +79,6 @@ func (m *OCRManager) StartOcr(imageBytes []byte) (string, error) {
 func (m *OCRManager) WindowOcr(rect Rect, job string, preprocess bool) (string, image.Image) {
 	var winRect win.RECT
 	win.GetWindowRect(m.HWND, &winRect)
-	// TODO: detect if the window is in fullscreen. if not add title bar height to the top
 	image := robotgo.CaptureImg(int(winRect.Left) + rect.X, int(winRect.Top) + rect.Y, rect.Width, rect.Height)
 	if image == nil {
 		return "", nil
@@ -134,19 +88,24 @@ func (m *OCRManager) WindowOcr(rect Rect, job string, preprocess bool) (string, 
 		image = preprocessImage(image)
 	}
 
-	// grayImg := ConvertToGrayscale(image)
-
-	SaveImg(image, "tmp/" + job + ".png") // Save the image for debugging purposes
-
-	buf := new(bytes.Buffer)
-	err := png.Encode(buf, image)
+	appPath, err := GetAppPath()
 	if err != nil {
-		logger.Logger.Errorf("["+job+"] "+"Error: %s", err)
+		logger.Logger.Errorf("["+job+"] "+"error: %s", err)
 		return "", nil
 	}
-	text, err := m.StartOcr(buf.Bytes())
+
+	imagePath := filepath.Join(appPath, consts.TmpDir, job + ".png")
+	err = CreateDir(imagePath)
 	if err != nil {
-		logger.Logger.Errorf("["+job+"] "+"Error: %s", err)
+		logger.Logger.Errorf("["+job+"] "+"error: %s", err)
+		return "", nil
+	}
+
+	SaveImg(image, imagePath)
+
+	text, err := m.StartOcr(imagePath)
+	if err != nil {
+		logger.Logger.Errorf("["+job+"] "+"error: %s", err)
 		return "", nil
 	}
 

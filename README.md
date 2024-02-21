@@ -99,7 +99,6 @@ Menus:
 - [ ] Add support for Echo of war
 - [ ] Add support for cut scenes
 - [ ] Add support for the Trailblazer
-- [ ] Remove the tesseract install step (maybe try to use [GetText](https://pkg.go.dev/github.com/go-vgo/robotgo#GetText) from robotgo)
 - [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
 - [x] Auto calculate coords based on app resolution
 - [ ] Reimplement the personalization of coordinates in GUI
