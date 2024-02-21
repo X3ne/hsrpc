@@ -200,7 +200,7 @@ func getMenu(menus []utils.Data, value string) utils.Data {
 func (app *App) CaptureGameMenu() {
 	escText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.EscCoord, "esc_menu", false)
 	menuText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.MenusCoord, "menus", false)
-	combatText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CombatCoord, "combat", false)
+	combatText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CombatCoord, "combat", true)
 
 	escTextPrediction := utils.FindClosestCorrespondence(escText, utils.GameData.Menus)
 	menuTextPrediction := utils.FindClosestCorrespondence(menuText, utils.GameData.Menus)
