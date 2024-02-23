@@ -21,7 +21,7 @@
 
 <h2>🤓 Technical information:</h2>
 
-This program works with [tesseract](https://github.com/tesseract-ocr/tesseract), an open source text recognition software. hrpc extracts no data from the game and is based solely on what tesseract recognizes on the window (so some results may be wrong)
+This program works with [tesseract](https://github.com/tesseract-ocr/tesseract), an open source text recognition software. hsrpc extracts no data from the game and is based solely on what tesseract recognizes on the window (so some results may be wrong)
 
 <h2>🛠️ Installation Steps:</h2>
 
