@@ -154,14 +154,6 @@ func (app *App) SetSize() {
 
 	app.Config.GUICoordsConfig = config.GetGUICoords(config.Resolution{Width: uint32(w), Height: uint32(h)}, xAdjustment, yAdjustment)
 
-	if w < 1920 {
-		app.Config.PreprocessThreshold = 120
-		app.Config.BrightnessThreshold = 300
-	} else {
-		app.Config.PreprocessThreshold = 180
-		app.Config.BrightnessThreshold = 450
-	}
-
 	config.SaveConfig(app.Config)
 }
 
