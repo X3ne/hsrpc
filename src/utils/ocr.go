@@ -16,7 +16,7 @@ import (
 
 type OCRConfig struct {
 	ExecutablePath			*string
-	PreprocessThreshold	int
+	PreprocessThreshold	*int
 }
 
 type OCRManager struct {
@@ -85,7 +85,7 @@ func (m *OCRManager) WindowOcr(rect Rect, job string, preprocess bool) (string, 
 	}
 
 	if preprocess {
-		image = preprocessImage(image, m.config.PreprocessThreshold)
+		image = preprocessImage(image, *m.config.PreprocessThreshold)
 	}
 
 	appPath, err := GetAppPath()
