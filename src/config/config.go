@@ -29,6 +29,8 @@ type AppConfig struct {
 	Resolution					Resolution
 	Debug								bool
 	StartWithWindows		bool
+	BrightnessThreshold int
+	PreprocessThreshold int
 	GUICoordsConfig			*GUICoordsConfig
 }
 
@@ -81,14 +83,16 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAjustment int) *GUICo
 
 func NewConfig() AppConfig {
 	config :=  AppConfig{
-		WindowName:					"Honkai: Star Rail",
-		WindowClass:				"UnityWndClass",
-		LoopTime:						2000,
-		TesseractPath:			`C:\Program Files\Tesseract-OCR\tesseract.exe`,
-		Resolution:					Resolution{Width: 1920, Height: 1080},
-		DiscordAppId:				"1208212792574869544",
-		Debug:							false,
-		StartWithWindows:		false,
+		WindowName:						"Honkai: Star Rail",
+		WindowClass:					"UnityWndClass",
+		LoopTime:							2000,
+		TesseractPath:				`C:\Program Files\Tesseract-OCR\tesseract.exe`,
+		Resolution:						Resolution{Width: 1920, Height: 1080},
+		DiscordAppId:					"1208212792574869544",
+		Debug:								false,
+		StartWithWindows:			false,
+		BrightnessThreshold:	450,
+		PreprocessThreshold:	180,
 	}
 
 	return config

@@ -103,7 +103,7 @@ func (app *App) GetWindow() {
 
 // Detect the current character currently selected
 func (app *App) CaptureCharacter() {
-	pos := utils.FindCurrentCharacter(app.HWND, app.Config.GUICoordsConfig.CharactersBoxCoords)
+	pos := utils.FindCurrentCharacter(app.HWND, app.Config.GUICoordsConfig.CharactersBoxCoords, app.Config.BrightnessThreshold)
 	if pos == -1 {
 		return
 	}
@@ -153,6 +153,15 @@ func (app *App) SetSize() {
 	}
 
 	app.Config.GUICoordsConfig = config.GetGUICoords(config.Resolution{Width: uint32(w), Height: uint32(h)}, xAdjustment, yAdjustment)
+
+	if w < 1920 {
+		app.Config.PreprocessThreshold = 120
+		app.Config.BrightnessThreshold = 300
+	} else {
+		app.Config.PreprocessThreshold = 180
+		app.Config.BrightnessThreshold = 450
+	}
+
 	config.SaveConfig(app.Config)
 }
 
@@ -296,17 +305,18 @@ func (app *App) IsWindowFocused() bool {
 	foregroundWindow := win.GetForegroundWindow()
 	if foregroundWindow != app.HWND {
 		app.AppState.LoopTime = 5000
-		logger.Logger.Info("Honkai window not focused")
+		logger.Logger.Debug("Honkai window not focused")
 		return false
 	}
-	logger.Logger.Info("Honkai window focused")
+	logger.Logger.Debug("Honkai window focused")
 	return true
 }
 
 // Initializes OCR for capturing game data
 func (app *App) InitializeOCR() {
 	utils.InitOcr(utils.OCRConfig{
-		ExecutablePath: &app.Config.TesseractPath,
+		ExecutablePath:				&app.Config.TesseractPath,
+		PreprocessThreshold:	app.Config.PreprocessThreshold,
 	}, app.HWND)
 
 	app.AppState.IsOCRInitialized = true

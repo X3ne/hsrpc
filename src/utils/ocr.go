@@ -15,7 +15,8 @@ import (
 )
 
 type OCRConfig struct {
-	ExecutablePath	*string
+	ExecutablePath			*string
+	PreprocessThreshold	int
 }
 
 type OCRManager struct {
@@ -32,7 +33,7 @@ func InitOcr(cfg OCRConfig, hWnd win.HWND) {
 	}
 }
 
-func preprocessImage(img image.Image) image.Image {
+func preprocessImage(img image.Image, threshold int) image.Image {
 	grayImg := image.NewGray(img.Bounds())
 	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
 		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
@@ -41,7 +42,6 @@ func preprocessImage(img image.Image) image.Image {
 		}
 	}
 
-	threshold := 180
 	binarizedImg := image.NewGray(img.Bounds())
 	for y := img.Bounds().Min.Y; y < img.Bounds().Max.Y; y++ {
 		for x := img.Bounds().Min.X; x < img.Bounds().Max.X; x++ {
@@ -85,7 +85,7 @@ func (m *OCRManager) WindowOcr(rect Rect, job string, preprocess bool) (string, 
 	}
 
 	if preprocess {
-		image = preprocessImage(image)
+		image = preprocessImage(image, m.config.PreprocessThreshold)
 	}
 
 	appPath, err := GetAppPath()

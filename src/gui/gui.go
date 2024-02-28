@@ -3,7 +3,6 @@ package gui
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/url"
 	"os"
 	"time"
@@ -123,7 +122,6 @@ func (g *GUI) updateApp(confirm bool) {
 
 	go func() {
 		success := <-updateCompleted
-		log.Println("Update completed")
 
 		time.Sleep(1 * time.Second)
 
