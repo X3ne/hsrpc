@@ -29,52 +29,55 @@ type AppConfig struct {
 	Resolution					Resolution
 	Debug								bool
 	StartWithWindows		bool
-	BrightnessThreshold int
 	PreprocessThreshold int
 	GUICoordsConfig			*GUICoordsConfig
 }
 
-func GetGUICoords(gameResolution Resolution, xAdjustment, yAjustment int) *GUICoordsConfig {
+func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUICoordsConfig {
 	referenceResolution := Resolution{Width: 2560, Height: 1080}
 	scaleX := float64(gameResolution.Width) / float64(referenceResolution.Width)
 	scaleY := float64(gameResolution.Height) / float64(referenceResolution.Height)
 
+	adjustSize := func(originalSize int, scale float64) int {
+		return int(float64(originalSize) * scale)
+	}
+
 	config := &GUICoordsConfig{
 		EscCoord: utils.Rect{
-			X:      int(float64(1925+(xAdjustment*2)) * scaleX),
-			Y:      int(float64(250+yAjustment) * scaleY),
-			Width:  180,
-			Height: 30,
+			X:			adjustSize(1925+(xAdjustment*2), scaleX),
+			Y:			adjustSize(250+yAdjustment, scaleY),
+			Width:	adjustSize(180, scaleX) + 50,
+			Height:	adjustSize(30, scaleY),
 		},
 		MenusCoord: utils.Rect{
-			X:      100,
-			Y:      int(float64(40+yAjustment) * scaleY),
-			Width:  300,
-			Height: 25,
+			X:			adjustSize(100, scaleX),
+			Y:			adjustSize(40+yAdjustment, scaleY),
+			Width:	adjustSize(300, scaleX) + 50,
+			Height:	adjustSize(25, scaleY),
 		},
 		CombatCoord: utils.Rect{
-			X:      int(float64(2100+xAdjustment) * scaleX),
-			Y:      int(float64(25+yAjustment) * scaleY),
-			Width:  85,
-			Height: 40,
+			X:			adjustSize(2100+xAdjustment, scaleX),
+			Y:			adjustSize(25+yAdjustment, scaleY),
+			Width:	adjustSize(85, scaleX) + 50,
+			Height:	adjustSize(40, scaleY),
 		},
 		LocationCoord: utils.Rect{
-			X:      int(55 * scaleX),
-			Y:      int(float64(15+yAjustment) * scaleY),
-			Width:  320,
-			Height: 25,
+			X:			adjustSize(55, scaleX),
+			Y:			adjustSize(15+yAdjustment, scaleY),
+			Width:	adjustSize(320, scaleX) + 50,
+			Height:	adjustSize(25, scaleY),
 		},
 		CharactersCoords: []utils.Rect{
-			{X: int(float64(2250+xAdjustment) * scaleX), Y: int(float64(305+yAjustment) * scaleY), Width: 170, Height: 30},
-			{X: int(float64(2250+xAdjustment) * scaleX), Y: int(float64(400+yAjustment) * scaleY), Width: 170, Height: 30},
-			{X: int(float64(2250+xAdjustment) * scaleX), Y: int(float64(495+yAjustment) * scaleY), Width: 170, Height: 30},
-			{X: int(float64(2250+xAdjustment) * scaleX), Y: int(float64(585+yAjustment) * scaleY), Width: 170, Height: 30},
+			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(305+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + 50, Height: adjustSize(30, scaleY)},
+			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(400+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + 50, Height: adjustSize(30, scaleY)},
+			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(495+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + 50, Height: adjustSize(30, scaleY)},
+			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(585+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + 50, Height: adjustSize(30, scaleY)},
 		},
 		CharactersBoxCoords: []utils.Rect{
-			{X: int(float64(2400+xAdjustment) * scaleX), Y: int(float64(351+yAjustment) * scaleY)},
-			{X: int(float64(2400+xAdjustment) * scaleX), Y: int(float64(445+yAjustment) * scaleY)},
-			{X: int(float64(2400+xAdjustment) * scaleX), Y: int(float64(538+yAjustment) * scaleY)},
-			{X: int(float64(2400+xAdjustment) * scaleX), Y: int(float64(632+yAjustment) * scaleY)},
+			{X: adjustSize(2400+xAdjustment, scaleX), Y: adjustSize(351+yAdjustment, scaleY)},
+			{X: adjustSize(2400+xAdjustment, scaleX), Y: adjustSize(445+yAdjustment, scaleY)},
+			{X: adjustSize(2400+xAdjustment, scaleX), Y: adjustSize(538+yAdjustment, scaleY)},
+			{X: adjustSize(2400+xAdjustment, scaleX), Y: adjustSize(632+yAdjustment, scaleY)},
 		},
 	}
 
@@ -91,7 +94,6 @@ func NewConfig() AppConfig {
 		DiscordAppId:					"1208212792574869544",
 		Debug:								false,
 		StartWithWindows:			false,
-		BrightnessThreshold:	450,
 		PreprocessThreshold:	180,
 	}
 
