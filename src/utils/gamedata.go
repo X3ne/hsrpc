@@ -67,7 +67,7 @@ func loadCharacters() ([]Data, error) {
 		loadedCharacters++
 	}
 
-	logger.Logger.Info("Loaded", loadedCharacters, "characters")
+	logger.Logger.Info("Loaded ", loadedCharacters, " characters")
 
 	return characters, nil
 }
@@ -99,7 +99,7 @@ func loadLocations() ([]Data, error) {
 		loadedLocations++
 	}
 
-	logger.Logger.Info("Loaded", loadedLocations, "locations")
+	logger.Logger.Info("Loaded ", loadedLocations, " locations")
 
 	return locations, nil
 }
@@ -130,7 +130,7 @@ func loadGameMenus() ([]Data, error) {
 		loadedMenus++
 	}
 
-	logger.Logger.Info("Loaded", loadedMenus, "game menus")
+	logger.Logger.Info("Loaded ", loadedMenus, " game menus")
 
 	return menus, nil
 }
