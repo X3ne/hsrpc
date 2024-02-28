@@ -23,6 +23,12 @@
 
 This program works with [tesseract](https://github.com/tesseract-ocr/tesseract), an open source text recognition software. hsrpc extracts no data from the game and is based solely on what tesseract recognizes on the window (so some results may be wrong)
 
+<h3>App folder</h3>
+
+This app create a folder `hsrpc` inside `C:\Users\<user>\AppData\Roaming`. This folder is user to store config, logs and files needed to make this app working.
+
+**⚠️ Warning⚠️ for now, if a new value is added to the configuration between 2 versions and the config file already exists this causes crashes. So remember to backup and delete your `config.txt` file when updating the application.**
+
 <h2>🛠️ Installation Steps:</h2>
 
 <p>1. Install tesseract-ocr</p>
@@ -71,13 +77,20 @@ go generate ./...
 go build -ldflags="-X github.com/X3ne/hsrpc/src/consts.Version=X.X.X -H=windowsgui"
 ```
 
+<h2>⚙️ Configuration:</h2>
+
+When you launch the `.exe` file you can configure some settings with the GUI app. To open the GUI just go to your **windows systray** and **right click** to open the config.
+
+<h3>Settings:</h3>
+
+**Loop time**: This is the time that elapses between two loop executions. If you're experiencing performance issues, you can increase this value (in milliseconds).
+
+**Preprocess treshold**: You can adjust this value by checking screenshots inside `C:\Users\<user>\AppData\Roaming\hsrpc\tmp` (you need to see the text on the images when using the app). If you have `Lost in the space-time continuum` status this means you may need to lower this value.
+
 <h2>🪲 Known issues:</h2>
 
 IMPORTANT:
 - [ ] Merge config file to avoid application crashes when config changes between different versions
-
-- [ ] Sometimes, the position of the selected character is not the right one (especially when the background is too bright, e.g. on Jarilo-VI when there's snow in the background)
-- [ ] I don't have these characters, but `Dan Heng Imbibitor Lunae` and `Topaz and Numby` seem sus names for ocr detection.
 
 Menus:
 - [ ] Data bank tab is not detected
@@ -85,6 +98,8 @@ Menus:
 - [ ] Unfortunately, the new update has broken other menus for no reason (only on resolutions below 2560)
 
 - [ ] Fix gosec errors
+- [ ] Sometimes, the position of the selected character is not the right one (especially when the background is too bright, e.g. on Jarilo-VI when there's snow in the background)
+- [ ] I don't have these characters, but `Dan Heng Imbibitor Lunae` and `Topaz and Numby` seem sus names for ocr detection.
 
 <h2>⚒️ Improvements:</h2>
 
