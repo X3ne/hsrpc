@@ -6,7 +6,7 @@ import (
 )
 
 // This function check the brightness of the pixels in the given coordinates to determine the current character
-func FindCurrentCharacter(hWnd win.HWND, coords []Rect, colorThreshold int) int32 {
+func FindCurrentCharacter(hWnd win.HWND, coords []Rect) int32 {
 	whitestPosition := -1
 	whitestValue := 0
 
@@ -19,7 +19,7 @@ func FindCurrentCharacter(hWnd win.HWND, coords []Rect, colorThreshold int) int3
 
 		brightness := int(pixel.R) + int(pixel.G) + int(pixel.B)
 
-		if brightness >= colorThreshold && brightness > whitestValue {
+		if brightness > whitestValue {
 			whitestValue = brightness
 			whitestPosition = i
 		}

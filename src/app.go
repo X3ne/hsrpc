@@ -103,7 +103,7 @@ func (app *App) GetWindow() {
 
 // Detect the current character currently selected
 func (app *App) CaptureCharacter() {
-	pos := utils.FindCurrentCharacter(app.HWND, app.Config.GUICoordsConfig.CharactersBoxCoords, app.Config.BrightnessThreshold)
+	pos := utils.FindCurrentCharacter(app.HWND, app.Config.GUICoordsConfig.CharactersBoxCoords)
 	if pos == -1 {
 		return
 	}
@@ -199,8 +199,8 @@ func getMenu(menus []utils.Data, value string) utils.Data {
 
 // Capture the current game menu
 func (app *App) CaptureGameMenu() {
-	escText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.EscCoord, "esc_menu", false)
-	menuText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.MenusCoord, "menus", false)
+	escText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.EscCoord, "esc_menu", true)
+	menuText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.MenusCoord, "menus", true)
 	combatText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CombatCoord, "combat", true)
 
 	escTextPrediction := utils.FindClosestCorrespondence(escText, utils.GameData.Menus)
@@ -221,7 +221,7 @@ func (app *App) CaptureGameMenu() {
 	if !app.AppState.CombatStarted.IsZero() {
 		app.setMenu("menu_combat", "In combat", true)
 		return
-	} else if combatText != "" && app.AppState.CombatStarted.IsZero() {
+	} else if combatText != "" && len(combatText) > 2 && app.AppState.CombatStarted.IsZero() {
 		app.setMenu("menu_combat", "In combat", true)
 		app.AppState.CombatStarted = time.Now()
 		return
@@ -308,7 +308,7 @@ func (app *App) IsWindowFocused() bool {
 func (app *App) InitializeOCR() {
 	utils.InitOcr(utils.OCRConfig{
 		ExecutablePath:				&app.Config.TesseractPath,
-		PreprocessThreshold:	app.Config.PreprocessThreshold,
+		PreprocessThreshold:	&app.Config.PreprocessThreshold,
 	}, app.HWND)
 
 	app.AppState.IsOCRInitialized = true

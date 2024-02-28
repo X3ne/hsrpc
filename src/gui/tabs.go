@@ -132,7 +132,6 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 	// })
 	timeEntry := widget.NewEntry()
 	tesseractPath := widget.NewEntry()
-	brightnessThreshold := widget.NewEntry()
 	preprocessThreshold := widget.NewEntry()
 	tesseractPathButton := widget.NewButton("Browse", func() {
 		dlg := new(walk.FileDialog)
@@ -165,17 +164,6 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 		g.saveConfig()
 	}, 500*time.Millisecond)
 
-	brightnessThreshold.SetText(strconv.Itoa(g.RPCApp.Config.BrightnessThreshold))
-
-	brightnessThreshold.OnChanged = debounce(func(s string) {
-		brightnessThreshold, err := strconv.Atoi(s)
-		if err != nil {
-			logger.Logger.Error(err)
-		}
-		g.RPCApp.Config.BrightnessThreshold = brightnessThreshold
-		g.saveConfig()
-	}, 500*time.Millisecond)
-
 	preprocessThreshold.SetText(strconv.Itoa(g.RPCApp.Config.PreprocessThreshold))
 
 	preprocessThreshold.OnChanged = debounce(func(s string) {
@@ -190,7 +178,6 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 	form := &widget.Form{
 		Items: []*widget.FormItem{
 			{Text: "Loop time (ms)", Widget: timeEntry},
-			{Text: "Brightness threshold", Widget: brightnessThreshold},
 			{Text: "Preprocess threshold", Widget: preprocessThreshold},
 			{Text: "Tesseract path", Widget: container.NewAdaptiveGrid(2, tesseractPath, tesseractPathButton)},
 		},
