@@ -100,7 +100,7 @@ Menus:
 - [ ] Fix gosec errors
 - [ ] Sometimes, the position of the selected character is not the right one (especially when the background is too bright, e.g. on Jarilo-VI when there's snow in the background)
 - [ ] I don't have these characters, but `Dan Heng Imbibitor Lunae` and `Topaz and Numby` seem sus names for ocr detection.
-
+- [ ] The results are very poor on the Outlying Snow Plains
 <h2>⚒️ Improvements:</h2>
 
 - [x] Add support for more game resolution (tested with fullscreen 1920x1080, 2560x1080 & windowed 1768x992)
