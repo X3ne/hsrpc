@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"log"
 	"os"
 	"path/filepath"
 
@@ -14,37 +15,46 @@ var Logger *zap.SugaredLogger
 
 func init() {
 	appDataDir, err := os.UserConfigDir()
-	if err == nil {
-		logFilePath := filepath.Join(appDataDir, consts.AppDataDir, consts.LogsDir, "errors.log")
-
-    lumberjackSink := zapcore.AddSync(&lumberjack.Logger{
-			Filename:		logFilePath,
-			MaxSize:		100,
-			MaxBackups:	3,
-			MaxAge:			7,
-			Compress:		true,
-    })
-
-    encoderConfig := zap.NewProductionEncoderConfig()
-    encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-
-    // Configure core
-    core := zapcore.NewCore(
-			zapcore.NewJSONEncoder(encoderConfig),
-			lumberjackSink,
-			zapcore.ErrorLevel,
-    )
-
-		logger := zap.New(core)
-		defer logger.Sync()
-
-		Logger = logger.Sugar()
-
-		return
+	if err != nil {
+		log.Fatalf("failed to get user config directory: %v", err)
 	}
 
-	// Fallback to console logger
-	logger, _ := zap.NewProduction()
+	errorLogFilePath := filepath.Join(appDataDir, consts.AppDataDir, consts.LogsDir, "errors.log")
+	errorLumberjackSink := zapcore.AddSync(&lumberjack.Logger{
+		Filename:   errorLogFilePath,
+		MaxSize:    100,
+		MaxBackups: 3,
+		MaxAge:     7,
+		Compress:   true,
+	})
+
+	infoLogFilePath := filepath.Join(appDataDir, consts.AppDataDir, consts.LogsDir, "logs.log")
+	infoLumberjackSink := zapcore.AddSync(&lumberjack.Logger{
+		Filename:   infoLogFilePath,
+		MaxSize:    100,
+		MaxBackups: 3,
+		MaxAge:     7,
+		Compress:   true,
+	})
+
+	encoderConfig := zap.NewProductionEncoderConfig()
+	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+
+	errorCore := zapcore.NewCore(
+		zapcore.NewJSONEncoder(encoderConfig),
+		errorLumberjackSink,
+		zapcore.ErrorLevel,
+	)
+
+	infoCore := zapcore.NewCore(
+		zapcore.NewJSONEncoder(encoderConfig),
+		infoLumberjackSink,
+		zapcore.InfoLevel,
+	)
+
+	core := zapcore.NewTee(errorCore, infoCore)
+
+	logger := zap.New(core)
 	defer logger.Sync()
 
 	Logger = logger.Sugar()
