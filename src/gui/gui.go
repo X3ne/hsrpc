@@ -85,7 +85,7 @@ func CreateGUI(rpcApp *rpcApp.App) {
 
 	g.MainScreen(update)
 
-	w.ShowAndRun()
+	a.Run()
 }
 
 func (g *GUI) ConfigApp() {
