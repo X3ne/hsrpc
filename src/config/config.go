@@ -94,7 +94,7 @@ func NewConfig() AppConfig {
 		DiscordAppId:					"1208212792574869544",
 		Debug:								false,
 		StartWithWindows:			false,
-		PreprocessThreshold:	180,
+		PreprocessThreshold:	150,
 	}
 
 	return config
