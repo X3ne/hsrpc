@@ -93,9 +93,9 @@ IMPORTANT:
 - [x] Merge config file to avoid application crashes when config changes between different versions
 
 Menus:
-- [ ] Data bank tab is not detected
-- [ ] Achievements tab is not detected
-- [ ] Unfortunately, the new update has broken other menus for no reason (only on resolutions below 2560)
+- [x] Data bank tab is not detected
+- [x] Achievements tab is not detected
+- [x] Unfortunately, the new update has broken other menus for no reason (only on resolutions below 2560)
 
 - [ ] Fix gosec errors
 - [ ] Sometimes, the position of the selected character is not the right one (especially when the background is too bright, e.g. on Jarilo-VI when there's snow in the background)
@@ -110,7 +110,8 @@ Menus:
 - [x] Create scripts to create data csv
 - [x] Build to .exe
 - [x] Add support for Simulated Universe
-- [ ] Add support for Calyx
+- [ ] Add support for the forgotten hall (add some data to detect the current level)
+- [x] Add support for Calyx
 - [ ] Add support for Cavern of corrosion
 - [ ] Add support for Echo of war
 - [ ] Add support for cut scenes
