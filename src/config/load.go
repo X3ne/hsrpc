@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"reflect"
 
 	"github.com/X3ne/hsrpc/src/consts"
 	"github.com/X3ne/hsrpc/src/utils"
@@ -16,7 +17,6 @@ func LoadConfig() (AppConfig, error) {
 	}
 	appDataPath := filepath.Join(appData, consts.ConfigFile)
 
-	// Config file does not exist, create a new one with default values
 	if _, err := os.Stat(appDataPath); os.IsNotExist(err) {
 		defaultConfig := NewConfig()
 		err := SaveConfig(defaultConfig)
@@ -37,7 +37,40 @@ func LoadConfig() (AppConfig, error) {
 		return AppConfig{}, err
 	}
 
+	defaultConfig := NewConfig()
+	updateConfigWithDefaults(&config, defaultConfig)
+
+	err = SaveConfig(config)
+	if err != nil {
+		return AppConfig{}, err
+	}
+
 	return config, nil
+}
+
+func updateConfigWithDefaults(config *AppConfig, defaultConfig AppConfig) {
+	configType := reflect.TypeOf(*config)
+
+	for i := 0; i < configType.NumField(); i++ {
+		field := configType.Field(i)
+
+		fieldValue := reflect.ValueOf(config).Elem().FieldByName(field.Name)
+
+		defaultValue := reflect.ValueOf(defaultConfig).FieldByName(field.Name)
+
+		if fieldValue.Kind() == reflect.Struct {
+			for j := 0; j < fieldValue.NumField(); j++ {
+				nestedField := fieldValue.Field(j)
+				if nestedField.IsZero() {
+					nestedField.Set(defaultValue.Field(j))
+				}
+			}
+		} else {
+			if fieldValue.IsZero() {
+				fieldValue.Set(defaultValue)
+			}
+		}
+	}
 }
 
 func SaveConfig(config AppConfig) error {
