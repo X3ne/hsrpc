@@ -59,7 +59,7 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUIC
 			X:			adjustSize(100, scaleX),
 			Y:			adjustSize(40+yAdjustment, scaleY),
 			Width:	adjustSize(300, scaleX) + 50,
-			Height:	adjustSize(25, scaleY),
+			Height:	adjustSize(35, scaleY),
 		},
 		SubMenuCoord: utils.Rect{
 			X:			adjustSize(100, scaleX),
