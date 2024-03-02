@@ -25,7 +25,7 @@ This program works with [tesseract](https://github.com/tesseract-ocr/tesseract),
 
 <h3>App folder</h3>
 
-This app create a folder `hsrpc` inside `C:\Users\<user>\AppData\Roaming`. This folder is user to store config, logs and files needed to make this app working.
+This app create a folder `hsrpc` inside `C:\Users\<user>\AppData\Roaming`. This folder is used to store config, logs and files needed to make this app working.
 
 **⚠️ If your app crashes after an update, please delete your `config.txt` file and restart the app**
 
@@ -109,7 +109,7 @@ Menus:
 - [ ] Clean some code
 - [x] Create scripts to create data csv
 - [x] Build to .exe
-- [ ] Add support for Simulated Universe
+- [x] Add support for Simulated Universe
 - [ ] Add support for Calyx
 - [ ] Add support for Cavern of corrosion
 - [ ] Add support for Echo of war
