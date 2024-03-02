@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
 
 	"github.com/X3ne/hsrpc/src/consts"
 	"github.com/X3ne/hsrpc/src/logger"
@@ -64,7 +65,10 @@ func (m *OCRManager) StartOcr(path string) (string, error) {
 
 	whitelistChars := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, "
 
-	body, err := exec.Command(executablePath, path, "stdout", "-l", "eng", "-c", "tessedit_char_whitelist=" + whitelistChars).Output()
+	cmd := exec.Command(executablePath, path, "stdout", "-l", "eng", "-c", "tessedit_char_whitelist=" + whitelistChars)
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+
+	body, err := cmd.Output()
 	if err != nil {
 		return "", err
 	}
