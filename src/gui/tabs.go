@@ -99,7 +99,7 @@ func (g *GUI) createPresenceTab() *fyne.Container {
 		),
 	)
 
-	if err := g.RPCApp.ConnectToDiscordGateway(); err != nil {
+	if !g.RPCApp.AppState.IsGatewayConnected {
 		gatewayStatus.Set("Error when connecting to Discord Gateway")
 	} else {
 		gatewayStatus.Set("Connected to Discord Gateway")
