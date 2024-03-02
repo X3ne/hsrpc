@@ -42,6 +42,11 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUIC
 		return int(float64(originalSize) * scale)
 	}
 
+	wAdjust := 0
+	if gameResolution.Width <= 1920 {
+		wAdjust = 50
+	}
+
 	config := &GUICoordsConfig{
 		EscCoord: utils.Rect{
 			X:			adjustSize(1925+(xAdjustment*2), scaleX),
@@ -68,10 +73,10 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUIC
 			Height:	adjustSize(25, scaleY),
 		},
 		CharactersCoords: []utils.Rect{
-			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(305+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + 50, Height: adjustSize(30, scaleY)},
-			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(400+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + 50, Height: adjustSize(30, scaleY)},
-			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(495+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + 50, Height: adjustSize(30, scaleY)},
-			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(585+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + 50, Height: adjustSize(30, scaleY)},
+			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(305+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + wAdjust, Height: adjustSize(30, scaleY)},
+			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(400+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + wAdjust, Height: adjustSize(30, scaleY)},
+			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(495+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + wAdjust, Height: adjustSize(30, scaleY)},
+			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(585+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + wAdjust, Height: adjustSize(30, scaleY)},
 		},
 		CharactersBoxCoords: []utils.Rect{
 			{X: adjustSize(2400+xAdjustment, scaleX), Y: adjustSize(351+yAdjustment, scaleY)},
