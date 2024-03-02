@@ -118,6 +118,7 @@ Menus:
 - [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
 - [x] Auto calculate coords based on app resolution
 - [ ] Reimplement the personalization of coordinates in GUI
+- [ ] Add support for the `Parlor car`
 
 GUI app:
 - [x] Add persistent state to GUI configuration
