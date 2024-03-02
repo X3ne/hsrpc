@@ -6,9 +6,20 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/theme"
+	"github.com/X3ne/hsrpc/src/utils"
 )
 
 type appTheme struct{}
+
+var themeColor string
+
+func init() {
+	var err error
+	themeColor, err = utils.GetWindowsAccentColor()
+	if err != nil {
+		themeColor = "#009688"
+	}
+}
 
 func ParseHexColor(s string) (c color.RGBA) {
 	c.A = 0xff
@@ -36,9 +47,9 @@ func ParseHexColor(s string) (c color.RGBA) {
 func (appTheme) Color(c fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
 	switch c {
 	case theme.ColorNameBackground:
-		return ParseHexColor("#171e1d")
+		return ParseHexColor("#121212")
 	case theme.ColorNameButton:
-		return ParseHexColor("#8bc5bb")
+		return ParseHexColor(themeColor)
 	case theme.ColorNameDisabledButton:
 		return color.NRGBA{R: 0x26, G: 0x26, B: 0x26, A: 0xff}
 	case theme.ColorNameDisabled:
@@ -52,17 +63,17 @@ func (appTheme) Color(c fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
 	case theme.ColorNameHover:
 		return color.NRGBA{R: 0xff, G: 0xff, B: 0xff, A: 0xf}
 	case theme.ColorNameInputBackground:
-		return ParseHexColor("#2c3332")
+		return ParseHexColor("#282828")
 	case theme.ColorNameInputBorder:
-		return ParseHexColor("#434948")
+		return ParseHexColor(themeColor)
 	case theme.ColorNamePlaceHolder:
 		return color.NRGBA{R: 0xb2, G: 0xb2, B: 0xb2, A: 0xff}
 	case theme.ColorNamePressed:
 		return color.NRGBA{R: 0xff, G: 0xff, B: 0xff, A: 0x66}
 	case theme.ColorNamePrimary:
-		return ParseHexColor("#8bc5bb")
+		return ParseHexColor(themeColor)
 	case theme.ColorNameScrollBar:
-		return ParseHexColor("#8bc5bb")
+		return ParseHexColor(themeColor)
 	case theme.ColorNameShadow:
 		return color.NRGBA{R: 0x0, G: 0x0, B: 0x0, A: 0x66}
 	default:

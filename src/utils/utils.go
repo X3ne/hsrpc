@@ -15,6 +15,7 @@ import (
 	"github.com/go-vgo/robotgo"
 	"github.com/lxn/win"
 	"github.com/texttheater/golang-levenshtein/levenshtein"
+	"golang.org/x/sys/windows/registry"
 )
 
 type Rect struct {
@@ -118,4 +119,21 @@ func CreateDir(path string) error {
 	}
 
 	return nil
+}
+
+func GetWindowsAccentColor() (string, error) {
+	key, err := registry.OpenKey(registry.CURRENT_USER, `SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent`, registry.QUERY_VALUE)
+	if err != nil {
+		return "", fmt.Errorf("error opening registry key: %w", err)
+	}
+	defer key.Close()
+
+	value, _, err := key.GetIntegerValue("StartColorMenu")
+	if err != nil {
+		return "", fmt.Errorf("error querying registry value: %w", err)
+	}
+
+	colorHex := fmt.Sprintf("#%06X", value&0xFFFFFF)
+
+	return colorHex, nil
 }
