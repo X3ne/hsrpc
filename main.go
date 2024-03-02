@@ -3,7 +3,7 @@
 package main
 
 import (
-	app "github.com/X3ne/hsrpc/src"
+	rpcApp "github.com/X3ne/hsrpc/src"
 	"github.com/X3ne/hsrpc/src/config"
 	"github.com/X3ne/hsrpc/src/gui"
 	"github.com/X3ne/hsrpc/src/logger"
@@ -11,9 +11,11 @@ import (
 )
 
 func main() {
+	guiApp := gui.CreateApp()
+
 	defer func() {
 		if r := recover(); r != nil {
-			utils.PanicRecover(r)
+			utils.PanicRecover(r, guiApp)
 		}
 	}()
 
@@ -22,9 +24,11 @@ func main() {
 		logger.Logger.Fatal(err)
 	}
 
-	app := app.CreateApp(config)
+	app := rpcApp.CreateApp(config, guiApp)
 
 	go app.StartLoop()
 
-	gui.CreateGUI(app)
+	gui.CreateGUI(app, guiApp)
+
+	guiApp.Run()
 }

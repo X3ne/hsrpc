@@ -5,6 +5,7 @@ import (
 	"time"
 	"unsafe"
 
+	"fyne.io/fyne/v2"
 	"github.com/lxn/win"
 
 	"github.com/X3ne/hsrpc/src/config"
@@ -15,6 +16,7 @@ import (
 
 type App struct {
 	Config			config.AppConfig
+	GUIApp			fyne.App
 	HWND				win.HWND
 	AppState		AppState
 	AppSize			config.Resolution
@@ -33,11 +35,12 @@ type AppState struct {
 	IsOCRInitialized					bool
 }
 
-func CreateApp(config config.AppConfig) *App {
+func CreateApp(config config.AppConfig, guiApp fyne.App) *App {
 	utils.LoadGameData()
 
 	return &App{
 		Config:				config,
+		GUIApp:				guiApp,
 		HWND:					0,
 		AppState:			AppState{
 			Location: utils.Data{
@@ -232,6 +235,12 @@ func (app *App) CaptureGameMenu() {
 
 // Main loop of the app
 func (app *App) StartLoop() {
+	defer func() {
+		if r := recover(); r != nil {
+			utils.PanicRecover(r, app.GUIApp)
+		}
+	}()
+
 	for {
 		<-time.After(app.AppState.LoopTime * time.Millisecond)
 		// Reconnect to Discord gateway if not connected

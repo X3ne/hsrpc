@@ -66,12 +66,19 @@ func (g *GUI) UpdateApplicationGUI( updateCompleted chan bool) {
 	updateCompleted <- true
 }
 
-func CreateGUI(rpcApp *rpcApp.App) {
-	a := app.New()
-	w := a.NewWindow("Honkai RPC " + consts.Version)
+func CreateApp() fyne.App {
+	icon := ImportIcon()
+	guiApp := app.New()
+	guiApp.SetIcon(fyne.NewStaticResource("icon.png", icon))
+
+	return guiApp
+}
+
+func CreateGUI(rpcApp *rpcApp.App, guiApp fyne.App) {
+	w := guiApp.NewWindow("Honkai RPC " + consts.Version)
 
 	g := &GUI{
-		App:		a,
+		App:		guiApp,
 		Window:	w,
 		RPCApp:	rpcApp,
 	}
@@ -84,8 +91,6 @@ func CreateGUI(rpcApp *rpcApp.App) {
 	}
 
 	g.MainScreen(update)
-
-	a.Run()
 }
 
 func (g *GUI) ConfigApp() {

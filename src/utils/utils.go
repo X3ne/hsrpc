@@ -10,6 +10,9 @@ import (
 	"runtime"
 	"time"
 
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
 	"github.com/X3ne/hsrpc/src/consts"
 	"github.com/X3ne/hsrpc/src/logger"
 	"github.com/go-vgo/robotgo"
@@ -72,7 +75,7 @@ func SaveImg(img image.Image, fileName string) error {
 	return nil
 }
 
-func PanicRecover(r interface{}) {
+func PanicRecover(r interface{}, guiApp ...fyne.App) {
 	appDataDir, err := GetAppPath()
 	if err != nil {
 		fmt.Println("Error getting user config dir:", err)
@@ -97,7 +100,34 @@ func PanicRecover(r interface{}) {
 
 	buf := make([]byte, 1<<16)
 	stackLen := runtime.Stack(buf, true)
-	fmt.Fprintf(file, "=== STACK TRACE ===\n%s\n", buf[:stackLen])
+	fmt.Fprintf(file, "Error: %s\n\n=== STACK TRACE ===\n%s\n", r, buf[:stackLen])
+
+	if len(guiApp) > 0 {
+		app := guiApp[0]
+		win := app.NewWindow("Application Error")
+
+		win.SetIcon(app.Icon())
+
+		errText := widget.NewLabel(fmt.Sprintf("An error occurred: %v\n\nA crash log has been saved to %s", r, logFilePath))
+		stackText := widget.NewMultiLineEntry()
+		stackText.SetText(string(buf[:stackLen]))
+
+		stackScroll := container.NewScroll(stackText)
+		stackScroll.SetMinSize(fyne.NewSize(0, 300))
+
+		win.CenterOnScreen()
+
+		win.SetContent(container.NewVBox(
+			errText,
+			stackScroll,
+		))
+
+		win.SetCloseIntercept(func() {
+			os.Exit(1)
+		})
+
+		win.Show()
+	}
 }
 
 func GetAppPath() (string, error) {
