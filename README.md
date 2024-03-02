@@ -27,7 +27,7 @@ This program works with [tesseract](https://github.com/tesseract-ocr/tesseract),
 
 This app create a folder `hsrpc` inside `C:\Users\<user>\AppData\Roaming`. This folder is user to store config, logs and files needed to make this app working.
 
-**⚠️ Warning⚠️ for now, if a new value is added to the configuration between 2 versions and the config file already exists this causes crashes. So remember to backup and delete your `config.txt` file when updating the application.**
+**⚠️ If your app crashes after an update, please backup and delete your `config.txt` file and restart the app**
 
 <h2>🛠️ Installation Steps:</h2>
 
@@ -90,7 +90,7 @@ When you launch the `.exe` file you can configure some settings with the GUI app
 <h2>🪲 Known issues:</h2>
 
 IMPORTANT:
-- [ ] Merge config file to avoid application crashes when config changes between different versions
+- [x] Merge config file to avoid application crashes when config changes between different versions
 
 Menus:
 - [ ] Data bank tab is not detected
@@ -101,6 +101,7 @@ Menus:
 - [ ] Sometimes, the position of the selected character is not the right one (especially when the background is too bright, e.g. on Jarilo-VI when there's snow in the background)
 - [ ] I don't have these characters, but `Dan Heng Imbibitor Lunae` and `Topaz and Numby` seem sus names for ocr detection.
 - [ ] The results are very poor on the Outlying Snow Plains
+
 <h2>⚒️ Improvements:</h2>
 
 - [x] Add support for more game resolution (tested with fullscreen 1920x1080, 2560x1080 & windowed 1768x992)
