@@ -12,6 +12,7 @@ type GameDataStruct struct {
 	Characters	[]Data
 	Locations		[]Data
 	Menus				[]Data
+	SubMenus		[]Data
 }
 
 type Data struct {
@@ -37,10 +38,15 @@ func LoadGameData() {
 	if err != nil {
 		logger.Logger.Fatal("Error when loading menus", err)
 	}
+	subMenus, err := loadGameSubMenus()
+	if err != nil {
+		logger.Logger.Fatal("Error when loading sub menus", err)
+	}
 	GameData = &GameDataStruct{
 		Characters:	characters,
 		Locations:	locations,
 		Menus:			menus,
+		SubMenus:		subMenus,
 	}
 }
 
@@ -131,6 +137,37 @@ func loadGameMenus() ([]Data, error) {
 	}
 
 	logger.Logger.Info("Loaded ", loadedMenus, " game menus")
+
+	return menus, nil
+}
+
+func loadGameSubMenus() ([]Data, error) {
+	var menus []Data
+
+	logger.Logger.Info("Loading sub game menus")
+
+	data := bundle.Get("sub_menus.csv")
+
+	reader := csv.NewReader(bytes.NewReader(data))
+
+	records, err := reader.ReadAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var loadedMenus int
+	for _, record := range records {
+		menu := Data{
+			AssetID:	record[2],
+			Value:		record[0],
+			Message:	record[1],
+		}
+
+		menus = append(menus, menu)
+		loadedMenus++
+	}
+
+	logger.Logger.Info("Loaded ", loadedMenus, " game sub menus")
 
 	return menus, nil
 }

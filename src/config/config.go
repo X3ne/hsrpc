@@ -9,6 +9,7 @@ import (
 type GUICoordsConfig struct {
 	EscCoord						utils.Rect
 	MenusCoord					utils.Rect
+	SubMenuCoord				utils.Rect
 	CombatCoord					utils.Rect
 	LocationCoord				utils.Rect
 	CharactersCoords		[]utils.Rect
@@ -57,6 +58,12 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUIC
 		MenusCoord: utils.Rect{
 			X:			adjustSize(100, scaleX),
 			Y:			adjustSize(40+yAdjustment, scaleY),
+			Width:	adjustSize(300, scaleX) + 50,
+			Height:	adjustSize(25, scaleY),
+		},
+		SubMenuCoord: utils.Rect{
+			X:			adjustSize(100, scaleX),
+			Y:			adjustSize(65+yAdjustment, scaleY),
 			Width:	adjustSize(300, scaleX) + 50,
 			Height:	adjustSize(25, scaleY),
 		},

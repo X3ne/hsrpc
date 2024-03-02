@@ -30,3 +30,5 @@ Mailbox,Viewing mailbox,menu_mailbox
 Trailblaze Level,Game paused,menu_lost
 Battle Paused,Battle paused,menu_combat
 Real-Time Combat View,Viewing real-time combat view,menu_combat
+Simulated Universe,In the simulated universe,menu_su
+Select Blessings,Selecting a blessing,menu_su

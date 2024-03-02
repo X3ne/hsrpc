@@ -104,26 +104,6 @@ func (app *App) GetWindow() {
 	app.AppState.AppStarted =	time.Now()
 }
 
-// Detect the current character currently selected
-func (app *App) CaptureCharacter() {
-	pos := utils.FindCurrentCharacter(app.HWND, app.Config.GUICoordsConfig.CharactersBoxCoords)
-	if pos == -1 {
-		return
-	}
-	app.AppState.CharacterPos = pos
-
-	characterText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CharactersCoords[pos], "char", true)
-	if characterText == "" {
-		return
-	}
-
-	characterPred := utils.FindClosestCorrespondence(characterText, utils.GameData.Characters)
-
-	if characterPred.Value != "" {
-		app.AppState.Character = characterPred
-	}
-}
-
 // Set App size
 func (app *App) SetSize() {
 	w, h := getWindowSize(app.HWND)
@@ -160,6 +140,26 @@ func (app *App) SetSize() {
 	config.SaveConfig(app.Config)
 }
 
+// Detect the current character currently selected
+func (app *App) CaptureCharacter() {
+	pos := utils.FindCurrentCharacter(app.HWND, app.Config.GUICoordsConfig.CharactersBoxCoords)
+	if pos == -1 {
+		return
+	}
+	app.AppState.CharacterPos = pos
+
+	characterText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CharactersCoords[pos], "char", true)
+	if characterText == "" {
+		return
+	}
+
+	characterPred := utils.FindClosestCorrespondence(characterText, utils.GameData.Characters)
+
+	if characterPred.Value != "" {
+		app.AppState.Character = characterPred
+	}
+}
+
 // Detect the current location of the player
 func (app *App) CaptureLocation() {
 	locationText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.LocationCoord, "location", true)
@@ -182,10 +182,13 @@ func (app *App) CaptureLocation() {
 }
 
 // Set the current menu and if the player is in menus
-func (app *App) setMenu(assetID, value string, isInMenus bool) {
+func (app *App) setMenu(assetID, value string, isInMenus bool, subMenu ...string) {
+	subMenu = append(subMenu, "")
+
 	app.AppState.Menu = utils.Data{
 		AssetID: assetID,
 		Value:   value,
+		Region: subMenu[0],
 	}
 	app.AppState.IsInMenus = isInMenus
 }
@@ -217,7 +220,9 @@ func (app *App) CaptureGameMenu() {
 
 	if menuTextPrediction.Value != "" {
 		menu := getMenu(utils.GameData.Menus, menuTextPrediction.Value)
-		app.setMenu(menu.AssetID, menu.Message, true)
+		subMenu, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.SubMenuCoord, "sub_menu", true)
+		subMenuPrediction := utils.FindClosestCorrespondence(subMenu, utils.GameData.SubMenus)
+		app.setMenu(menu.AssetID, menu.Message, true, subMenuPrediction.Message)
 		return
 	}
 
