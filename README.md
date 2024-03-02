@@ -5,7 +5,7 @@
 <h2>🖼️ Project Screenshots:</h2>
 
 <div align="center">
-  <img src="https://cdn.discordapp.com/attachments/568052462716583948/1208268522627670046/CaXsVbp.png?ex=65e2aac0&is=65d035c0&hm=fcddb9f18578452c0a036b4e231bcf2315f1f0a475c7dd2f10db92c72c432c98&" alt="project-screenshot" width="300"/>
+  <img src="./assets/project_image.png" alt="project-screenshot" width="600"/>
 </div>
 
 <h2>💻 Platforms:</h2>
