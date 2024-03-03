@@ -106,6 +106,15 @@ func (app *App) GetWindow() {
 	app.AppState.AppStarted =	time.Now()
 }
 
+// Get Honkai Star Rail window size
+func getWindowSize(hwnd win.HWND) (int32, int32) {
+	var rect win.RECT
+	win.GetClientRect(hwnd, &rect)
+	width := rect.Right - rect.Left
+	height := rect.Bottom - rect.Top
+	return width, height
+}
+
 // Set App size
 func (app *App) SetSize() {
 	w, h := getWindowSize(app.HWND)
@@ -175,7 +184,28 @@ func (app *App) CaptureLocation() {
 		return
 	}
 
-	locationPred := utils.FindClosestCorrespondence(locationText, utils.GameData.Locations)
+	// TODO: clean this and move to the csv (edit the script to auto gen new data with this)
+	locationData := append(
+		utils.GameData.Locations,
+		utils.Data{
+			AssetID: "loc_parlor_car",
+			Value: "Parlor Car",
+		},
+		utils.Data{
+			AssetID: "loc_parlor_car",
+			Value: "Passenger Cabin",
+		},
+	)
+
+	locationPred := utils.FindClosestCorrespondence(locationText, locationData)
+
+	// needed to trigger prescence updating
+	if locationPred.Value == "Parlor Car" || locationPred.Value == "Passenger Cabin" {
+		app.AppState.Character = utils.Data{
+			AssetID: "char_trailblazer",
+			Value: app.Config.PlayerName,
+		}
+	}
 
 	if locationPred.Value != "" {
 		app.AppState.IsInMenus = false
@@ -253,7 +283,7 @@ func (app *App) StartLoop() {
 		}
 	}()
 
-	// TODO: Refresh data when uuid changes
+	// TODO: Refresh data when uid changes
 	go func() {
 		waitTime := 5 * time.Second
 		for {
@@ -310,14 +340,6 @@ func (app *App) StartLoop() {
 		app.CaptureGameData()
 		app.UpdateDiscordPresence()
 	}
-}
-
-func getWindowSize(hwnd win.HWND) (int32, int32) {
-	var rect win.RECT
-	win.GetClientRect(hwnd, &rect)
-	width := rect.Right - rect.Left
-	height := rect.Bottom - rect.Top
-	return width, height
 }
 
 // Handles the scenario when the Honkai window is closed
