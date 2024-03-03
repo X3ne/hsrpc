@@ -99,7 +99,7 @@ Menus:
 
 - [ ] Fix gosec errors
 - [ ] Sometimes, the position of the selected character is not the right one (especially when the background is too bright, e.g. on Jarilo-VI when there's snow in the background)
-- [ ] I don't have these characters, but `Dan Heng Imbibitor Lunae` and `Topaz and Numby` seem sus names for ocr detection.
+- [ ] I don't have these characters, but `Dan Heng Imbibitor Lunae` and `Topaz and Numby` seem broken with ocr detection (due to their long name)
 - [ ] The results are very poor on the Outlying Snow Plains
 
 <h2>⚒️ Improvements:</h2>
@@ -119,7 +119,7 @@ Menus:
 - [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
 - [x] Auto calculate coords based on app resolution
 - [ ] Reimplement the personalization of coordinates in GUI
-- [ ] Add support for the `Parlor car`
+- [x] Add support for the `Parlor car`
 
 GUI app:
 - [x] Add persistent state to GUI configuration
