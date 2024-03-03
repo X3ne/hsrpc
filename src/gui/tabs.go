@@ -139,6 +139,7 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 		g.RPCApp.Config.DisplayNickname = b
 		g.saveConfig()
 	})
+	playerName := widget.NewEntry()
 	timeEntry := widget.NewEntry()
 	tesseractPath := widget.NewEntry()
 	preprocessThreshold := widget.NewEntry()
@@ -162,6 +163,13 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 
 	uuidText.OnChanged = debounce(func(s string) {
 		g.RPCApp.Config.PlayerUID = s
+		g.saveConfig()
+	}, 500*time.Millisecond)
+
+	playerName.SetText(g.RPCApp.Config.PlayerName)
+
+	playerName.OnChanged = debounce(func(s string) {
+		g.RPCApp.Config.PlayerName = s
 		g.saveConfig()
 	}, 500*time.Millisecond)
 
@@ -197,6 +205,7 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 	form := &widget.Form{
 		Items: []*widget.FormItem{
 			{Text: "Player UID", Widget: uuidText},
+			{Text: "Player name", Widget: playerName},
 			{Text: "Loop time (ms)", Widget: timeEntry},
 			{Text: "Preprocess threshold", Widget: preprocessThreshold},
 			{Text: "Tesseract path", Widget: container.NewAdaptiveGrid(2, tesseractPath, tesseractPathButton)},

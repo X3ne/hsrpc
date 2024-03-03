@@ -155,7 +155,12 @@ func (app *App) CaptureCharacter() {
 		return
 	}
 
-	characterPred := utils.FindClosestCorrespondence(characterText, utils.GameData.Characters)
+	charactersData := append(utils.GameData.Characters, utils.Data{
+		AssetID: "char_trailblazer",
+		Value: app.Config.PlayerName,
+	})
+
+	characterPred := utils.FindClosestCorrespondence(characterText, charactersData)
 
 	if characterPred.Value != "" {
 		app.AppState.Character = characterPred

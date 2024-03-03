@@ -35,6 +35,7 @@ type AppConfig struct {
 	PlayerUID						string
 	DisplayNickname			bool
 	DisplayLevel				bool
+	PlayerName					string
 }
 
 func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUICoordsConfig {
@@ -113,6 +114,7 @@ func NewConfig() AppConfig {
 		PlayerUID:						"",
 		DisplayNickname:			true,
 		DisplayLevel:					true,
+		PlayerName:						"",
 	}
 
 	return config
