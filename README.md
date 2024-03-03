@@ -112,8 +112,8 @@ Menus:
 - [x] Add support for Simulated Universe
 - [ ] Add support for the forgotten hall (add some data to detect the current level)
 - [x] Add support for Calyx
-- [ ] Add support for Cavern of corrosion
-- [ ] Add support for Echo of war
+- [x] Add support for Cavern of corrosion
+- [x] Add support for Echo of war
 - [ ] Add support for cut scenes
 - [ ] Add support for the Trailblazer
 - [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
