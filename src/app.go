@@ -177,10 +177,6 @@ func (app *App) CaptureCharacter() {
 
 	characterPred := utils.FindClosestCorrespondence(characterText, charactersData)
 
-	if !app.Config.DisplayNickname {
-		characterPred.Value = ""
-	}
-
 	if characterPred.Value != "" {
 		app.AppState.Character = characterPred
 	}
