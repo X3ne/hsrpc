@@ -67,7 +67,9 @@ func updateConfigWithDefaults(config *AppConfig, defaultConfig AppConfig) {
 			}
 		} else {
 			if fieldValue.IsZero() {
-				fieldValue.Set(defaultValue)
+				if fieldValue.Kind() != reflect.Bool {
+					fieldValue.Set(defaultValue)
+				}
 			}
 		}
 	}
