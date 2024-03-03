@@ -61,7 +61,7 @@ func GetPixelColor(hWnd win.HWND, rect Rect) (color.RGBA, error) {
 	var winRect win.RECT
 	win.GetWindowRect(hWnd, &winRect)
 
-	img := robotgo.CaptureImg(rect.X + int(winRect.Left), rect.Y + int(winRect.Top), 100, 1)
+	img := robotgo.CaptureImg(rect.X + int(winRect.Left), rect.Y + int(winRect.Top), 1, 1)
 	if img == nil {
 		return color.RGBA{}, nil
 	}

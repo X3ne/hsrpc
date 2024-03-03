@@ -11,7 +11,7 @@ func FindCurrentCharacter(hWnd win.HWND, coords []Rect) int32 {
 	whitestValue := 0
 
 	for i, coord := range coords {
-		pixel, err := GetPixelColor(hWnd, coord) // TODO: replace this function by this one https://pkg.go.dev/github.com/go-vgo/robotgo#GetPixelColor
+		pixel, err := GetPixelColor(hWnd, coord)
 		if err != nil {
 			logger.Logger.Error(err)
 			continue
