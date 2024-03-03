@@ -109,7 +109,7 @@ func NewConfig() AppConfig {
 		DiscordAppId:					"1208212792574869544",
 		Debug:								false,
 		StartWithWindows:			false,
-		PreprocessThreshold:	150,
+		PreprocessThreshold:	130,
 		PlayerUID:						"",
 		DisplayNickname:			true,
 		DisplayLevel:					true,
