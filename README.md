@@ -120,6 +120,7 @@ Menus:
 - [x] Auto calculate coords based on app resolution
 - [ ] Reimplement the personalization of coordinates in GUI
 - [x] Add support for the `Parlor car`
+- [ ] Add support for bosses
 
 GUI app:
 - [x] Add persistent state to GUI configuration
