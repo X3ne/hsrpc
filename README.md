@@ -115,7 +115,7 @@ Menus:
 - [x] Add support for Cavern of corrosion
 - [x] Add support for Echo of war
 - [ ] Add support for cut scenes
-- [ ] Add support for the Trailblazer
+- [x] Add support for the Trailblazer
 - [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
 - [x] Auto calculate coords based on app resolution
 - [ ] Reimplement the personalization of coordinates in GUI
