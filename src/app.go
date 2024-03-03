@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"syscall"
 	"time"
 	"unsafe"
@@ -23,6 +24,7 @@ type App struct {
 }
 
 type AppState struct {
+	PlayerInfo								*utils.PlayerInfo
 	CharacterPos							int32
 	Character									utils.Data
 	Location									utils.Data
@@ -246,6 +248,23 @@ func (app *App) StartLoop() {
 		}
 	}()
 
+	// TODO: Refresh data when uuid changes
+	go func() {
+		waitTime := 5 * time.Second
+		for {
+			<-time.After(waitTime)
+			if app.Config.PlayerUID != "" {
+				playerInfos, err := utils.GetPlayerInfos(app.Config.PlayerUID)
+				if err != nil {
+					logger.Logger.Error(err)
+				} else {
+					app.AppState.PlayerInfo = playerInfos
+					waitTime = 5 * time.Minute
+				}
+			}
+		}
+	}()
+
 	for {
 		<-time.After(app.AppState.LoopTime * time.Millisecond)
 		// Reconnect to Discord gateway if not connected
@@ -357,6 +376,15 @@ func (app *App) UpdateDiscordPresence() {
 		}
 		character = app.AppState.Character
 	}
+	largeText := ""
+	if app.AppState.PlayerInfo != nil {
+		if app.Config.DisplayLevel {
+			largeText += fmt.Sprintf("Level %d ", app.AppState.PlayerInfo.Player.Level)
+		}
+		if app.Config.DisplayNickname {
+			largeText += app.AppState.PlayerInfo.Player.Nickname
+		}
+	}
 
 	// TODO: prevent update the presence if the data is the same
 
@@ -364,7 +392,7 @@ func (app *App) UpdateDiscordPresence() {
 		app.SetPresence(client.Activity{
 			State:      location.Value,
 			LargeImage: location.AssetID,
-			LargeText:  location.Region,
+			LargeText:  largeText,
 			Details:    location.Region,
 			SmallImage: character.AssetID,
 			SmallText:  character.Value,

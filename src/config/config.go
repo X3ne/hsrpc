@@ -32,6 +32,9 @@ type AppConfig struct {
 	StartWithWindows		bool
 	PreprocessThreshold int
 	GUICoordsConfig			*GUICoordsConfig
+	PlayerUID						string
+	DisplayNickname			bool
+	DisplayLevel				bool
 }
 
 func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUICoordsConfig {
@@ -107,6 +110,9 @@ func NewConfig() AppConfig {
 		Debug:								false,
 		StartWithWindows:			false,
 		PreprocessThreshold:	150,
+		PlayerUID:						"",
+		DisplayNickname:			true,
+		DisplayLevel:					true,
 	}
 
 	return config

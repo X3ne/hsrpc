@@ -130,6 +130,15 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 	// 	g.RPCApp.Config.StartWithWindows = b
 	// 	g.saveConfig()
 	// })
+	uuidText := widget.NewEntry()
+	displayLevelCheckbox := widget.NewCheck("Display your level", func(b bool) {
+		g.RPCApp.Config.DisplayLevel = b
+		g.saveConfig()
+	})
+	displayNicknameCheckbox := widget.NewCheck("Display your nickname", func(b bool) {
+		g.RPCApp.Config.DisplayNickname = b
+		g.saveConfig()
+	})
 	timeEntry := widget.NewEntry()
 	tesseractPath := widget.NewEntry()
 	preprocessThreshold := widget.NewEntry()
@@ -145,6 +154,16 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 			g.saveConfig()
 		}
 	})
+
+
+	uuidText.SetText(g.RPCApp.Config.PlayerUID)
+	displayLevelCheckbox.SetChecked(g.RPCApp.Config.DisplayLevel)
+	displayNicknameCheckbox.SetChecked(g.RPCApp.Config.DisplayNickname)
+
+	uuidText.OnChanged = debounce(func(s string) {
+		g.RPCApp.Config.PlayerUID = s
+		g.saveConfig()
+	}, 500*time.Millisecond)
 
 	timeEntry.SetText(strconv.Itoa(int((g.RPCApp.AppState.LoopTime * time.Millisecond).Milliseconds())))
 
@@ -177,6 +196,7 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 
 	form := &widget.Form{
 		Items: []*widget.FormItem{
+			{Text: "Player UID", Widget: uuidText},
 			{Text: "Loop time (ms)", Widget: timeEntry},
 			{Text: "Preprocess threshold", Widget: preprocessThreshold},
 			{Text: "Tesseract path", Widget: container.NewAdaptiveGrid(2, tesseractPath, tesseractPathButton)},
@@ -186,6 +206,8 @@ func (g *GUI) createGlobalConfigTab() *fyne.Container {
 	container := container.NewVBox(
 		// startupCheckbox,
 		container.NewVBox(form),
+		displayLevelCheckbox,
+		displayNicknameCheckbox,
 	)
 
 	return container

@@ -1,10 +1,12 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
 	"image"
 	"image/color"
 	"image/png"
+	"net/http"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -23,6 +25,14 @@ import (
 
 type Rect struct {
 	X, Y, Width, Height	int
+}
+
+type PlayerInfo struct {
+	Player struct {
+		UID				string	`json:"uid"`
+		Level			int			`json:"level"`
+		Nickname	string	`json:"nickname"`
+	} `json:"player"`
 }
 
 // This function is useful to mitigate OCR errors by finding the closest correspondence to the given text
@@ -166,4 +176,21 @@ func GetWindowsAccentColor() (string, error) {
 	colorHex := fmt.Sprintf("#%06X", value&0xFFFFFF)
 
 	return colorHex, nil
+}
+
+func GetPlayerInfos(uuid string) (*PlayerInfo, error) {
+	resp, err := http.Get(fmt.Sprintf("https://api.mihomo.me/sr_info_parsed/%s?lang=fr", uuid))
+	if err != nil {
+		return nil, fmt.Errorf("error getting player infos: %w", err)
+	}
+	defer resp.Body.Close()
+
+	var playerInfo PlayerInfo
+	err = json.NewDecoder(resp.Body).Decode(&playerInfo)
+	if err != nil {
+		logger.Logger.Error(err)
+		return nil, fmt.Errorf("error decoding player infos: %w", err)
+	}
+
+	return &playerInfo, nil
 }
