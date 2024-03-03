@@ -25,6 +25,7 @@ Embers Exchange,Embers Exchange,menu_shop
 Contract Shop,Contract Shop,menu_shop
 Oneiric Pouch,Oneiric Pouch,menu_shop
 Stellar Trade,Stellar Trade,menu_shop
+Herta's Store,Herta's Store,menu_shop
 Upgrade Materials,Upgrade Materials,menu_inventory
 Light Cone,Light Cone,menu_inventory
 Relics,Relics,menu_inventory
@@ -32,6 +33,7 @@ Other Materials,Other Materials,menu_inventory
 Consumables,Consumables,menu_inventory
 Missions,Missions,menu_inventory
 Valuables,Valuables,menu_inventory
+Salvage Relic,Salvage Relic,menu_inventory
 All Missions,All Missions,menu_missions
 Trailblaze Mission,Trailblaze Mission,menu_missions
 Trailblaze Continuance,Trailblaze Continuance,menu_missions
