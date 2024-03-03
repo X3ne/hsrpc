@@ -25,6 +25,7 @@ Team,Setting up team,menu_team
 Inventory,In the inventory,menu_inventory
 Messions,Viewing missions,menu_missions
 Navigation,Searching for a new destination,menu_navigation
+Holographic Overview,Viewing holographic overview,menu_navigation
 Settings,Changing settings,menu_settings
 Mailbox,Viewing mailbox,menu_mailbox
 Trailblaze Level,Game paused,menu_lost
