@@ -5,7 +5,10 @@ Select Curio,Selecting a Curio,menu_su
 Select Blessings,Selecting a Blessing,menu_su
 Character Reset,Reviving a Character,menu_su
 Download Additional Characters,Setting up characters,menu_su
-Occurrence,Came across an occurrence,menu_su
+Occurrence,Viewing Occurrence,menu_su
+Curios,Viewing Curios,menu_su
+Blessings,Viewing Blessings,menu_su
+Aeons,Viewing Aeons,menu_su
 Operation Briefing,Operation Briefing,menu_interastral
 Daily Training,Daily Training,menu_interastral
 Survival Index,Survival Index,menu_interastral
