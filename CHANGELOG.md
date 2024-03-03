@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.4.0](https://github.com/X3ne/hsrpc/compare/v1.3.0...v1.4.0) (2024-03-03)
+
+
+### Features
+
+* add player data (level & nickname) to the status, add GUI config ([4699dac](https://github.com/X3ne/hsrpc/commit/4699dac0dc8a6f6920960600bc5352f5dac312e8))
+* add simulated universe status & sub menus detection ([4826573](https://github.com/X3ne/hsrpc/commit/4826573c9a171463fc43859f9ea7af8379f4b2cc))
+* add Sparkle support ([dee5d4e](https://github.com/X3ne/hsrpc/commit/dee5d4e52a0300ad92a737654b68a7641bc97e20))
+* add support for calyx ([d431229](https://github.com/X3ne/hsrpc/commit/d43122948c5c47162eb7b66fa03776da223e4667))
+* add support for echo of war ([500e3b4](https://github.com/X3ne/hsrpc/commit/500e3b4f0c559044cf735f7b8ba3f2d8ad6e1a0d))
+* add support for forgotten hall ([b7f8110](https://github.com/X3ne/hsrpc/commit/b7f8110fb244f6855394ff34eff2cc115d1b252d))
+* add support for the cavern of corrosion ([3d43ffb](https://github.com/X3ne/hsrpc/commit/3d43ffb358dad4ac7a4bf96fae09226d399f72b9))
+* **game data:** add more game sub menus ([d39ecb4](https://github.com/X3ne/hsrpc/commit/d39ecb432750f35bad7d9bbd22659a092ee19fa7))
+
+
+### Bug Fixes
+
+* adjust menu coords to detect assignments menu ([9621b50](https://github.com/X3ne/hsrpc/commit/9621b50a5017a19d27da25e77e76269129f51373))
+* adjust x-menu coords for small screens to detect menus correctly ([94f67b1](https://github.com/X3ne/hsrpc/commit/94f67b190ef5d93fb02a0334cda279ebbe75abcf))
+* **config:** boolean values are no longer reset at startup ([e8ff6cb](https://github.com/X3ne/hsrpc/commit/e8ff6cbd8b7fb96597914bc9d70d36d8c68fcfca))
+* increase menu capture box height to correct detection of certain menus ([11b3252](https://github.com/X3ne/hsrpc/commit/11b325208667fc2b70590528e2019bfeca5a15c1))
+
 ## [1.3.0](https://github.com/X3ne/hsrpc/compare/v1.2.0...v1.3.0) (2024-03-02)
 
 
