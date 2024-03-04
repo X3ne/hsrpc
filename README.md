@@ -1,6 +1,6 @@
 <p align="center"><img src="https://socialify.git.ci/X3ne/hsrpc/image?description=1&font=Inter&language=1&logo=https%3A%2F%2Fgithub.com%2FX3ne%2Fhsrpc%2Fblob%2Fmain%2Fassets%2Ficon.png%3Fraw%3Dtrue&name=1&owner=1&stargazers=1&theme=Auto" alt="project-image"></p>
 
-<p id="description">Add Honkai Star Rail status to Discord with locations, characters, simulated universe, forgotten hall, 85+ menus supported and more.</p>
+<p id="description">Add Honkai Star Rail status to Discord with locations, characters, bosses, simulated universe, forgotten hall, 130+ menus supported and more.</p>
 
 <h2>🖼️ Project Screenshots:</h2>
 
@@ -120,7 +120,7 @@ Menus:
 - [x] Auto calculate coords based on app resolution
 - [ ] Reimplement the personalization of coordinates in GUI
 - [x] Add support for the `Parlor car`
-- [ ] Add support for bosses
+- [x] Add support for bosses
 
 GUI app:
 - [x] Add persistent state to GUI configuration
