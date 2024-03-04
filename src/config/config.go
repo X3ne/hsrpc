@@ -12,6 +12,7 @@ type GUICoordsConfig struct {
 	SubMenuCoord				utils.Rect
 	CombatCoord					utils.Rect
 	LocationCoord				utils.Rect
+	BossCoord						utils.Rect
 	CharactersCoords		[]utils.Rect
 	CharactersBoxCoords	[]utils.Rect
 }
@@ -82,6 +83,12 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUIC
 			Y:			adjustSize(15+yAdjustment, scaleY),
 			Width:	adjustSize(320, scaleX) + 50,
 			Height:	adjustSize(25, scaleY),
+		},
+		BossCoord: utils.Rect{
+			X:			adjustSize(850, scaleX),
+			Y:			adjustSize(yAdjustment, scaleY),
+			Width:	adjustSize(745, scaleX) + 50,
+			Height:	adjustSize(50, scaleY),
 		},
 		CharactersCoords: []utils.Rect{
 			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(305+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + wAdjust, Height: adjustSize(30, scaleY)},

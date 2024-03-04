@@ -63,7 +63,7 @@ func (m *OCRManager) StartOcr(path string) (string, error) {
 		return "", errors.New("tesseract executable path is not set")
 	}
 
-	whitelistChars := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, "
+	whitelistChars := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, ():"
 
 	cmd := exec.Command(executablePath, path, "stdout", "-l", "eng", "-c", "tessedit_char_whitelist=" + whitelistChars)
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}

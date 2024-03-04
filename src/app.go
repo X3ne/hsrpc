@@ -233,6 +233,14 @@ func (app *App) setMenu(assetID, value string, isInMenus bool, subMenu ...string
 		Value:   value,
 		Region: subMenu[0],
 	}
+
+	if len(subMenu) > 1 {
+		app.AppState.Character = utils.Data{
+			AssetID: subMenu[1],
+			Value: subMenu[0],
+		}
+	}
+
 	app.AppState.IsInMenus = isInMenus
 }
 
@@ -251,9 +259,11 @@ func (app *App) CaptureGameMenu() {
 	escText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.EscCoord, "esc_menu", true)
 	menuText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.MenusCoord, "menus", true)
 	combatText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.CombatCoord, "combat", true)
+	bossText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.BossCoord, "boss", true)
 
 	escTextPrediction := utils.FindClosestCorrespondence(escText, utils.GameData.Menus)
 	menuTextPrediction := utils.FindClosestCorrespondence(menuText, utils.GameData.Menus)
+	bossTextPrediction := utils.FindClosestCorrespondence(bossText, utils.GameData.Bosses)
 
 	if escTextPrediction.Value == "Trailblaze Level" {
 		menu := getMenu(utils.GameData.Menus, "Trailblaze Level")
@@ -269,11 +279,15 @@ func (app *App) CaptureGameMenu() {
 		return
 	}
 
+	statusText := "In combat"
+	if bossTextPrediction.Value != "" {
+		statusText = "Defeating a boss"
+	}
 	if !app.AppState.CombatStarted.IsZero() {
-		app.setMenu("menu_combat", "In combat", true)
+		app.setMenu("menu_combat", statusText, true, bossTextPrediction.Value, bossTextPrediction.AssetID)
 		return
-	} else if combatText != "" && len(combatText) > 2 && app.AppState.CombatStarted.IsZero() {
-		app.setMenu("menu_combat", "In combat", true)
+	} else if ((combatText != "" && len(combatText) > 2) || bossTextPrediction.Value != "") && app.AppState.CombatStarted.IsZero() {
+		app.setMenu("menu_combat", statusText, true, bossTextPrediction.Value, bossTextPrediction.AssetID)
 		app.AppState.CombatStarted = time.Now()
 		return
 	}
@@ -398,7 +412,12 @@ func (app *App) UpdateDiscordPresence() {
 
 	if app.AppState.IsInMenus {
 		location = app.AppState.Menu
-		character = utils.Data{}
+
+		if app.AppState.Menu.Value == "Defeating a boss" {
+			character = app.AppState.Character
+		} else {
+			character = utils.Data{}
+		}
 	} else {
 		location = app.AppState.Location
 		if location.Value == "" {
