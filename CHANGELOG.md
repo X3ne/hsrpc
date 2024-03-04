@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.5.0](https://github.com/X3ne/hsrpc/compare/v1.4.0...v1.5.0) (2024-03-04)
+
+
+### Features
+
+* add bosses detection ([d8302d5](https://github.com/X3ne/hsrpc/commit/d8302d5e9756b8accfd7bf67f34c54653550ec33))
+* add fate's atlas menu ([d796926](https://github.com/X3ne/hsrpc/commit/d7969261ae3e66c8e190152674432c569495c553))
+* add holographic overview menu ([ff8aa4b](https://github.com/X3ne/hsrpc/commit/ff8aa4bb38c90eccaec55c981c8e50540c975a09))
+* add support for parlor car & passenger cabin ([ff78b2e](https://github.com/X3ne/hsrpc/commit/ff78b2e014490be8e7082f8085fe8afdbe708dac))
+* add support for trailblazer ([401ddb3](https://github.com/X3ne/hsrpc/commit/401ddb37f24c47426a6c2f62250871e439ea9c47))
+* auto detect trailblazer name if player uid is set ([3aee737](https://github.com/X3ne/hsrpc/commit/3aee7378c87c22d7dcdbd9b09ba19d3f9ffeaa42))
+* **game data:** add more combat sub menus ([57dc3bf](https://github.com/X3ne/hsrpc/commit/57dc3bf3830a549b55cf4c0cd14c1a7afeadde0c))
+* **game data:** add more simulated universe menus & locations ([dceb6a4](https://github.com/X3ne/hsrpc/commit/dceb6a424b64ece55c843c13932274be06075b2c))
+* **game data:** add some event menus ([6942dea](https://github.com/X3ne/hsrpc/commit/6942deac651d691d93a921a3dbc24f10b096b967))
+* **game data:** add some missing menus ([38d5da6](https://github.com/X3ne/hsrpc/commit/38d5da6c4083eccaee71788e664c9243758b58ee))
+* **game data:** add support for gold and gears menus ([35291c4](https://github.com/X3ne/hsrpc/commit/35291c4f50dd5530c4d78cc5633d27dc63efab4e))
+* **game data:** add support for herta's store & salvage relic menus ([3799fa0](https://github.com/X3ne/hsrpc/commit/3799fa0d76d92415e1489157e0367142ef6ca027))
+* **game data:** add support for swarm disaster ([8e9dc6d](https://github.com/X3ne/hsrpc/commit/8e9dc6d1356accdfc6b4d3345be7db3a736867f1))
+* **GUI:** added configuration for WindowClass and WindowName to adjust Honkai window if not detected ([a7e9f00](https://github.com/X3ne/hsrpc/commit/a7e9f008e8e3eb5547b0ff767f57119822a0c850))
+
+
+### Bug Fixes
+
+* changed GetPixelColor to only one pixel ([254b694](https://github.com/X3ne/hsrpc/commit/254b6948aba709ddd4e91bf786dca5405b549b8a))
+* reduce pre-processing to detect characters more efficiently ([dfc90a1](https://github.com/X3ne/hsrpc/commit/dfc90a12a84301b53b80ac6c0294c4d69a67cf9f))
+* remove character value reset if `DisplayNickname` is false (which made character detection impossible) ([0490cd1](https://github.com/X3ne/hsrpc/commit/0490cd158dae12ee5dbdecbd7aa95b8c67c162ee))
+
 ## [1.4.0](https://github.com/X3ne/hsrpc/compare/v1.3.0...v1.4.0) (2024-03-03)
 
 
