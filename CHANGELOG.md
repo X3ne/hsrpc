@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.2](https://github.com/X3ne/hsrpc/compare/v1.5.1...v1.5.2) (2024-03-05)
+
+
+### Bug Fixes
+
+* the boss timer is no longer reset when the boss name is not recognized (when there were animations) ([d374e58](https://github.com/X3ne/hsrpc/commit/d374e58ee0def10037d28e5bac0fd663ae044e11))
+
+
+### Miscellaneous Chores
+
+* release 1.5.2 ([ad3342e](https://github.com/X3ne/hsrpc/commit/ad3342e38b9f0009d64e0198800968ccae130e3e))
+
 ## [1.5.1](https://github.com/X3ne/hsrpc/compare/v1.5.0...v1.5.1) (2024-03-05)
 
 
