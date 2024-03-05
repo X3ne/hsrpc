@@ -286,14 +286,11 @@ func (app *App) CaptureGameMenu() {
 	}
 
 	statusText := "In combat"
-	if bossTextPrediction.Value != "" {
+
+	if bossTextPrediction.Value != "" && !app.AppState.Combat.IsBoss {
 		app.AppState.Combat = Combat{
 			IsBoss:	true,
 			Boss:		bossTextPrediction,
-		}
-
-		if app.AppState.Combat.Started.IsZero() {
-			app.AppState.Combat.Started = time.Now()
 		}
 	}
 
@@ -309,11 +306,10 @@ func (app *App) CaptureGameMenu() {
 	if (combatText != "" && len(combatText) > 2) || bossTextPrediction.Value != "" {
 		app.setMenu("menu_combat", statusText, true, bossTextPrediction.Value, bossTextPrediction.AssetID)
 		app.AppState.Combat = Combat{
-			Started:	app.AppState.Combat.Started,
 			IsBoss:		bossTextPrediction.Value != "",
 			Boss:			bossTextPrediction,
+			Started:	time.Now(),
 		}
-		return
 	}
 }
 
