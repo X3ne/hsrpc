@@ -83,9 +83,22 @@ When you launch the `.exe` file you can configure some settings with the GUI app
 
 <h3>Settings:</h3>
 
+**Player UID**: Enter your hsr UID to display your level and player name (you can disable both with the 2 checkboxes). If no **Player Name** is entered, this value is used to detect whether your Trailblazer is the currently selected character.
+
+**Player name**: Enter your player name to activate Trailblazer detection (this value is optional if you've entered your UID).
+
 **Loop time**: This is the time that elapses between two loop executions. If you're experiencing performance issues, you can increase this value (in milliseconds).
 
 **Preprocess treshold**: You can adjust this value by checking screenshots inside `C:\Users\<user>\AppData\Roaming\hsrpc\tmp` (you need to see the text on the images when using the app). If you have `Lost in the space-time continuum` status this means you may need to lower this value.
+
+**Tesseract path**: You can change the path to tesseract.exe if the default path does not match your tesseract installation.
+
+**Window class** and **Window name**: These values should only be changed if your game window is not found (you can check that the loop time is 20s in the `Presence` tab, or simply by checking the application logs). To find these values, you need to :
+- Install [WinSpy++](https://github.com/strobejb/winspy) and launch the .exe
+- Enlarge window
+- Launch your task manager, right-click on `Name` and activate `PID` if it's not already activated
+- Find the `Star Rail` process and extend it, pick the `Star Rail` process PID
+- Return to WinSpy++ and find the `PID` from the previous step, double-click and select the `UnityWndClass` window. Now you have the `Caption` and `Class`, these values must be entered in **Window name** and **Window class** respectively
 
 <h2>🪲 Known issues:</h2>
 
