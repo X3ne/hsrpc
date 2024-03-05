@@ -23,6 +23,12 @@ type App struct {
 	AppSize			config.Resolution
 }
 
+type Combat struct {
+	Started		time.Time
+	IsBoss		bool
+	Boss			utils.Data
+}
+
 type AppState struct {
 	PlayerInfo								*utils.PlayerInfo
 	CharacterPos							int32
@@ -31,7 +37,7 @@ type AppState struct {
 	Menu											utils.Data
 	LoopTime									time.Duration
 	AppStarted								time.Time
-	CombatStarted							time.Time
+	Combat										Combat
 	IsInMenus									bool
 	IsGatewayConnected				bool
 	IsOCRInitialized					bool
@@ -216,7 +222,7 @@ func (app *App) CaptureLocation() {
 	if locationPred.Value != "" {
 		app.AppState.IsInMenus = false
 		app.AppState.Menu = utils.Data{}
-		app.AppState.CombatStarted = time.Time{}
+		app.AppState.Combat = Combat{}
 		app.AppState.Location = locationPred
 		return
 	}
@@ -281,18 +287,34 @@ func (app *App) CaptureGameMenu() {
 
 	statusText := "In combat"
 	if bossTextPrediction.Value != "" {
+		app.AppState.Combat = Combat{
+			IsBoss:	true,
+			Boss:		bossTextPrediction,
+		}
+
+		if app.AppState.Combat.Started.IsZero() {
+			app.AppState.Combat.Started = time.Now()
+		}
+	}
+
+	if app.AppState.Combat.IsBoss {
 		statusText = "Defeating a boss"
 	}
-	if !app.AppState.CombatStarted.IsZero() {
-		app.setMenu("menu_combat", statusText, true, bossTextPrediction.Value, bossTextPrediction.AssetID)
-		return
-	} else if ((combatText != "" && len(combatText) > 2) || bossTextPrediction.Value != "") && app.AppState.CombatStarted.IsZero() {
-		app.setMenu("menu_combat", statusText, true, bossTextPrediction.Value, bossTextPrediction.AssetID)
-		app.AppState.CombatStarted = time.Now()
+
+	if !app.AppState.Combat.Started.IsZero() {
+		app.setMenu("menu_combat", statusText, true, app.AppState.Combat.Boss.Value, app.AppState.Combat.Boss.AssetID)
 		return
 	}
 
-	app.setMenu("menu_lost", "Lost in the space-time continuum", true)
+	if (combatText != "" && len(combatText) > 2) || bossTextPrediction.Value != "" {
+		app.setMenu("menu_combat", statusText, true, bossTextPrediction.Value, bossTextPrediction.AssetID)
+		app.AppState.Combat = Combat{
+			Started:	app.AppState.Combat.Started,
+			IsBoss:		bossTextPrediction.Value != "",
+			Boss:			bossTextPrediction,
+		}
+		return
+	}
 }
 
 // Main loop of the app
@@ -455,10 +477,10 @@ func (app *App) UpdateDiscordPresence() {
 // Util to sets the Discord presence
 func (app *App) SetPresence(rich client.Activity) {
 	var time time.Time
-	if app.AppState.CombatStarted.IsZero() {
+	if app.AppState.Combat.Started.IsZero() {
 		time = app.AppState.AppStarted
 	} else {
-		time = app.AppState.CombatStarted
+		time = app.AppState.Combat.Started
 	}
 	err := client.SetActivity(client.Activity{
 		State:			rich.State,
