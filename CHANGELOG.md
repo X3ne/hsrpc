@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/X3ne/hsrpc/compare/v1.5.0...v1.5.1) (2024-03-05)
+
+
+### Miscellaneous Chores
+
+* release 1.5.1 ([042170f](https://github.com/X3ne/hsrpc/commit/042170ff18dddc81e1d9906d84dd736d6c13276e))
+
 ## [1.5.0](https://github.com/X3ne/hsrpc/compare/v1.4.0...v1.5.0) (2024-03-04)
 
 
