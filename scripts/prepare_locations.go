@@ -60,15 +60,17 @@ func PrepareLocations(config *ScriptConfig) {
 				if err := writer.Write(subData); err != nil {
 					log.Fatal(err)
 				}
-				row.ParentsUntil("tbody").Find("li").Each(func(k int, location *goquery.Selection) {
+				row.ParentsUntil("tbody").Find("a").Each(func(k int, location *goquery.Selection) {
 					var rowData []string
 
 					assetId := formatAssetId(region)
 
-					rowData = append(rowData, formatString(location.Text()), formatString(subRegion), region, assetId)
+					if location.Text() != "" {
+						rowData = append(rowData, formatString(location.Text()), formatString(subRegion), region, assetId)
 
-					if err := writer.Write(rowData); err != nil {
-						log.Fatal(err)
+						if err := writer.Write(rowData); err != nil {
+							log.Fatal(err)
+						}
 					}
 				})
 			})
