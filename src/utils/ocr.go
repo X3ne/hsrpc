@@ -16,13 +16,13 @@ import (
 )
 
 type OCRConfig struct {
-	ExecutablePath			*string
-	PreprocessThreshold	*int
+	ExecutablePath      *string
+	PreprocessThreshold *int
 }
 
 type OCRManager struct {
-	config	OCRConfig
-	HWND		win.HWND
+	config OCRConfig
+	HWND   win.HWND
 }
 
 var OcrManager *OCRManager
@@ -30,7 +30,7 @@ var OcrManager *OCRManager
 func InitOcr(cfg OCRConfig, hWnd win.HWND) {
 	OcrManager = &OCRManager{
 		config: cfg,
-		HWND: hWnd,
+		HWND:   hWnd,
 	}
 }
 
@@ -65,7 +65,7 @@ func (m *OCRManager) StartOcr(path string) (string, error) {
 
 	whitelistChars := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz, ():"
 
-	cmd := exec.Command(executablePath, path, "stdout", "-l", "eng", "-c", "tessedit_char_whitelist=" + whitelistChars)
+	cmd := exec.Command(executablePath, path, "stdout", "-l", "eng", "-c", "tessedit_char_whitelist="+whitelistChars)
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
 	body, err := cmd.Output()
@@ -83,7 +83,7 @@ func (m *OCRManager) StartOcr(path string) (string, error) {
 func (m *OCRManager) WindowOcr(rect Rect, job string, preprocess bool) (string, image.Image) {
 	var winRect win.RECT
 	win.GetWindowRect(m.HWND, &winRect)
-	image := robotgo.CaptureImg(int(winRect.Left) + rect.X, int(winRect.Top) + rect.Y, rect.Width, rect.Height)
+	image := robotgo.CaptureImg(int(winRect.Left)+rect.X, int(winRect.Top)+rect.Y, rect.Width, rect.Height)
 	if image == nil {
 		return "", nil
 	}
@@ -98,7 +98,7 @@ func (m *OCRManager) WindowOcr(rect Rect, job string, preprocess bool) (string, 
 		return "", nil
 	}
 
-	imagePath := filepath.Join(appPath, consts.TmpDir, job + ".png")
+	imagePath := filepath.Join(appPath, consts.TmpDir, job+".png")
 	err = CreateDir(imagePath)
 	if err != nil {
 		logger.Logger.Errorf("["+job+"] "+"error: %s", err)

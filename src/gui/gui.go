@@ -20,12 +20,12 @@ import (
 )
 
 type GUI struct {
-	App			fyne.App
-	Window	fyne.Window
-	RPCApp	*rpcApp.App
+	App    fyne.App
+	Window fyne.Window
+	RPCApp *rpcApp.App
 }
 
-func (g *GUI) UpdateApplicationGUI( updateCompleted chan bool) {
+func (g *GUI) UpdateApplicationGUI(updateCompleted chan bool) {
 	updateLabel := widget.NewLabel("Downloading update...")
 	progressBar := widget.NewProgressBarInfinite()
 
@@ -78,9 +78,9 @@ func CreateGUI(rpcApp *rpcApp.App, guiApp fyne.App) {
 	w := guiApp.NewWindow("Honkai RPC " + consts.Version)
 
 	g := &GUI{
-		App:		guiApp,
-		Window:	w,
-		RPCApp:	rpcApp,
+		App:    guiApp,
+		Window: w,
+		RPCApp: rpcApp,
 	}
 
 	g.ConfigApp()

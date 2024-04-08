@@ -16,44 +16,44 @@ import (
 )
 
 type App struct {
-	Config			config.AppConfig
-	GUIApp			fyne.App
-	HWND				win.HWND
-	AppState		AppState
-	AppSize			config.Resolution
+	Config   config.AppConfig
+	GUIApp   fyne.App
+	HWND     win.HWND
+	AppState AppState
+	AppSize  config.Resolution
 }
 
 type Combat struct {
-	Started		time.Time
-	IsBoss		bool
-	Boss			utils.Data
+	Started time.Time
+	IsBoss  bool
+	Boss    utils.Data
 }
 
 type AppState struct {
-	PlayerInfo								*utils.PlayerInfo
-	CharacterPos							int32
-	Character									utils.Data
-	Location									utils.Data
-	Menu											utils.Data
-	LoopTime									time.Duration
-	AppStarted								time.Time
-	Combat										Combat
-	IsInMenus									bool
-	IsGatewayConnected				bool
-	IsOCRInitialized					bool
+	PlayerInfo         *utils.PlayerInfo
+	CharacterPos       int32
+	Character          utils.Data
+	Location           utils.Data
+	Menu               utils.Data
+	LoopTime           time.Duration
+	AppStarted         time.Time
+	Combat             Combat
+	IsInMenus          bool
+	IsGatewayConnected bool
+	IsOCRInitialized   bool
 }
 
 func CreateApp(config config.AppConfig, guiApp fyne.App) *App {
 	utils.LoadGameData()
 
 	return &App{
-		Config:				config,
-		GUIApp:				guiApp,
-		HWND:					0,
-		AppState:			AppState{
+		Config: config,
+		GUIApp: guiApp,
+		HWND:   0,
+		AppState: AppState{
 			Location: utils.Data{
 				AssetID: "menu_lost",
-				Value: "Lost in the space-time continuum",
+				Value:   "Lost in the space-time continuum",
 			},
 			LoopTime: config.LoopTime,
 		},
@@ -64,13 +64,14 @@ func (app *App) ResetAppState() {
 	app.AppState.Character = utils.Data{}
 	app.AppState.Location = utils.Data{
 		AssetID: "menu_lost",
-		Value: "Lost in the space-time continuum",
+		Value:   "Lost in the space-time continuum",
 	}
 	app.AppState.Menu = utils.Data{}
 	app.AppState.IsInMenus = false
 	app.AppState.IsOCRInitialized = false
 }
 
+// ConnectToDiscordGateway
 // Connects to the Discord gateway
 func (app *App) ConnectToDiscordGateway() error {
 	logger.Logger.Info("Connecting to Discord Gateway")
@@ -84,12 +85,14 @@ func (app *App) ConnectToDiscordGateway() error {
 	return nil
 }
 
+// DisconnectFromDiscordGateway
 // Disconnects from the Discord gateway
 func (app *App) DisconnectFromDiscordGateway() {
 	client.Logout()
 	app.AppState.IsGatewayConnected = false
 }
 
+// GetWindow
 // Get the Honkai window handle
 func (app *App) GetWindow() {
 	winClassPtr, err := syscall.UTF16PtrFromString(app.Config.WindowClass)
@@ -109,7 +112,7 @@ func (app *App) GetWindow() {
 		return
 	}
 
-	app.AppState.AppStarted =	time.Now()
+	app.AppState.AppStarted = time.Now()
 }
 
 // Get Honkai Star Rail window size
@@ -121,6 +124,7 @@ func getWindowSize(hwnd win.HWND) (int32, int32) {
 	return width, height
 }
 
+// SetSize
 // Set App size
 func (app *App) SetSize() {
 	w, h := getWindowSize(app.HWND)
@@ -139,7 +143,7 @@ func (app *App) SetSize() {
 	monitorInfo.CbSize = uint32(unsafe.Sizeof(monitorInfo))
 	win.GetMonitorInfo(monitor, &monitorInfo)
 
-	isFullscreen := monitorInfo.RcMonitor.Right - monitorInfo.RcMonitor.Left == w && monitorInfo.RcMonitor.Bottom - monitorInfo.RcMonitor.Top == h
+	isFullscreen := monitorInfo.RcMonitor.Right-monitorInfo.RcMonitor.Left == w && monitorInfo.RcMonitor.Bottom-monitorInfo.RcMonitor.Top == h
 	logger.Logger.Info("Fullscreen:", isFullscreen)
 
 	xAdjustment := 0
@@ -157,6 +161,7 @@ func (app *App) SetSize() {
 	config.SaveConfig(app.Config)
 }
 
+// CaptureCharacter
 // Detect the current character currently selected
 func (app *App) CaptureCharacter() {
 	pos := utils.FindCurrentCharacter(app.HWND, app.Config.GUICoordsConfig.CharactersBoxCoords)
@@ -178,7 +183,7 @@ func (app *App) CaptureCharacter() {
 
 	charactersData := append(utils.GameData.Characters, utils.Data{
 		AssetID: "char_trailblazer",
-		Value: playerName,
+		Value:   playerName,
 	})
 
 	characterPred := utils.FindClosestCorrespondence(characterText, charactersData)
@@ -188,6 +193,7 @@ func (app *App) CaptureCharacter() {
 	}
 }
 
+// CaptureLocation
 // Detect the current location of the player
 func (app *App) CaptureLocation() {
 	locationText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.LocationCoord, "location", true)
@@ -201,21 +207,25 @@ func (app *App) CaptureLocation() {
 		utils.GameData.Locations,
 		utils.Data{
 			AssetID: "loc_parlor_car",
-			Value: "Parlor Car",
+			Value:   "Parlor Car",
 		},
 		utils.Data{
 			AssetID: "loc_parlor_car",
-			Value: "Passenger Cabin",
+			Value:   "Passenger Cabin",
 		},
 	)
 
 	locationPred := utils.FindClosestCorrespondence(locationText, locationData)
 
-	// needed to trigger prescence updating
+	// needed to trigger presence updating
+	charName := app.Config.PlayerName
+	if charName == "" {
+		charName = "Trailblazer"
+	}
 	if locationPred.Value == "Parlor Car" || locationPred.Value == "Passenger Cabin" {
 		app.AppState.Character = utils.Data{
 			AssetID: "char_trailblazer",
-			Value: app.Config.PlayerName,
+			Value:   charName,
 		}
 	}
 
@@ -237,13 +247,13 @@ func (app *App) setMenu(assetID, value string, isInMenus bool, subMenu ...string
 	app.AppState.Menu = utils.Data{
 		AssetID: assetID,
 		Value:   value,
-		Region: subMenu[0],
+		Region:  subMenu[0],
 	}
 
 	if len(subMenu) > 1 {
 		app.AppState.Character = utils.Data{
 			AssetID: subMenu[1],
-			Value: subMenu[0],
+			Value:   subMenu[0],
 		}
 	}
 
@@ -260,6 +270,7 @@ func getMenu(menus []utils.Data, value string) utils.Data {
 	return utils.Data{}
 }
 
+// CaptureGameMenu
 // Capture the current game menu
 func (app *App) CaptureGameMenu() {
 	escText, _ := utils.OcrManager.WindowOcr(app.Config.GUICoordsConfig.EscCoord, "esc_menu", true)
@@ -289,8 +300,8 @@ func (app *App) CaptureGameMenu() {
 
 	if bossTextPrediction.Value != "" && !app.AppState.Combat.IsBoss {
 		app.AppState.Combat = Combat{
-			IsBoss:	true,
-			Boss:		bossTextPrediction,
+			IsBoss: true,
+			Boss:   bossTextPrediction,
 		}
 	}
 
@@ -306,13 +317,14 @@ func (app *App) CaptureGameMenu() {
 	if (combatText != "" && len(combatText) > 2) || bossTextPrediction.Value != "" {
 		app.setMenu("menu_combat", statusText, true, bossTextPrediction.Value, bossTextPrediction.AssetID)
 		app.AppState.Combat = Combat{
-			IsBoss:		bossTextPrediction.Value != "",
-			Boss:			bossTextPrediction,
-			Started:	time.Now(),
+			IsBoss:  bossTextPrediction.Value != "",
+			Boss:    bossTextPrediction,
+			Started: time.Now(),
 		}
 	}
 }
 
+// StartLoop
 // Main loop of the app
 func (app *App) StartLoop() {
 	defer func() {
@@ -380,6 +392,7 @@ func (app *App) StartLoop() {
 	}
 }
 
+// HandleWindowClosed
 // Handles the scenario when the Honkai window is closed
 func (app *App) HandleWindowClosed() {
 	if app.HWND != 0 {
@@ -390,6 +403,7 @@ func (app *App) HandleWindowClosed() {
 	}
 }
 
+// IsWindowFocused
 // Checks if the Honkai window is currently focused
 func (app *App) IsWindowFocused() bool {
 	foregroundWindow := win.GetForegroundWindow()
@@ -402,16 +416,18 @@ func (app *App) IsWindowFocused() bool {
 	return true
 }
 
+// InitializeOCR
 // Initializes OCR for capturing game data
 func (app *App) InitializeOCR() {
 	utils.InitOcr(utils.OCRConfig{
-		ExecutablePath:				&app.Config.TesseractPath,
-		PreprocessThreshold:	&app.Config.PreprocessThreshold,
+		ExecutablePath:      &app.Config.TesseractPath,
+		PreprocessThreshold: &app.Config.PreprocessThreshold,
 	}, app.HWND)
 
 	app.AppState.IsOCRInitialized = true
 }
 
+// CaptureGameData
 // Captures game data such as character and location
 func (app *App) CaptureGameData() {
 	// TODO: view the possibility of running these in parallel
@@ -423,6 +439,7 @@ func (app *App) CaptureGameData() {
 	app.CaptureCharacter()
 }
 
+// UpdateDiscordPresence
 // Updates the Discord presence based on game data
 func (app *App) UpdateDiscordPresence() {
 	var character utils.Data
@@ -470,6 +487,7 @@ func (app *App) UpdateDiscordPresence() {
 	}
 }
 
+// SetPresence
 // Util to sets the Discord presence
 func (app *App) SetPresence(rich client.Activity) {
 	var time time.Time
@@ -479,14 +497,14 @@ func (app *App) SetPresence(rich client.Activity) {
 		time = app.AppState.Combat.Started
 	}
 	err := client.SetActivity(client.Activity{
-		State:			rich.State,
-		Details:		rich.Details,
-		LargeImage:	rich.LargeImage,
-		LargeText:	rich.LargeText,
-		SmallImage:	rich.SmallImage,
-		SmallText:	rich.SmallText,
-		Timestamps:	&client.Timestamps{
-			Start:	&time,
+		State:      rich.State,
+		Details:    rich.Details,
+		LargeImage: rich.LargeImage,
+		LargeText:  rich.LargeText,
+		SmallImage: rich.SmallImage,
+		SmallText:  rich.SmallText,
+		Timestamps: &client.Timestamps{
+			Start: &time,
 		},
 	})
 

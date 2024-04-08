@@ -18,7 +18,7 @@ func (e *embedBundle) Add(file string, content []byte) {
 
 func (e *embedBundle) Get(file string) []byte {
 	if f, ok := e.storage[file]; ok {
-			return f
+		return f
 	}
 	return nil
 }

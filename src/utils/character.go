@@ -5,6 +5,7 @@ import (
 	"github.com/lxn/win"
 )
 
+// FindCurrentCharacter
 // This function check the brightness of the pixels in the given coordinates to determine the current character
 func FindCurrentCharacter(hWnd win.HWND, coords []Rect) int32 {
 	whitestPosition := -1

@@ -24,17 +24,18 @@ import (
 )
 
 type Rect struct {
-	X, Y, Width, Height	int
+	X, Y, Width, Height int
 }
 
 type PlayerInfo struct {
 	Player struct {
-		UID				string	`json:"uid"`
-		Level			int			`json:"level"`
-		Nickname	string	`json:"nickname"`
+		UID      string `json:"uid"`
+		Level    int    `json:"level"`
+		Nickname string `json:"nickname"`
 	} `json:"player"`
 }
 
+// FindClosestCorrespondence
 // This function is useful to mitigate OCR errors by finding the closest correspondence to the given text
 func FindClosestCorrespondence(text string, candidates []Data) Data {
 	const threshold = 5
@@ -61,7 +62,7 @@ func GetPixelColor(hWnd win.HWND, rect Rect) (color.RGBA, error) {
 	var winRect win.RECT
 	win.GetWindowRect(hWnd, &winRect)
 
-	img := robotgo.CaptureImg(rect.X + int(winRect.Left), rect.Y + int(winRect.Top), 1, 1)
+	img := robotgo.CaptureImg(rect.X+int(winRect.Left), rect.Y+int(winRect.Top), 1, 1)
 	if img == nil {
 		return color.RGBA{}, nil
 	}
@@ -73,13 +74,13 @@ func GetPixelColor(hWnd win.HWND, rect Rect) (color.RGBA, error) {
 func SaveImg(img image.Image, fileName string) error {
 	file, err := os.Create(fileName)
 	if err != nil {
-			return err
+		return err
 	}
 	defer file.Close()
 
 	err = png.Encode(file, img)
 	if err != nil {
-			return err
+		return err
 	}
 
 	return nil

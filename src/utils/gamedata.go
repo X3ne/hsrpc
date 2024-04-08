@@ -9,19 +9,19 @@ import (
 )
 
 type GameDataStruct struct {
-	Characters	[]Data
-	Locations		[]Data
-	Menus				[]Data
-	SubMenus		[]Data
-	Bosses			[]Data
+	Characters []Data
+	Locations  []Data
+	Menus      []Data
+	SubMenus   []Data
+	Bosses     []Data
 }
 
 type Data struct {
-	AssetID		string
-	Value			string
-	Message		string
-	Region		string
-	SubRegion	string
+	AssetID   string
+	Value     string
+	Message   string
+	Region    string
+	SubRegion string
 }
 
 var GameData *GameDataStruct
@@ -48,11 +48,11 @@ func LoadGameData() {
 		logger.Logger.Fatal("Error when loading bosses", err)
 	}
 	GameData = &GameDataStruct{
-		Characters:	characters,
-		Locations:	locations,
-		Menus:			menus,
-		SubMenus:		subMenus,
-		Bosses:			bosses,
+		Characters: characters,
+		Locations:  locations,
+		Menus:      menus,
+		SubMenus:   subMenus,
+		Bosses:     bosses,
 	}
 }
 
@@ -73,8 +73,8 @@ func loadCharacters() ([]Data, error) {
 	var loadedCharacters int
 	for _, record := range records {
 		characters = append(characters, Data{
-			AssetID:	record[1],
-			Value:		record[0],
+			AssetID: record[1],
+			Value:   record[0],
 		})
 		loadedCharacters++
 	}
@@ -101,10 +101,10 @@ func loadLocations() ([]Data, error) {
 	var loadedLocations int
 	for _, record := range records {
 		location := Data{
-			AssetID:	record[3],
-			Value:		record[0],
-			Region:		record[2],
-			SubRegion:	record[1],
+			AssetID:   record[3],
+			Value:     record[0],
+			Region:    record[2],
+			SubRegion: record[1],
 		}
 
 		locations = append(locations, location)
@@ -133,9 +133,9 @@ func loadGameMenus() ([]Data, error) {
 	var loadedMenus int
 	for _, record := range records {
 		menu := Data{
-			AssetID:	record[2],
-			Value:		record[0],
-			Message:	record[1],
+			AssetID: record[2],
+			Value:   record[0],
+			Message: record[1],
 		}
 
 		menus = append(menus, menu)
@@ -164,9 +164,9 @@ func loadGameSubMenus() ([]Data, error) {
 	var loadedMenus int
 	for _, record := range records {
 		menu := Data{
-			AssetID:	record[2],
-			Value:		record[0],
-			Message:	record[1],
+			AssetID: record[2],
+			Value:   record[0],
+			Message: record[1],
 		}
 
 		menus = append(menus, menu)
@@ -195,8 +195,8 @@ func loadGameBosses() ([]Data, error) {
 	var loadedBosses int
 	for _, record := range records {
 		bosses = append(bosses, Data{
-			AssetID:	record[1],
-			Value:		record[0],
+			AssetID: record[1],
+			Value:   record[0],
 		})
 
 		loadedBosses++

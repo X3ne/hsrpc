@@ -7,14 +7,14 @@ import (
 )
 
 type GUICoordsConfig struct {
-	EscCoord						utils.Rect
-	MenusCoord					utils.Rect
-	SubMenuCoord				utils.Rect
-	CombatCoord					utils.Rect
-	LocationCoord				utils.Rect
-	BossCoord						utils.Rect
-	CharactersCoords		[]utils.Rect
-	CharactersBoxCoords	[]utils.Rect
+	EscCoord            utils.Rect
+	MenusCoord          utils.Rect
+	SubMenuCoord        utils.Rect
+	CombatCoord         utils.Rect
+	LocationCoord       utils.Rect
+	BossCoord           utils.Rect
+	CharactersCoords    []utils.Rect
+	CharactersBoxCoords []utils.Rect
 }
 
 type Resolution struct {
@@ -23,20 +23,20 @@ type Resolution struct {
 }
 
 type AppConfig struct {
-	WindowName					string
-	WindowClass					string
-	LoopTime						time.Duration
-	TesseractPath				string
-	DiscordAppId				string
-	Resolution					Resolution
-	Debug								bool
-	StartWithWindows		bool
+	WindowName          string
+	WindowClass         string
+	LoopTime            time.Duration
+	TesseractPath       string
+	DiscordAppId        string
+	Resolution          Resolution
+	Debug               bool
+	StartWithWindows    bool
 	PreprocessThreshold int
-	GUICoordsConfig			*GUICoordsConfig
-	PlayerUID						string
-	DisplayNickname			bool
-	DisplayLevel				bool
-	PlayerName					string
+	GUICoordsConfig     *GUICoordsConfig
+	PlayerUID           string
+	DisplayNickname     bool
+	DisplayLevel        bool
+	PlayerName          string
 }
 
 func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUICoordsConfig {
@@ -55,40 +55,40 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUIC
 
 	config := &GUICoordsConfig{
 		EscCoord: utils.Rect{
-			X:			adjustSize(1925+(xAdjustment*2), scaleX),
-			Y:			adjustSize(250+yAdjustment, scaleY),
-			Width:	adjustSize(180, scaleX) + 50,
-			Height:	adjustSize(30, scaleY),
+			X:      adjustSize(1925+(xAdjustment*2), scaleX),
+			Y:      adjustSize(250+yAdjustment, scaleY),
+			Width:  adjustSize(180, scaleX) + 50,
+			Height: adjustSize(30, scaleY),
 		},
 		MenusCoord: utils.Rect{
-			X:			adjustSize(100+(xAdjustment/3*-1), scaleX),
-			Y:			adjustSize(35+yAdjustment, scaleY),
-			Width:	adjustSize(300, scaleX) + 50,
-			Height:	adjustSize(40, scaleY),
+			X:      adjustSize(100+(xAdjustment/3*-1), scaleX),
+			Y:      adjustSize(35+yAdjustment, scaleY),
+			Width:  adjustSize(300, scaleX) + 50,
+			Height: adjustSize(40, scaleY),
 		},
 		SubMenuCoord: utils.Rect{
-			X:			adjustSize(100, scaleX),
-			Y:			adjustSize(65+yAdjustment, scaleY),
-			Width:	adjustSize(370, scaleX) + 50,
-			Height:	adjustSize(25, scaleY),
+			X:      adjustSize(100, scaleX),
+			Y:      adjustSize(65+yAdjustment, scaleY),
+			Width:  adjustSize(370, scaleX) + 50,
+			Height: adjustSize(25, scaleY),
 		},
 		CombatCoord: utils.Rect{
-			X:			adjustSize(2100+xAdjustment, scaleX),
-			Y:			adjustSize(25+yAdjustment, scaleY),
-			Width:	adjustSize(85, scaleX) + 50,
-			Height:	adjustSize(40, scaleY),
+			X:      adjustSize(2100+xAdjustment, scaleX),
+			Y:      adjustSize(25+yAdjustment, scaleY),
+			Width:  adjustSize(85, scaleX) + 50,
+			Height: adjustSize(40, scaleY),
 		},
 		LocationCoord: utils.Rect{
-			X:			adjustSize(55, scaleX),
-			Y:			adjustSize(15+yAdjustment, scaleY),
-			Width:	adjustSize(320, scaleX) + 50,
-			Height:	adjustSize(25, scaleY),
+			X:      adjustSize(55, scaleX),
+			Y:      adjustSize(15+yAdjustment, scaleY),
+			Width:  adjustSize(320, scaleX) + 50,
+			Height: adjustSize(25, scaleY),
 		},
 		BossCoord: utils.Rect{
-			X:			adjustSize(850, scaleX),
-			Y:			adjustSize(yAdjustment, scaleY),
-			Width:	adjustSize(745, scaleX) + 50,
-			Height:	adjustSize(50, scaleY),
+			X:      adjustSize(850, scaleX),
+			Y:      adjustSize(yAdjustment, scaleY),
+			Width:  adjustSize(745, scaleX) + 50,
+			Height: adjustSize(50, scaleY),
 		},
 		CharactersCoords: []utils.Rect{
 			{X: adjustSize(2250+xAdjustment, scaleX), Y: adjustSize(305+yAdjustment, scaleY), Width: adjustSize(170, scaleX) + wAdjust, Height: adjustSize(30, scaleY)},
@@ -108,20 +108,20 @@ func GetGUICoords(gameResolution Resolution, xAdjustment, yAdjustment int) *GUIC
 }
 
 func NewConfig() AppConfig {
-	config :=  AppConfig{
-		WindowName:						"Honkai: Star Rail",
-		WindowClass:					"UnityWndClass",
-		LoopTime:							2000,
-		TesseractPath:				`C:\Program Files\Tesseract-OCR\tesseract.exe`,
-		Resolution:						Resolution{Width: 1920, Height: 1080},
-		DiscordAppId:					"1208212792574869544",
-		Debug:								false,
-		StartWithWindows:			false,
-		PreprocessThreshold:	130,
-		PlayerUID:						"",
-		DisplayNickname:			true,
-		DisplayLevel:					true,
-		PlayerName:						"",
+	config := AppConfig{
+		WindowName:          "Honkai: Star Rail",
+		WindowClass:         "UnityWndClass",
+		LoopTime:            2000,
+		TesseractPath:       `C:\Program Files\Tesseract-OCR\tesseract.exe`,
+		Resolution:          Resolution{Width: 1920, Height: 1080},
+		DiscordAppId:        "1208212792574869544",
+		Debug:               false,
+		StartWithWindows:    false,
+		PreprocessThreshold: 130,
+		PlayerUID:           "",
+		DisplayNickname:     true,
+		DisplayLevel:        true,
+		PlayerName:          "",
 	}
 
 	return config

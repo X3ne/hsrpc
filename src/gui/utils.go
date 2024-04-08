@@ -46,7 +46,6 @@ func createRectForm(rect *utils.Rect, onChanged func()) *widget.Form {
 		onChanged()
 	}, 500*time.Millisecond)
 
-
 	yEntry.OnChanged = debounce(func(s string) {
 		rect.Y = stringToInt(s)
 		onChanged()
