@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.6.0](https://github.com/X3ne/hsrpc/compare/v1.5.2...v1.6.0) (2024-04-08)
+
+
+### Features
+
+* format code & fix Parlor Car location status update when player name is not set ([52435b1](https://github.com/X3ne/hsrpc/commit/52435b1ec037dc4e821661b96bd20c891effd18b))
+* **game data:** add 2.1 game data ([a283946](https://github.com/X3ne/hsrpc/commit/a28394695c53bc4c4d90b765bebd06c0b641492c))
+
+
+### Bug Fixes
+
+* **scripts:** accept new wiki locations format ([bf6f0fc](https://github.com/X3ne/hsrpc/commit/bf6f0fcf0317041f918e4aaad6eeccbe5c491cb7))
+
 ## [1.5.2](https://github.com/X3ne/hsrpc/compare/v1.5.1...v1.5.2) (2024-03-05)
 
 
