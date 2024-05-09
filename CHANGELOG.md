@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/X3ne/hsrpc/compare/v1.6.0...v1.7.0) (2024-05-09)
+
+
+### Miscellaneous Chores
+
+* release 1.7.0 ([21ccb2e](https://github.com/X3ne/hsrpc/commit/21ccb2e10bada9dfb2f6bed87c1d11c369ce361f))
+
 ## [1.6.0](https://github.com/X3ne/hsrpc/compare/v1.5.2...v1.6.0) (2024-04-08)
 
 
