@@ -38,7 +38,7 @@ func PrepareCharacters(config *ScriptConfig) {
 	doc.Find(".article-table").First().Find("tr").Each(func(i int, s *goquery.Selection) {
 		var rowData []string
 
-		s.Find("td:nth-child(2)").Each(func(cellIndex int, cellHtml *goquery.Selection) {
+		s.Find("td:nth-child(1)").Each(func(cellIndex int, cellHtml *goquery.Selection) {
 			charName := strings.TrimSpace(cellHtml.Text())
 			regex := regexp.MustCompile("[^a-zA-Z0-9_ ]+")
 			charName = regex.ReplaceAllString(charName, "")
