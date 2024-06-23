@@ -106,11 +106,11 @@ Old Weapon Testing Ground,Underworld,Jarilo-VI,loc_jarilovi
 Aetherium Wars Terminal,Underworld,Jarilo-VI,loc_jarilovi
 Victory Celebration Center,Underworld,Jarilo-VI,loc_jarilovi
 Boulder Town,Underworld,Jarilo-VI,loc_jarilovi
-Fight Club (Space Anchor),Underworld,Jarilo-VI,loc_jarilovi
+Fight Club,Underworld,Jarilo-VI,loc_jarilovi
 Fight Club,Underworld,Jarilo-VI,loc_jarilovi
 Goethe Grand Hotel,Underworld,Jarilo-VI,loc_jarilovi
 Cheap Room,Underworld,Jarilo-VI,loc_jarilovi
-Natasha's Clinic (Space Anchor),Underworld,Jarilo-VI,loc_jarilovi
+Natasha's Clinic,Underworld,Jarilo-VI,loc_jarilovi
 Natasha's Clinic,Underworld,Jarilo-VI,loc_jarilovi
 Great Mine,Underworld,Jarilo-VI,loc_jarilovi
 Entrance,Underworld,Jarilo-VI,loc_jarilovi
@@ -131,11 +131,11 @@ Aetherium Wars Terminal,Old Weapon Testing Ground,Jarilo-VI,loc_jarilovi
 Victory Celebration Center,Old Weapon Testing Ground,Jarilo-VI,loc_jarilovi
 Boulder Town,Boulder Town,Jarilo-VI,loc_jarilovi
 Boulder Town,Boulder Town,Jarilo-VI,loc_jarilovi
-Fight Club (Space Anchor),Boulder Town,Jarilo-VI,loc_jarilovi
+Fight Club,Boulder Town,Jarilo-VI,loc_jarilovi
 Fight Club,Boulder Town,Jarilo-VI,loc_jarilovi
 Goethe Grand Hotel,Boulder Town,Jarilo-VI,loc_jarilovi
 Cheap Room,Boulder Town,Jarilo-VI,loc_jarilovi
-Natasha's Clinic (Space Anchor),Boulder Town,Jarilo-VI,loc_jarilovi
+Natasha's Clinic,Boulder Town,Jarilo-VI,loc_jarilovi
 Natasha's Clinic,Boulder Town,Jarilo-VI,loc_jarilovi
 Great Mine,Great Mine,Jarilo-VI,loc_jarilovi
 Great Mine,Great Mine,Jarilo-VI,loc_jarilovi
@@ -251,19 +251,41 @@ Dewlight Pavilion,Dreamscape,Penacony,loc_penacony
 Dreammaster Hall,Dreamscape,Penacony,loc_penacony
 Reception Counter,Dreamscape,Penacony,loc_penacony
 City Sandpit,Dreamscape,Penacony,loc_penacony
-City Sandpit (Space Anchor),Dreamscape,Penacony,loc_penacony
+City Sandpit,Dreamscape,Penacony,loc_penacony
 Clock Studios Theme Park,Dreamscape,Penacony,loc_penacony
+Dreamjoy Memoir Filming Site,Dreamscape,Penacony,loc_penacony
 Hamster Ball Park,Dreamscape,Penacony,loc_penacony
 Hanu Gang Base,Dreamscape,Penacony,loc_penacony
 Screening Area Entrance,Dreamscape,Penacony,loc_penacony
 Theme Park Entrance,Dreamscape,Penacony,loc_penacony
 Dreamflux Reef,Dreamscape,Penacony,loc_penacony
-Narrow Alley,Dreamscape,Penacony,loc_penacony
-Timesplit Square,Dreamscape,Penacony,loc_penacony
+A Child's Moonlight,Dreamscape,Penacony,loc_penacony
 Bygoneville,Dreamscape,Penacony,loc_penacony
+Narrow Alley,Dreamscape,Penacony,loc_penacony
 Slumbertown,Dreamscape,Penacony,loc_penacony
+Timesplit Square,Dreamscape,Penacony,loc_penacony
 SoulGlad™ Scorchsand Audition Venue,Dreamscape,Penacony,loc_penacony
+Audition Plaza,Dreamscape,Penacony,loc_penacony
+Path of the Superstar,Dreamscape,Penacony,loc_penacony
+Dreamplay Fantasia: Acting Challenge,Dreamscape,Penacony,loc_penacony
+Dreamplay Fantasia: Action Challenge,Dreamscape,Penacony,loc_penacony
+Gunfire Time: Gunfire Trial,Dreamscape,Penacony,loc_penacony
+Gunfire Time: Time Trial,Dreamscape,Penacony,loc_penacony
+Gunfire Time: Time Trial (Posterior),Dreamscape,Penacony,loc_penacony
+Superstar Showdown: Arena I,Dreamscape,Penacony,loc_penacony
+Superstar Showdown: Arena II,Dreamscape,Penacony,loc_penacony
 Penacony Grand Theater,Dreamscape,Penacony,loc_penacony
+Ascension Hallway,Dreamscape,Penacony,loc_penacony
+Communing Hall,Dreamscape,Penacony,loc_penacony
+Hall of Chords,Dreamscape,Penacony,loc_penacony
+Saloon of Gospels,Dreamscape,Penacony,loc_penacony
+Radiant Feldspar,Dreamscape,Penacony,loc_penacony
+Aft Pool,Dreamscape,Penacony,loc_penacony
+Cockpit,Dreamscape,Penacony,loc_penacony
+Divergent Universe: Terminal Interface,Dreamscape,Penacony,loc_penacony
+Main Banquet Hall,Dreamscape,Penacony,loc_penacony
+Midship Lounge,Dreamscape,Penacony,loc_penacony
+Origami Bird Battle Lobby,Dreamscape,Penacony,loc_penacony
 Golden Hour,Golden Hour,Penacony,loc_penacony
 Golden Hour,Golden Hour,Penacony,loc_penacony
 Aideen Park,Golden Hour,Penacony,loc_penacony
@@ -294,25 +316,64 @@ VIP Lounge Corridor,The Reverie (Dreamscape),Penacony,loc_penacony
 Dewlight Pavilion,Dewlight Pavilion,Penacony,loc_penacony
 Dewlight Pavilion,Dewlight Pavilion,Penacony,loc_penacony
 Dreammaster Hall,Dewlight Pavilion,Penacony,loc_penacony
-Reception Counter,Dewlight Pavilion,Penacony,loc_penacony
+Reception Counter,Dewlight Pavilion,Penacony,loc_OpenACC
 City Sandpit,Dewlight Pavilion,Penacony,loc_penacony
-City Sandpit (Space Anchor),Dewlight Pavilion,Penacony,loc_penacony
+City Sandpit,Dewlight Pavilion,Penacony,loc_penacony
+City Sandpit,City Sandpit,Penacony,loc_penacony
+City Sandpit,City Sandpit,Penacony,loc_penacony
+City Sandpit,City Sandpit,Penacony,loc_penacony
 Clock Studios Theme Park,Clock Studios Theme Park,Penacony,loc_penacony
 Clock Studios Theme Park,Clock Studios Theme Park,Penacony,loc_penacony
+Dreamjoy Memoir Filming Site,Clock Studios Theme Park,Penacony,loc_penacony
 Hamster Ball Park,Clock Studios Theme Park,Penacony,loc_penacony
 Hanu Gang Base,Clock Studios Theme Park,Penacony,loc_penacony
 Screening Area Entrance,Clock Studios Theme Park,Penacony,loc_penacony
 Theme Park Entrance,Clock Studios Theme Park,Penacony,loc_penacony
 Dreamflux Reef,Dreamflux Reef,Penacony,loc_penacony
 Dreamflux Reef,Dreamflux Reef,Penacony,loc_penacony
-Narrow Alley,Dreamflux Reef,Penacony,loc_penacony
-Timesplit Square,Dreamflux Reef,Penacony,loc_penacony
+A Child's Moonlight,Dreamflux Reef,Penacony,loc_penacony
 Bygoneville,Dreamflux Reef,Penacony,loc_penacony
+Narrow Alley,Dreamflux Reef,Penacony,loc_penacony
 Slumbertown,Dreamflux Reef,Penacony,loc_penacony
+Timesplit Square,Dreamflux Reef,Penacony,loc_penacony
 SoulGlad™ Scorchsand Audition Venue,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 SoulGlad™ Scorchsand Audition Venue,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Audition Plaza,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Path of the Superstar,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Dreamplay Fantasia: Acting Challenge,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Dreamplay Fantasia: Action Challenge,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Gunfire Time: Gunfire Trial,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Gunfire Time: Time Trial,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Gunfire Time: Time Trial (Posterior),SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Superstar Showdown: Arena I,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Superstar Showdown: Arena II,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Dreamplay Fantasia: Acting Challenge,Dreamplay Fantasia: Acting Challenge,Penacony,loc_penacony
+Dreamplay Fantasia: Acting Challenge,Dreamplay Fantasia: Acting Challenge,Penacony,loc_penacony
+Dreamplay Fantasia: Action Challenge,Dreamplay Fantasia: Action Challenge,Penacony,loc_penacony
+Dreamplay Fantasia: Action Challenge,Dreamplay Fantasia: Action Challenge,Penacony,loc_penacony
+Gunfire Time: Gunfire Trial,Gunfire Time: Gunfire Trial,Penacony,loc_penacony
+Gunfire Time: Gunfire Trial,Gunfire Time: Gunfire Trial,Penacony,loc_penacony
+Gunfire Time: Time Trial,Gunfire Time: Time Trial,Penacony,loc_penacony
+Gunfire Time: Time Trial,Gunfire Time: Time Trial,Penacony,loc_penacony
+Gunfire Time: Time Trial (Posterior),Gunfire Time: Time Trial,Penacony,loc_penacony
+Superstar Showdown: Arena I,Superstar Showdown: Arena I,Penacony,loc_penacony
+Superstar Showdown: Arena I,Superstar Showdown: Arena I,Penacony,loc_penacony
+Superstar Showdown: Arena II,Superstar Showdown: Arena II,Penacony,loc_penacony
+Superstar Showdown: Arena II,Superstar Showdown: Arena II,Penacony,loc_penacony
 Penacony Grand Theater,Penacony Grand Theater,Penacony,loc_penacony
 Penacony Grand Theater,Penacony Grand Theater,Penacony,loc_penacony
+Ascension Hallway,Penacony Grand Theater,Penacony,loc_penacony
+Communing Hall,Penacony Grand Theater,Penacony,loc_penacony
+Hall of Chords,Penacony Grand Theater,Penacony,loc_penacony
+Saloon of Gospels,Penacony Grand Theater,Penacony,loc_penacony
+Radiant Feldspar,Radiant Feldspar,Penacony,loc_penacony
+Radiant Feldspar,Radiant Feldspar,Penacony,loc_penacony
+Aft Pool,Radiant Feldspar,Penacony,loc_penacony
+Cockpit,Radiant Feldspar,Penacony,loc_penacony
+Divergent Universe: Terminal Interface,Radiant Feldspar,Penacony,loc_penacony
+Main Banquet Hall,Radiant Feldspar,Penacony,loc_penacony
+Midship Lounge,Radiant Feldspar,Penacony,loc_penacony
+Origami Bird Battle Lobby,Radiant Feldspar,Penacony,loc_penacony
 Domain - Combat,Domain - Combat,Simulated universe,loc_su
 Domain - Elite,Domain - Elite,Simulated universe,loc_su
 Domain - Respite,Domain - Respite,Simulated universe,loc_su
