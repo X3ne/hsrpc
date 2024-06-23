@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/X3ne/hsrpc/compare/v1.7.0...v1.7.1) (2024-06-23)
+
+
+### Bug Fixes
+
+* **scripts:** new wiki characters format ([e00873f](https://github.com/X3ne/hsrpc/commit/e00873fe160c2c66d1058b296f557b7268dcb8f1))
+
 ## [1.7.0](https://github.com/X3ne/hsrpc/compare/v1.6.0...v1.7.0) (2024-05-09)
 
 
