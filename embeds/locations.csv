@@ -156,9 +156,14 @@ Vagrant Camp,Robot Settlement,Jarilo-VI,loc_jarilovi
 Central Starskiff Haven,Central Starskiff Haven,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Central Starskiff Haven,Central Starskiff Haven,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Earthrise Agora,Central Starskiff Haven,The Xianzhou Luofu,loc_the_xianzhou_luofu
-Palace of Astrum,Central Starskiff Haven,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Practice Dummy,Central Starskiff Haven,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Starskiff Jetty,Central Starskiff Haven,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Starwatcher Avenue,Central Starskiff Haven,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Palace of Astrum,Central Starskiff Haven,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Palace of Astrum,Central Starskiff Haven,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Palace of Astrum,Palace of Astrum,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Palace of Astrum,Palace of Astrum,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Palace of Astrum,Palace of Astrum,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Cloudford,Cloudford,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Cloudford,Cloudford,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Cloudford: Cargo Lane,Cloudford,The Xianzhou Luofu,loc_the_xianzhou_luofu
@@ -177,6 +182,10 @@ Court of Tranquility,Exalting Sanctum,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Synwood Pavilion,Exalting Sanctum,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Realm-Keeping Commission Chancery,Exalting Sanctum,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Seat of Divine Foresight,Exalting Sanctum,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Seat of Divine Foresight,Exalting Sanctum,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Seat of Divine Foresight,Seat of Divine Foresight,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Seat of Divine Foresight,Seat of Divine Foresight,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Seat of Divine Foresight,Seat of Divine Foresight,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Aurum Alley,Aurum Alley,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Aurum Alley,Aurum Alley,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Aurum Alley Night Market,Aurum Alley,The Xianzhou Luofu,loc_the_xianzhou_luofu
@@ -200,7 +209,7 @@ Locufox Forest Backdoor,Fyxestroll Garden,The Xianzhou Luofu,loc_the_xianzhou_lu
 Meeting Point,Fyxestroll Garden,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Pavilion of Cessation Corridor,Fyxestroll Garden,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Swallowsong Pavilion Entrance,Fyxestroll Garden,The Xianzhou Luofu,loc_the_xianzhou_luofu
-Verdant Terrace Entrance,Fyxestroll Garden,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Verdantia Terrace Entrance,Fyxestroll Garden,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Alchemy Commission,Alchemy Commission,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Alchemy Commission,Alchemy Commission,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Aureate Elixir Furnace,Alchemy Commission,The Xianzhou Luofu,loc_the_xianzhou_luofu
@@ -213,6 +222,23 @@ Scalegorge Waterscape,Scalegorge Waterscape,The Xianzhou Luofu,loc_the_xianzhou_
 Ancient Sea Palace Ruins,Scalegorge Waterscape,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Dragonvista Rain Hall,Scalegorge Waterscape,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Palace Ruin Depths,Scalegorge Waterscape,The Xianzhou Luofu,loc_the_xianzhou_luofu
+The Shackling Prison,The Shackling Prison,The Xianzhou Luofu,loc_the_xianzhou_luofu
+The Shackling Prison,The Shackling Prison,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Grimfrost Hold (I),The Shackling Prison,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Grimfrost Hold (II),The Shackling Prison,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Nether Key,The Shackling Prison,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Pyroscape Hold,The Shackling Prison,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Scriptorium: Plankway Front,The Shackling Prison,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Vileguard Maw,The Shackling Prison,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Skysplitter,Skysplitter,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Skysplitter,Skysplitter,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Blue Team Audience Seats,Skysplitter,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Deck Wardance Stage,Skysplitter,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Logistics Line,Skysplitter,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Mooring Zone,Skysplitter,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Reception Hall,Skysplitter,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Red Team Audience Seats,Skysplitter,The Xianzhou Luofu,loc_the_xianzhou_luofu
+Wardance Arena Sub-Floor,Skysplitter,The Xianzhou Luofu,loc_the_xianzhou_luofu
 Reality,Reality,Penacony,loc_penacony
 Reality,Reality,Penacony,loc_penacony
 The Reverie (Reality),Reality,Penacony,loc_penacony
@@ -268,24 +294,37 @@ SoulGlad™ Scorchsand Audition Venue,Dreamscape,Penacony,loc_penacony
 Audition Plaza,Dreamscape,Penacony,loc_penacony
 Path of the Superstar,Dreamscape,Penacony,loc_penacony
 Dreamplay Fantasia: Acting Challenge,Dreamscape,Penacony,loc_penacony
+Dreamplay Fantasia: Acting Challenge,Dreamscape,Penacony,loc_penacony
+Dreamplay Fantasia: Action Challenge,Dreamscape,Penacony,loc_penacony
 Dreamplay Fantasia: Action Challenge,Dreamscape,Penacony,loc_penacony
 Gunfire Time: Gunfire Trial,Dreamscape,Penacony,loc_penacony
+Gunfire Time: Gunfire Trial,Dreamscape,Penacony,loc_penacony
+Gunfire Time: Time Trial,Dreamscape,Penacony,loc_penacony
 Gunfire Time: Time Trial,Dreamscape,Penacony,loc_penacony
 Gunfire Time: Time Trial (Posterior),Dreamscape,Penacony,loc_penacony
 Superstar Showdown: Arena I,Dreamscape,Penacony,loc_penacony
+Superstar Showdown: Arena I,Dreamscape,Penacony,loc_penacony
+Superstar Showdown: Arena II,Dreamscape,Penacony,loc_penacony
 Superstar Showdown: Arena II,Dreamscape,Penacony,loc_penacony
 Penacony Grand Theater,Dreamscape,Penacony,loc_penacony
 Ascension Hallway,Dreamscape,Penacony,loc_penacony
 Communing Hall,Dreamscape,Penacony,loc_penacony
 Hall of Chords,Dreamscape,Penacony,loc_penacony
 Saloon of Gospels,Dreamscape,Penacony,loc_penacony
-Radiant Feldspar,Dreamscape,Penacony,loc_penacony
+"Act II, Present",Dreamscape,Penacony,loc_penacony
+The Radiant Feldspar,Dreamscape,Penacony,loc_penacony
 Aft Pool,Dreamscape,Penacony,loc_penacony
 Cockpit,Dreamscape,Penacony,loc_penacony
 Divergent Universe: Terminal Interface,Dreamscape,Penacony,loc_penacony
 Main Banquet Hall,Dreamscape,Penacony,loc_penacony
 Midship Lounge,Dreamscape,Penacony,loc_penacony
 Origami Bird Battle Lobby,Dreamscape,Penacony,loc_penacony
+Penacony Paperfold University College,Dreamscape,Penacony,loc_penacony
+Chromasweven Avenue,Dreamscape,Penacony,loc_penacony
+Creator's Market,Dreamscape,Penacony,loc_penacony
+Cultural Corridor,Dreamscape,Penacony,loc_penacony
+Glaux Sculpture,Dreamscape,Penacony,loc_penacony
+Dean's Office,Dreamscape,Penacony,loc_penacony
 Golden Hour,Golden Hour,Penacony,loc_penacony
 Golden Hour,Golden Hour,Penacony,loc_penacony
 Aideen Park,Golden Hour,Penacony,loc_penacony
@@ -316,7 +355,7 @@ VIP Lounge Corridor,The Reverie (Dreamscape),Penacony,loc_penacony
 Dewlight Pavilion,Dewlight Pavilion,Penacony,loc_penacony
 Dewlight Pavilion,Dewlight Pavilion,Penacony,loc_penacony
 Dreammaster Hall,Dewlight Pavilion,Penacony,loc_penacony
-Reception Counter,Dewlight Pavilion,Penacony,loc_OpenACC
+Reception Counter,Dewlight Pavilion,Penacony,loc_penacony
 City Sandpit,Dewlight Pavilion,Penacony,loc_penacony
 City Sandpit,Dewlight Pavilion,Penacony,loc_penacony
 City Sandpit,City Sandpit,Penacony,loc_penacony
@@ -341,23 +380,35 @@ SoulGlad™ Scorchsand Audition Venue,SoulGlad™ Scorchsand Audition Venue,Pena
 Audition Plaza,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 Path of the Superstar,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 Dreamplay Fantasia: Acting Challenge,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Dreamplay Fantasia: Acting Challenge,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Dreamplay Fantasia: Action Challenge,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 Dreamplay Fantasia: Action Challenge,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 Gunfire Time: Gunfire Trial,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Gunfire Time: Gunfire Trial,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Gunfire Time: Time Trial,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 Gunfire Time: Time Trial,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 Gunfire Time: Time Trial (Posterior),SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 Superstar Showdown: Arena I,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Superstar Showdown: Arena I,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
+Superstar Showdown: Arena II,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 Superstar Showdown: Arena II,SoulGlad™ Scorchsand Audition Venue,Penacony,loc_penacony
 Dreamplay Fantasia: Acting Challenge,Dreamplay Fantasia: Acting Challenge,Penacony,loc_penacony
 Dreamplay Fantasia: Acting Challenge,Dreamplay Fantasia: Acting Challenge,Penacony,loc_penacony
+Dreamplay Fantasia: Acting Challenge,Dreamplay Fantasia: Acting Challenge,Penacony,loc_penacony
+Dreamplay Fantasia: Action Challenge,Dreamplay Fantasia: Action Challenge,Penacony,loc_penacony
 Dreamplay Fantasia: Action Challenge,Dreamplay Fantasia: Action Challenge,Penacony,loc_penacony
 Dreamplay Fantasia: Action Challenge,Dreamplay Fantasia: Action Challenge,Penacony,loc_penacony
 Gunfire Time: Gunfire Trial,Gunfire Time: Gunfire Trial,Penacony,loc_penacony
 Gunfire Time: Gunfire Trial,Gunfire Time: Gunfire Trial,Penacony,loc_penacony
+Gunfire Time: Gunfire Trial,Gunfire Time: Gunfire Trial,Penacony,loc_penacony
+Gunfire Time: Time Trial,Gunfire Time: Time Trial,Penacony,loc_penacony
 Gunfire Time: Time Trial,Gunfire Time: Time Trial,Penacony,loc_penacony
 Gunfire Time: Time Trial,Gunfire Time: Time Trial,Penacony,loc_penacony
 Gunfire Time: Time Trial (Posterior),Gunfire Time: Time Trial,Penacony,loc_penacony
 Superstar Showdown: Arena I,Superstar Showdown: Arena I,Penacony,loc_penacony
 Superstar Showdown: Arena I,Superstar Showdown: Arena I,Penacony,loc_penacony
+Superstar Showdown: Arena I,Superstar Showdown: Arena I,Penacony,loc_penacony
+Superstar Showdown: Arena II,Superstar Showdown: Arena II,Penacony,loc_penacony
 Superstar Showdown: Arena II,Superstar Showdown: Arena II,Penacony,loc_penacony
 Superstar Showdown: Arena II,Superstar Showdown: Arena II,Penacony,loc_penacony
 Penacony Grand Theater,Penacony Grand Theater,Penacony,loc_penacony
@@ -366,14 +417,221 @@ Ascension Hallway,Penacony Grand Theater,Penacony,loc_penacony
 Communing Hall,Penacony Grand Theater,Penacony,loc_penacony
 Hall of Chords,Penacony Grand Theater,Penacony,loc_penacony
 Saloon of Gospels,Penacony Grand Theater,Penacony,loc_penacony
-Radiant Feldspar,Radiant Feldspar,Penacony,loc_penacony
-Radiant Feldspar,Radiant Feldspar,Penacony,loc_penacony
-Aft Pool,Radiant Feldspar,Penacony,loc_penacony
-Cockpit,Radiant Feldspar,Penacony,loc_penacony
-Divergent Universe: Terminal Interface,Radiant Feldspar,Penacony,loc_penacony
-Main Banquet Hall,Radiant Feldspar,Penacony,loc_penacony
-Midship Lounge,Radiant Feldspar,Penacony,loc_penacony
-Origami Bird Battle Lobby,Radiant Feldspar,Penacony,loc_penacony
+"Act II, Present",Penacony Grand Theater,Penacony,loc_penacony
+The Radiant Feldspar,The Radiant Feldspar,Penacony,loc_penacony
+The Radiant Feldspar,The Radiant Feldspar,Penacony,loc_penacony
+Aft Pool,The Radiant Feldspar,Penacony,loc_penacony
+Cockpit,The Radiant Feldspar,Penacony,loc_penacony
+Divergent Universe: Terminal Interface,The Radiant Feldspar,Penacony,loc_penacony
+Main Banquet Hall,The Radiant Feldspar,Penacony,loc_penacony
+Midship Lounge,The Radiant Feldspar,Penacony,loc_penacony
+Origami Bird Battle Lobby,The Radiant Feldspar,Penacony,loc_penacony
+Penacony Paperfold University College,Penacony Paperfold University College,Penacony,loc_penacony
+Penacony Paperfold University College,Penacony Paperfold University College,Penacony,loc_penacony
+Chromasweven Avenue,Penacony Paperfold University College,Penacony,loc_penacony
+Creator's Market,Penacony Paperfold University College,Penacony,loc_penacony
+Cultural Corridor,Penacony Paperfold University College,Penacony,loc_penacony
+Glaux Sculpture,Penacony Paperfold University College,Penacony,loc_penacony
+Dean's Office,Penacony Paperfold University College,Penacony,loc_penacony
+Dawn,Dawn,Amphoreus,loc_amphoreus
+Dawn,Dawn,Amphoreus,loc_amphoreus
+Eternal Holy City Okhema,Dawn,Amphoreus,loc_amphoreus
+Chimera Management Center,Dawn,Amphoreus,loc_amphoreus
+Court of Seasons,Dawn,Amphoreus,loc_amphoreus
+Hall of Respite,Dawn,Amphoreus,loc_amphoreus
+Hero's Bath,Dawn,Amphoreus,loc_amphoreus
+Garden of Life,Dawn,Amphoreus,loc_amphoreus
+Kephale Plaza,Dawn,Amphoreus,loc_amphoreus
+Marmoreal Market,Dawn,Amphoreus,loc_amphoreus
+Marmoreal Palace,Dawn,Amphoreus,loc_amphoreus
+Overflowing Bath,Dawn,Amphoreus,loc_amphoreus
+Path of Parting,Dawn,Amphoreus,loc_amphoreus
+Bloodbathed Battlefront Castrum Kremnos,Dawn,Amphoreus,loc_amphoreus
+Chisel Zone,Dawn,Amphoreus,loc_amphoreus
+Excavation Ground,Dawn,Amphoreus,loc_amphoreus
+Hall of Strife,Dawn,Amphoreus,loc_amphoreus
+Path of Conquest,Dawn,Amphoreus,loc_amphoreus
+Soul-Forging Gate,Dawn,Amphoreus,loc_amphoreus
+Sanctum of Prophecy Janusopolis,Dawn,Amphoreus,loc_amphoreus
+Archive of Prophecies,Dawn,Amphoreus,loc_amphoreus
+Destiny's Gate,Dawn,Amphoreus,loc_amphoreus
+End of the Gate,Dawn,Amphoreus,loc_amphoreus
+Hidden Passage of Contemplation,Dawn,Amphoreus,loc_amphoreus
+Theophany Altar,Dawn,Amphoreus,loc_amphoreus
+Worshiper's Footpath,Dawn,Amphoreus,loc_amphoreus
+Demigod Council Dawncloud,Dawn,Amphoreus,loc_amphoreus
+Demigod Council,Dawn,Amphoreus,loc_amphoreus
+Demigod Council: Forecourt,Dawn,Amphoreus,loc_amphoreus
+Sacred Path of Dawncloud,Dawn,Amphoreus,loc_amphoreus
+Titan Cliff: Entrance,Dawn,Amphoreus,loc_amphoreus
+Worldbearing Altar: Audience Hall,Dawn,Amphoreus,loc_amphoreus
+Fortress of Dome Eye of Twilight,Dawn,Amphoreus,loc_amphoreus
+Arching BoneMech,Dawn,Amphoreus,loc_amphoreus
+Celestial Mural,Dawn,Amphoreus,loc_amphoreus
+End of Neon,Dawn,Amphoreus,loc_amphoreus
+Frontier Corridor,Dawn,Amphoreus,loc_amphoreus
+Frontier Roof,Dawn,Amphoreus,loc_amphoreus
+Frontier Well,Dawn,Amphoreus,loc_amphoreus
+Eternal Holy City Okhema,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Eternal Holy City Okhema,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Chimera Management Center,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Court of Seasons,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Hall of Respite,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Hero's Bath,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Garden of Life,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Kephale Plaza,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Marmoreal Market,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Marmoreal Palace,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Overflowing Bath,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Path of Parting,Eternal Holy City Okhema,Amphoreus,loc_amphoreus
+Bloodbathed Battlefront Castrum Kremnos,Bloodbathed Battlefront Castrum Kremnos,Amphoreus,loc_amphoreus
+Bloodbathed Battlefront Castrum Kremnos,Bloodbathed Battlefront Castrum Kremnos,Amphoreus,loc_amphoreus
+Chisel Zone,Bloodbathed Battlefront Castrum Kremnos,Amphoreus,loc_amphoreus
+Excavation Ground,Bloodbathed Battlefront Castrum Kremnos,Amphoreus,loc_amphoreus
+Hall of Strife,Bloodbathed Battlefront Castrum Kremnos,Amphoreus,loc_amphoreus
+Path of Conquest,Bloodbathed Battlefront Castrum Kremnos,Amphoreus,loc_amphoreus
+Soul-Forging Gate,Bloodbathed Battlefront Castrum Kremnos,Amphoreus,loc_amphoreus
+Sanctum of Prophecy Janusopolis,Sanctum of Prophecy Janusopolis,Amphoreus,loc_amphoreus
+Sanctum of Prophecy Janusopolis,Sanctum of Prophecy Janusopolis,Amphoreus,loc_amphoreus
+Archive of Prophecies,Sanctum of Prophecy Janusopolis,Amphoreus,loc_amphoreus
+Destiny's Gate,Sanctum of Prophecy Janusopolis,Amphoreus,loc_amphoreus
+End of the Gate,Sanctum of Prophecy Janusopolis,Amphoreus,loc_amphoreus
+Hidden Passage of Contemplation,Sanctum of Prophecy Janusopolis,Amphoreus,loc_amphoreus
+Theophany Altar,Sanctum of Prophecy Janusopolis,Amphoreus,loc_amphoreus
+Worshiper's Footpath,Sanctum of Prophecy Janusopolis,Amphoreus,loc_amphoreus
+Demigod Council Dawncloud,Demigod Council Dawncloud,Amphoreus,loc_amphoreus
+Demigod Council Dawncloud,Demigod Council Dawncloud,Amphoreus,loc_amphoreus
+Demigod Council,Demigod Council Dawncloud,Amphoreus,loc_amphoreus
+Demigod Council: Forecourt,Demigod Council Dawncloud,Amphoreus,loc_amphoreus
+Sacred Path of Dawncloud,Demigod Council Dawncloud,Amphoreus,loc_amphoreus
+Titan Cliff: Entrance,Demigod Council Dawncloud,Amphoreus,loc_amphoreus
+Worldbearing Altar: Audience Hall,Demigod Council Dawncloud,Amphoreus,loc_amphoreus
+Fortress of Dome Eye of Twilight,Fortress of Dome Eye of Twilight,Amphoreus,loc_amphoreus
+Fortress of Dome Eye of Twilight,Fortress of Dome Eye of Twilight,Amphoreus,loc_amphoreus
+Arching BoneMech,Fortress of Dome Eye of Twilight,Amphoreus,loc_amphoreus
+Celestial Mural,Fortress of Dome Eye of Twilight,Amphoreus,loc_amphoreus
+End of Neon,Fortress of Dome Eye of Twilight,Amphoreus,loc_amphoreus
+Frontier Corridor,Fortress of Dome Eye of Twilight,Amphoreus,loc_amphoreus
+Frontier Roof,Fortress of Dome Eye of Twilight,Amphoreus,loc_amphoreus
+Frontier Well,Fortress of Dome Eye of Twilight,Amphoreus,loc_amphoreus
+Evernight,Evernight,Amphoreus,loc_amphoreus
+Evernight,Evernight,Amphoreus,loc_amphoreus
+Fallen Twilight City Okhema,Evernight,Amphoreus,loc_amphoreus
+Frostlight Bath Chamber,Evernight,Amphoreus,loc_amphoreus
+Mirage Cove,Evernight,Amphoreus,loc_amphoreus
+Nightshade Courtyard,Evernight,Amphoreus,loc_amphoreus
+Reverie Bath,Evernight,Amphoreus,loc_amphoreus
+Road of Sunset,Evernight,Amphoreus,loc_amphoreus
+Sentinel Plaza,Evernight,Amphoreus,loc_amphoreus
+Silent Night's Market,Evernight,Amphoreus,loc_amphoreus
+Tranquil Waters,Evernight,Amphoreus,loc_amphoreus
+Whispering Hall,Evernight,Amphoreus,loc_amphoreus
+Strife Ruins Castrum Kremnos,Evernight,Amphoreus,loc_amphoreus
+Conquered Outlands,Evernight,Amphoreus,loc_amphoreus
+Kremnos Arena,Evernight,Amphoreus,loc_amphoreus
+Old Quarry Ground,Evernight,Amphoreus,loc_amphoreus
+Remnant Hall of Truce,Evernight,Amphoreus,loc_amphoreus
+Silent Chisel Ground,Evernight,Amphoreus,loc_amphoreus
+Soul-Forging Ruins,Evernight,Amphoreus,loc_amphoreus
+Soulchaser Pass,Evernight,Amphoreus,loc_amphoreus
+Abyss of Fate Janusopolis,Evernight,Amphoreus,loc_amphoreus
+Destiny's Desolation,Evernight,Amphoreus,loc_amphoreus
+Dreamshroud Mausoleum,Evernight,Amphoreus,loc_amphoreus
+Everdream Gate,Evernight,Amphoreus,loc_amphoreus
+Silent Shroud,Evernight,Amphoreus,loc_amphoreus
+Theophany Chamber,Evernight,Amphoreus,loc_amphoreus
+Murmuring Woods Grove of Epiphany,Evernight,Amphoreus,loc_amphoreus
+Dome of Devotion,Evernight,Amphoreus,loc_amphoreus
+Library of Philia,Evernight,Amphoreus,loc_amphoreus
+Luminary Throne,Evernight,Amphoreus,loc_amphoreus
+Serene Court of Learning,Evernight,Amphoreus,loc_amphoreus
+Woven Trail,Evernight,Amphoreus,loc_amphoreus
+Lightless Chapel Dawncloud,Evernight,Amphoreus,loc_amphoreus
+Apocalypse Altar,Evernight,Amphoreus,loc_amphoreus
+Eve's Holy Pass,Evernight,Amphoreus,loc_amphoreus
+Lightless Chapel,Evernight,Amphoreus,loc_amphoreus
+Lightless Chapel: Vestibule,Evernight,Amphoreus,loc_amphoreus
+Mourning Heights: Entrance,Evernight,Amphoreus,loc_amphoreus
+Dragonbone City Styxia,Evernight,Amphoreus,loc_amphoreus
+Ancient City Main Gate,Evernight,Amphoreus,loc_amphoreus
+Ancient City Market,Evernight,Amphoreus,loc_amphoreus
+Royal Palace Ruins,Evernight,Amphoreus,loc_amphoreus
+Temple of Ages,Evernight,Amphoreus,loc_amphoreus
+Treasure Vault Secret Passage,Evernight,Amphoreus,loc_amphoreus
+Twin Moon Spire,Evernight,Amphoreus,loc_amphoreus
+The Sea of Flowers in Memory,Evernight,Amphoreus,loc_amphoreus
+Cloudedge Bastion Ruins Eye of Twilight,Evernight,Amphoreus,loc_amphoreus
+Aurous Perch,Evernight,Amphoreus,loc_amphoreus
+Aurous Pool,Evernight,Amphoreus,loc_amphoreus
+Bastion Depth,Evernight,Amphoreus,loc_amphoreus
+Bastion Well,Evernight,Amphoreus,loc_amphoreus
+Nightspire BoneMech,Evernight,Amphoreus,loc_amphoreus
+Nightwail Ruins,Evernight,Amphoreus,loc_amphoreus
+Fallen Twilight City Okhema,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Fallen Twilight City Okhema,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Frostlight Bath Chamber,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Mirage Cove,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Nightshade Courtyard,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Reverie Bath,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Road of Sunset,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Sentinel Plaza,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Silent Night's Market,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Tranquil Waters,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Whispering Hall,Fallen Twilight City Okhema,Amphoreus,loc_amphoreus
+Strife Ruins Castrum Kremnos,Strife Ruins Castrum Kremnos,Amphoreus,loc_amphoreus
+Strife Ruins Castrum Kremnos,Strife Ruins Castrum Kremnos,Amphoreus,loc_amphoreus
+Conquered Outlands,Strife Ruins Castrum Kremnos,Amphoreus,loc_amphoreus
+Kremnos Arena,Strife Ruins Castrum Kremnos,Amphoreus,loc_amphoreus
+Old Quarry Ground,Strife Ruins Castrum Kremnos,Amphoreus,loc_amphoreus
+Remnant Hall of Truce,Strife Ruins Castrum Kremnos,Amphoreus,loc_amphoreus
+Silent Chisel Ground,Strife Ruins Castrum Kremnos,Amphoreus,loc_amphoreus
+Soul-Forging Ruins,Strife Ruins Castrum Kremnos,Amphoreus,loc_amphoreus
+Soulchaser Pass,Strife Ruins Castrum Kremnos,Amphoreus,loc_amphoreus
+Abyss of Fate Janusopolis,Abyss of Fate Janusopolis,Amphoreus,loc_amphoreus
+Abyss of Fate Janusopolis,Abyss of Fate Janusopolis,Amphoreus,loc_amphoreus
+Destiny's Desolation,Abyss of Fate Janusopolis,Amphoreus,loc_amphoreus
+Dreamshroud Mausoleum,Abyss of Fate Janusopolis,Amphoreus,loc_amphoreus
+Everdream Gate,Abyss of Fate Janusopolis,Amphoreus,loc_amphoreus
+Silent Shroud,Abyss of Fate Janusopolis,Amphoreus,loc_amphoreus
+Theophany Chamber,Abyss of Fate Janusopolis,Amphoreus,loc_amphoreus
+Murmuring Woods Grove of Epiphany,Murmuring Woods Grove of Epiphany,Amphoreus,loc_amphoreus
+Murmuring Woods Grove of Epiphany,Murmuring Woods Grove of Epiphany,Amphoreus,loc_amphoreus
+Dome of Devotion,Murmuring Woods Grove of Epiphany,Amphoreus,loc_amphoreus
+Library of Philia,Murmuring Woods Grove of Epiphany,Amphoreus,loc_amphoreus
+Luminary Throne,Murmuring Woods Grove of Epiphany,Amphoreus,loc_amphoreus
+Serene Court of Learning,Murmuring Woods Grove of Epiphany,Amphoreus,loc_amphoreus
+Woven Trail,Murmuring Woods Grove of Epiphany,Amphoreus,loc_amphoreus
+Lightless Chapel Dawncloud,Lightless Chapel Dawncloud,Amphoreus,loc_amphoreus
+Lightless Chapel Dawncloud,Lightless Chapel Dawncloud,Amphoreus,loc_amphoreus
+Apocalypse Altar,Lightless Chapel Dawncloud,Amphoreus,loc_amphoreus
+Eve's Holy Pass,Lightless Chapel Dawncloud,Amphoreus,loc_amphoreus
+Lightless Chapel,Lightless Chapel Dawncloud,Amphoreus,loc_amphoreus
+Lightless Chapel: Vestibule,Lightless Chapel Dawncloud,Amphoreus,loc_amphoreus
+Mourning Heights: Entrance,Lightless Chapel Dawncloud,Amphoreus,loc_amphoreus
+Dragonbone City Styxia,Dragonbone City Styxia,Amphoreus,loc_amphoreus
+Dragonbone City Styxia,Dragonbone City Styxia,Amphoreus,loc_amphoreus
+Ancient City Main Gate,Dragonbone City Styxia,Amphoreus,loc_amphoreus
+Ancient City Market,Dragonbone City Styxia,Amphoreus,loc_amphoreus
+Royal Palace Ruins,Dragonbone City Styxia,Amphoreus,loc_amphoreus
+Temple of Ages,Dragonbone City Styxia,Amphoreus,loc_amphoreus
+Treasure Vault Secret Passage,Dragonbone City Styxia,Amphoreus,loc_amphoreus
+Twin Moon Spire,Dragonbone City Styxia,Amphoreus,loc_amphoreus
+The Sea of Flowers in Memory,Dragonbone City Styxia,Amphoreus,loc_amphoreus
+Cloudedge Bastion Ruins Eye of Twilight,Cloudedge Bastion Ruins Eye of Twilight,Amphoreus,loc_amphoreus
+Cloudedge Bastion Ruins Eye of Twilight,Cloudedge Bastion Ruins Eye of Twilight,Amphoreus,loc_amphoreus
+Aurous Perch,Cloudedge Bastion Ruins Eye of Twilight,Amphoreus,loc_amphoreus
+Aurous Pool,Cloudedge Bastion Ruins Eye of Twilight,Amphoreus,loc_amphoreus
+Bastion Depth,Cloudedge Bastion Ruins Eye of Twilight,Amphoreus,loc_amphoreus
+Bastion Well,Cloudedge Bastion Ruins Eye of Twilight,Amphoreus,loc_amphoreus
+Nightspire BoneMech,Cloudedge Bastion Ruins Eye of Twilight,Amphoreus,loc_amphoreus
+Nightwail Ruins,Cloudedge Bastion Ruins Eye of Twilight,Amphoreus,loc_amphoreus
+Outworld,Outworld,Amphoreus,loc_amphoreus
+Outworld,Outworld,Amphoreus,loc_amphoreus
+Vortex of Genesis,Outworld,Amphoreus,loc_amphoreus
+World Breeding Meridian,Outworld,Amphoreus,loc_amphoreus
+Vortex of Genesis,Vortex of Genesis,Amphoreus,loc_amphoreus
+Vortex of Genesis,Vortex of Genesis,Amphoreus,loc_amphoreus
+World Breeding Meridian,Vortex of Genesis,Amphoreus,loc_amphoreus
 Domain - Combat,Domain - Combat,Simulated universe,loc_su
 Domain - Elite,Domain - Elite,Simulated universe,loc_su
 Domain - Respite,Domain - Respite,Simulated universe,loc_su

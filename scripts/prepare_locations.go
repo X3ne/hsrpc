@@ -48,7 +48,7 @@ func PrepareLocations(config *ScriptConfig) {
 		log.Fatal(err)
 	}
 
-	regions := []string{"Herta Space Station", "Jarilo-VI", "The Xianzhou Luofu", "Penacony", "Other Locations"}
+	regions := []string{"Herta Space Station", "Jarilo-VI", "The Xianzhou Luofu", "Penacony", "Amphoreus", "Other Locations"}
 
 	root := doc.Find(".navbox-border").Eq(0)
 	for _, region := range regions {
