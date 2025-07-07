@@ -5,6 +5,8 @@ use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent}
 use tauri::Manager;
 use tauri_plugin_updater::UpdaterExt;
 
+use crate::error::Error;
+
 mod app;
 mod config;
 mod constants;
@@ -36,29 +38,42 @@ async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
     Ok(())
 }
 
-fn start_app_loop(app_handle: tauri::AppHandle) {
+fn start_app_loop(app_handle: tauri::AppHandle) -> Result<(), Error> {
     let config_dir = app_handle
         .path()
-        .config_dir()
-        .expect("Failed to get config directory");
-    let config = Config::load(config_dir.join("config.toml").to_str().unwrap()).unwrap();
+        .resolve("", BaseDirectory::AppConfig)
+        .map_err(|e| Error::Custom(format!("Failed to resolve config directory: {}", e)))?;
+
+    if !config_dir.exists() {
+        std::fs::create_dir_all(&config_dir)
+            .map_err(|e| Error::AppFolderCreation(format!("Failed to create config dir: {}", e)))?;
+    }
+
+    let config = Config::load(config_dir.join("config.toml").to_str().unwrap())?;
 
     let resources_path = app_handle
         .path()
         .resolve("game-data", BaseDirectory::Resource)
-        .expect("Failed to resolve resources path");
+        .map_err(|e| {
+            Error::AppPathResolution(format!("Failed to resolve resources path: {}", e))
+        })?;
 
-    let game_data = game::data::GameData::load(&resources_path).expect("Failed to load game data");
+    log::info!("Resources path: {}", resources_path.display());
+
+    let game_data = game::data::GameData::load(&resources_path)
+        .map_err(|e| Error::Custom(format!("Failed to load game data: {}", e)))?;
 
     let tesseract_path = app_handle
         .path()
         .resolve("binaries/tesseract/tesseract.exe", BaseDirectory::Resource)
-        .expect("failed to resolve tesseract path");
+        .map_err(|e| {
+            Error::AppPathResolution(format!("Failed to resolve tesseract path: {}", e))
+        })?;
 
     let tessdata_path = app_handle
         .path()
         .resolve("binaries/tesseract/tessdata", BaseDirectory::Resource)
-        .expect("failed to resolve tessdata path");
+        .map_err(|e| Error::AppPathResolution(format!("Failed to resolve tessdata path: {}", e)))?;
 
     // tauri::async_runtime::spawn_blocking(move || {
     //     let mut app = app::App::new(
@@ -91,6 +106,8 @@ fn start_app_loop(app_handle: tauri::AppHandle) {
             app.start_loop().await;
         });
     });
+
+    Ok(())
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -98,13 +115,15 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(
             tauri_plugin_log::Builder::new()
+                .max_file_size(50_000)
+                .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
                 .target(tauri_plugin_log::Target::new(
                     tauri_plugin_log::TargetKind::Stdout,
                 ))
                 .build(),
         )
         .plugin(tauri_plugin_updater::Builder::new().build())
-        .plugin(tauri_plugin_single_instance::init(|app, args, cwd| {
+        .plugin(tauri_plugin_single_instance::init(|app, _, _| {
             let _ = app
                 .get_webview_window("main")
                 .expect("no main window")
@@ -144,13 +163,30 @@ pub fn run() {
 
             let handle = app.handle().clone();
 
+            #[cfg(desktop)]
+            {
+                use tauri_plugin_autostart::MacosLauncher;
+
+                let _ = app.handle().plugin(tauri_plugin_autostart::init(
+                    MacosLauncher::LaunchAgent,
+                    None,
+                ));
+            }
+
             tauri::async_runtime::spawn(async move {
-                update(handle).await.map_err(|e| {
-                    log::error!("Failed to update: {}", e);
-                }).ok();
+                update(handle)
+                    .await
+                    .map_err(|e| {
+                        log::error!("Failed to update: {}", e);
+                    })
+                    .ok();
             });
 
-            start_app_loop(app.handle().clone());
+            start_app_loop(app.handle().clone())
+                .map_err(|e| {
+                    e.report_and_exit(app.handle(), "Failed to start app");
+                })
+                .unwrap_or(());
 
             Ok(())
         })

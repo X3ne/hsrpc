@@ -140,6 +140,7 @@ pub struct Config {
     pub window_class: String,
     pub resolution: Resolution,
     pub loop_time: u64,
+    pub autostart: bool,
     pub discord_app_id: String,
     pub ui_coords: UiCoordsConfig,
     #[serde(skip)]
@@ -153,6 +154,7 @@ impl Default for Config {
             window_class: "UnityWndClass".to_string(),
             resolution: Resolution::new(1920, 1080),
             loop_time: 2000,
+            autostart: false,
             discord_app_id: "1208212792574869544".to_string(),
             ui_coords: UiCoordsConfig::default(),
             path: PathBuf::new(),
