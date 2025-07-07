@@ -1,0 +1,85 @@
+value,message,asset_id
+Download Initial Characters,Setting up characters,menu_su
+Ability Tree,Viewing the Ability Tree,menu_su
+Path,Choosing a Path,menu_su
+Select Curio,Selecting a Curio,menu_su
+Select Blessings,Selecting a Blessing,menu_su
+Character Reset,Reviving a Character,menu_su
+Download Additional Characters,Setting up characters,menu_su
+Occurrence,Viewing Occurrence,menu_su
+Curios,Viewing Curios,menu_su
+Blessings,Viewing Blessings,menu_su
+Aeons,Viewing Aeons,menu_su
+Gold and Gears,Gold and Gears,menu_su
+Rewards Overview,Viewing Rewards,menu_su
+Dice Face Setup,Setting up Dice Faces,menu_su
+Dice Face Index,Viewing Dice Faces,menu_su
+Neural Network,Viewing Neural Network,menu_su
+Secrets,Viewing Secrets,menu_su
+Swarm Disaster,Swarm Disaster,menu_su
+Trailblaze Secrets,Viewing Trailblaze Secrets,menu_su
+Communing Trail,Viewing Communing Trail,menu_su
+Enchancing Blessings,Enhancing Blessings,menu_su
+Operation Briefing,Operation Briefing,menu_interastral
+Daily Training,Daily Training,menu_interastral
+Survival Index,Survival Index,menu_interastral
+Treasures Lightward,Treasures Lightward,menu_interastral
+Strategic Training,Strategic Training,menu_interastral
+Event Notes,Event Notes,menu_travel
+Conventional Memoir,Conventional Memoir,menu_travel
+Synthesizing Consumables,Synthesizing Consumables,menu_synthesize
+Material Synthesis,Synthesizing Material,menu_synthesize
+Material Exchange,Material Exchange,menu_synthesize
+Relic Crafting,Crafting Relics,menu_synthesize
+Starlight Exchange,Starlight Exchange,menu_shop
+Embers Exchange,Embers Exchange,menu_shop
+Contract Shop,Contract Shop,menu_shop
+Oneiric Pouch,Oneiric Pouch,menu_shop
+Stellar Trade,Stellar Trade,menu_shop
+Herta's Store,Herta's Store,menu_shop
+Upgrade Materials,Upgrade Materials,menu_inventory
+Light Cone,Light Cone,menu_inventory
+Relics,Relics,menu_inventory
+Other Materials,Other Materials,menu_inventory
+Consumables,Consumables,menu_inventory
+Missions,Missions,menu_inventory
+Valuables,Valuables,menu_inventory
+Salvage Relic,Salvage Relic,menu_inventory
+All Missions,All Missions,menu_missions
+Trailblaze Mission,Trailblaze Mission,menu_missions
+Trailblaze Continuance,Trailblaze Continuance,menu_missions
+Companion Mission,Companion Mission,menu_missions
+Daily Mission,Daily Mission,menu_missions
+Adventure Mission,Adventure Mission,menu_missions
+Herta Space Station,Herta Space Station,menu_navigation
+Jarilo-VI,Jarilo-VI,menu_navigation
+The Xianzhou Luofu,The Xianzhou Luofu,menu_navigation
+Penacony,Penacony,menu_navigation
+Amphoreus,Amphoreus,menu_navigation
+Star Rail Map,Star Rail Map,menu_navigation
+Graphics,Graphics,menu_settings
+Audio,Audio,menu_settings
+Language,Language,menu_settings
+Account,Account,menu_settings
+Key Info,Key Info,menu_settings
+Shortcut Wheel Settings,Shortcut Wheel,menu_settings
+Memory of Chaos,Memory of Chaos,menu_fh
+Memory,Memory,menu_fh
+Team Setup,Team Setup,menu_fh
+Stage Info,Stage Info,menu_combat
+Others,Others,menu_combat
+Subscription Plan,Subscription Plan,menu_common
+Exorcismal Chronicle,Exorcismal Chronicle,menu_common
+Exorcismics,Exorcismics,menu_common
+Logistics Planning,Logistics Planning,menu_common
+Guild Benefits,Guild Benefits,menu_common
+Store Index,Store Index,menu_common
+Victory Zone,Victory Zone,menu_common
+Hyperlink Match,Hyperlink Match,menu_common
+Point Ranking Tournament,Point Ranking Tournament,menu_common
+Boulder Town Martial Exhibition,Boulder Town Martial Exhibition,menu_common
+Legends Past and Present,Legends Past and Present,menu_common
+Event Rewards,Event Rewards,menu_common
+Write Story,Write Story,menu_common
+Amphoreus' Saga of Heroes,Writting Story,menu_common
+Flame-Chaser's Path,Flame-Chaser's Path,menu_common

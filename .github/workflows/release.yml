@@ -1,0 +1,96 @@
+name: 'Publish Tauri App'
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish-tauri:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: 'windows-latest'
+            args: ''
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get Latest GitHub Release Details
+        id: get_release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              const { data: release } = await github.rest.repos.getLatestRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+              });
+
+              core.setOutput('tag_name', release.tag_name);
+              core.setOutput('release_body', release.body);
+              core.setOutput('release_id', release.id);
+            } catch (error) {
+              console.log('No latest release found');
+              core.setOutput('tag_name', '');
+              core.setOutput('release_body', '');
+              core.setOutput('release_id', '');
+            }
+
+      - name: Install jq
+        if: runner.os == 'Windows'
+        run: |
+          choco install jq -y
+
+      - name: Update App Version
+
+        if: ${{ steps.get_release.outputs.release_id != '' }}
+        shell: bash
+        run: |
+          APP_VERSION=$(echo "${{ steps.get_release.outputs.tag_name }}" | sed 's/^v//')
+          echo "Updating app version to: $APP_VERSION"
+
+          sed -i "s/^version = \"[0-9.]*\"/version = \"${APP_VERSION}\"/" src-tauri/Cargo.toml
+
+          jq --arg VERSION "${APP_VERSION}" '.version = $VERSION' src-tauri/tauri.conf.json > src-tauri/tauri.conf.json.tmp && mv src-tauri/tauri.conf.json.tmp src-tauri/tauri.conf.json
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'pnpm'
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ''
+
+      - name: Install Frontend Dependencies
+        run: pnpm install
+
+      - name: Build and Publish Tauri App
+        if: ${{ steps.get_release.outputs.release_id != '' }}
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          tagName: ${{ steps.get_release.outputs.tag_name }}
+          releaseName: 'App ${{ steps.get_release.outputs.tag_name }}'
+          releaseBody: ${{ steps.get_release.outputs.release_body }}
+          releaseId: ${{ steps.get_release.outputs.release_id }}
+          releaseDraft: false
+          prerelease: false
+          args: ${{ matrix.args }}
+          includeUpdaterJson: true
