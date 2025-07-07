@@ -29,7 +29,7 @@ const SettingsModalNav = ({ items, activePage, onPageChange }: SettingsModalNavP
               isActive={item.key === activePage}
               onClick={() => onPageChange(item.key)}
             >
-              {item.icon && <item.icon size={18} />}
+              {item.icon && <item.icon className='scale-120' />}
               <span>{item.title}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>

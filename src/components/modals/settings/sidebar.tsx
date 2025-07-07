@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Setting2, Information, type Icon } from 'iconsax-reactjs'
+import { Setting2, Information, Gameboy, Activity, type Icon } from 'iconsax-reactjs'
 
 import { SettingsModalNav } from '@/components/modals/settings/nav'
 import { Sidebar, SidebarContent, SidebarHeader } from '@/components/ui/sidebar'
@@ -21,6 +21,16 @@ const sidebarNavItems: ISidebarNavItems = {
       icon: Setting2
     },
     {
+      title: 'Game',
+      key: 'game',
+      icon: Gameboy
+    },
+    {
+      title: 'Discord',
+      key: 'discord',
+      icon: Activity
+    },
+    {
       title: 'About',
       key: 'about',
       icon: Information
@@ -36,8 +46,8 @@ interface SettingsSidebarProps extends React.ComponentProps<typeof Sidebar> {
 const SettingsSidebar = ({ activePage, onPageChange, ...props }: SettingsSidebarProps) => {
   return (
     <Sidebar {...props}>
-      <SidebarHeader className='p-4'>
-        <h2 className='text-xl'>Settings</h2>
+      <SidebarHeader>
+        <h2 className='text-xl px-6 pt-4 text-muted-foreground'>Settings</h2>
       </SidebarHeader>
       <SidebarContent>
         <SettingsModalNav

@@ -8,11 +8,15 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { SettingsSidebar } from '@/components/modals/settings/sidebar'
 import { GeneralSettings } from '@/components/modals/settings/pages/general'
 import { AboutSettings } from '@/components/modals/settings/pages/about'
+import { GameSettings } from '@/components/modals/settings/pages/game'
+import { DiscordSettings } from '@/components/modals/settings/pages/discord'
 
-type SettingsPageKey = 'general' | 'about'
+type SettingsPageKey = 'general' | 'game' | 'discord' | 'about'
 
 const settingsPageComponents: Record<SettingsPageKey, React.ComponentType> = {
   general: GeneralSettings,
+  game: GameSettings,
+  discord: DiscordSettings,
   about: AboutSettings
 }
 

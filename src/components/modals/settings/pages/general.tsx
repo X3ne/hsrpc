@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { CardCta, CardCtaGroup } from '@/components/card-cta'
 import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
@@ -5,7 +7,14 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Switch } from '@/components/ui/switch'
 
+type CloseAction = 'tray' | 'quit'
+
 const GeneralSettings = () => {
+  const [autoLaunch, setAutoLaunch] = useState(false)
+  const [launchInTray, setLaunchInTray] = useState(false)
+  const [closeAction, setCloseAction] = useState<CloseAction>('tray')
+  const [autoUpdate, setAutoUpdate] = useState(false)
+
   return (
     <>
       <div className='h-fit p-6'>
@@ -16,7 +25,10 @@ const GeneralSettings = () => {
           <div>
             <h4 className='text-md text-muted-foreground mb-2'>Launch Settings</h4>
             <CardCtaGroup>
-              <CardCta title='Auto Launch on Startup' actionComponent={<Switch />} />
+              <CardCta
+                title='Auto Launch on Startup'
+                actionComponent={<Switch checked={autoLaunch} onCheckedChange={setAutoLaunch} />}
+              />
               <CardCta
                 title={
                   <div className='flex items-center gap-2'>
@@ -24,8 +36,10 @@ const GeneralSettings = () => {
                     <Badge variant='secondary'>Recommended</Badge>
                   </div>
                 }
-                description='Launch the application in the system tray'
-                actionComponent={<Switch />}
+                description='Launch the application in the system tray.'
+                actionComponent={
+                  <Switch checked={launchInTray} onCheckedChange={setLaunchInTray} />
+                }
               />
             </CardCtaGroup>
           </div>
@@ -35,7 +49,10 @@ const GeneralSettings = () => {
               <CardCta
                 title='Close App'
                 content={
-                  <RadioGroup defaultValue='tray'>
+                  <RadioGroup
+                    value={closeAction}
+                    onValueChange={value => setCloseAction(value as CloseAction)}
+                  >
                     <div className='flex items-center space-x-2'>
                       <RadioGroupItem value='tray' id='tray' />
                       <Label htmlFor='tray'>Minimize to Tray</Label>
@@ -56,7 +73,7 @@ const GeneralSettings = () => {
               <CardCta
                 title='Auto Update App on Start'
                 description='Automatically check for updates and install them on application start.'
-                actionComponent={<Switch />}
+                actionComponent={<Switch checked={autoUpdate} onCheckedChange={setAutoUpdate} />}
               />
             </CardCtaGroup>
           </div>
