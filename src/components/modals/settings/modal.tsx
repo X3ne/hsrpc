@@ -8,7 +8,6 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { SettingsSidebar } from '@/components/modals/settings/sidebar'
 import { GeneralSettings } from '@/components/modals/settings/pages/general'
 import { AboutSettings } from '@/components/modals/settings/pages/about'
-import { ScrollArea } from '@/components/ui/scroll-area'
 
 type SettingsPageKey = 'general' | 'about'
 
@@ -32,13 +31,15 @@ const SettingsModal = () => {
           <Setting2 size={18} />
         </Button>
       </DialogTrigger>
-      <DialogContent className='flex p-0 h-[554px] w-[1000px] overflow-hidden'>
+      <DialogContent className='p-0 h-9/12 w-3/4'>
         <DialogTitle className='sr-only'>Settings</DialogTitle>
-        <SidebarProvider className='h-[554px] min-h-0'>
-          <SettingsSidebar activePage={activePage} onPageChange={setActivePage} />
-          <ScrollArea className='w-full h-full flex-1'>
-            <SidebarInset>{renderActivePageContent()}</SidebarInset>
-          </ScrollArea>
+        <SidebarProvider className='min-h-0'>
+          <SettingsSidebar
+            activePage={activePage}
+            onPageChange={setActivePage}
+            className='h-full'
+          />
+          <SidebarInset className='h-full rounded-lg'>{renderActivePageContent()}</SidebarInset>
         </SidebarProvider>
       </DialogContent>
     </Dialog>

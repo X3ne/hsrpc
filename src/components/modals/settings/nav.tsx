@@ -20,7 +20,7 @@ interface SettingsModalNavProps {
 
 const SettingsModalNav = ({ items, activePage, onPageChange }: SettingsModalNavProps) => {
   return (
-    <SidebarGroup>
+    <SidebarGroup className='py-0'>
       <SidebarMenu>
         {items.map(item => (
           <SidebarMenuItem key={item.key}>

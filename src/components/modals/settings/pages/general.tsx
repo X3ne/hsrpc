@@ -1,42 +1,25 @@
+import { CardCta, CardCtaGroup } from '@/components/card-cta'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Switch } from '@/components/ui/switch'
+
 const GeneralSettings = () => {
   return (
-    <div className='p-6'>
-      <h3 className='text-xl font-bold mb-4'>General</h3>
-      <div className='mt-6 space-y-4'>
-        <div>
-          <label
-            htmlFor='theme-select'
-            className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'
-          >
-            App Theme
-          </label>
-          <select
-            id='theme-select'
-            className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'
-          >
-            <option>Dark</option>
-            <option>Light</option>
-            <option>System</option>
-          </select>
-        </div>
-        <div>
-          <label
-            htmlFor='language-select'
-            className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'
-          >
-            Language
-          </label>
-          <select
-            id='language-select'
-            className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'
-          >
-            <option>English</option>
-            <option>French</option>
-            <option>Spanish</option>
-          </select>
-        </div>
+    <>
+      <div className='h-fit p-6'>
+        <h3 className='text-xl'>General</h3>
       </div>
-    </div>
+      <ScrollArea className='h-full w-full overflow-hidden'>
+        <div className='flex flex-col space-y-6 p-6'>
+          <CardCtaGroup>
+            <CardCta
+              title='About'
+              description='View application information and check for updates.'
+              actionComponent={<Switch />}
+            />
+          </CardCtaGroup>
+        </div>
+      </ScrollArea>
+    </>
   )
 }
 

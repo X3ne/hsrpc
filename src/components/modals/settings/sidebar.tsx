@@ -35,9 +35,9 @@ interface SettingsSidebarProps extends React.ComponentProps<typeof Sidebar> {
 
 const SettingsSidebar = ({ activePage, onPageChange, ...props }: SettingsSidebarProps) => {
   return (
-    <Sidebar collapsible='icon' {...props}>
-      <SidebarHeader className='px-4 mt-4'>
-        <h2 className='text-xl font-semibold'>Settings</h2>
+    <Sidebar {...props}>
+      <SidebarHeader className='p-4'>
+        <h2 className='text-xl'>Settings</h2>
       </SidebarHeader>
       <SidebarContent>
         <SettingsModalNav
