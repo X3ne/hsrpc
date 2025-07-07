@@ -1,21 +1,38 @@
 import React from 'react'
 
-import { Card, CardAction, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 
 interface CardCtaProps {
-  title: string
-  description?: string
+  title: string | React.ReactNode
+  description?: string | React.ReactNode
   position?: 'top' | 'center' | 'bottom' | 'single'
   actionComponent?: React.ReactNode
+  content?: React.ReactNode
   onClick?: () => void
   className?: string
 }
 
 const CardCta = React.forwardRef<HTMLDivElement, CardCtaProps>(
   (
-    { title, description, position = 'single', actionComponent, onClick, className, ...props },
+    {
+      title,
+      description,
+      position = 'single',
+      actionComponent,
+      content,
+      onClick,
+      className,
+      ...props
+    },
     ref
   ) => {
     const positionClasses = {
@@ -52,6 +69,7 @@ const CardCta = React.forwardRef<HTMLDivElement, CardCtaProps>(
             </CardAction>
           )}
         </CardHeader>
+        {content && <CardContent className='p-0'>{content}</CardContent>}
       </Card>
     )
   }

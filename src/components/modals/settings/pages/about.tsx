@@ -69,7 +69,7 @@ const AboutSettings = () => {
         <h3 className='text-xl'>About</h3>
       </div>
       <ScrollArea className='h-full w-full overflow-hidden'>
-        <div className='flex flex-col space-y-6 p-6'>
+        <div className='flex flex-col space-y-6 px-6 pb-6'>
           <div className='flex flex-row items-center'>
             <img src='/icon.png' alt='Logo' className='w-10 h-10 rounded-xl' />
             <div className='ml-4 flex items-center space-x-2 h-4'>
