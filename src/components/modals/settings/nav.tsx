@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/sidebar'
 import { SettingsPageKey } from './modal'
 
-interface NavMainProps {
+interface SettingsModalNavProps {
   items: {
     title: string
     key: SettingsPageKey
@@ -18,7 +18,7 @@ interface NavMainProps {
   onPageChange: (pageKey: SettingsPageKey) => void
 }
 
-export function NavMain({ items, activePage, onPageChange }: NavMainProps) {
+const SettingsModalNav = ({ items, activePage, onPageChange }: SettingsModalNavProps) => {
   return (
     <SidebarGroup>
       <SidebarMenu>
@@ -38,3 +38,5 @@ export function NavMain({ items, activePage, onPageChange }: NavMainProps) {
     </SidebarGroup>
   )
 }
+
+export { SettingsModalNav, type SettingsModalNavProps }

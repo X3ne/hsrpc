@@ -8,6 +8,7 @@ use tauri_plugin_updater::UpdaterExt;
 use crate::error::Error;
 
 mod app;
+mod commands;
 mod config;
 mod constants;
 mod error;
@@ -75,23 +76,6 @@ fn start_app_loop(app_handle: tauri::AppHandle) -> Result<(), Error> {
         .resolve("binaries/tesseract/tessdata", BaseDirectory::Resource)
         .map_err(|e| Error::AppPathResolution(format!("Failed to resolve tessdata path: {}", e)))?;
 
-    // tauri::async_runtime::spawn_blocking(move || {
-    //     let mut app = app::App::new(
-    //         config,
-    //         game_data,
-    //         tesseract_path.to_str().unwrap(),
-    //         tessdata_path.to_str().unwrap(),
-    //         app_handle,
-    //     );
-
-    //     let rt = tokio::runtime::Builder::new_current_thread()
-    //         .enable_all()
-    //         .build()
-    //         .expect("Failed to create Tokio runtime for App loop in blocking thread");
-    //     rt.block_on(async move {
-    //         app.start_loop().await;
-    //     });
-    // });
     std::thread::spawn(move || {
         let rt =
             tokio::runtime::Runtime::new().expect("Failed to create Tokio runtime for App loop");
@@ -173,14 +157,14 @@ pub fn run() {
                 ));
             }
 
-            tauri::async_runtime::spawn(async move {
-                update(handle)
-                    .await
-                    .map_err(|e| {
-                        log::error!("Failed to update: {}", e);
-                    })
-                    .ok();
-            });
+            // tauri::async_runtime::spawn(async move {
+            //     update(handle)
+            //         .await
+            //         .map_err(|e| {
+            //             log::error!("Failed to update: {}", e);
+            //         })
+            //         .ok();
+            // });
 
             start_app_loop(app.handle().clone())
                 .map_err(|e| {
@@ -191,6 +175,10 @@ pub fn run() {
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
+        .invoke_handler(tauri::generate_handler![
+            crate::commands::open_log_file,
+            crate::commands::check_for_updates
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

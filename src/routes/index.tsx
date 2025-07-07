@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { listen } from '@tauri-apps/api/event'
+import { CardCta } from '@/components/card-cta'
 
 export const Route = createFileRoute('/')({
   component: Index

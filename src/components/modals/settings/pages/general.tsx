@@ -1,4 +1,4 @@
-export function GeneralSettings() {
+const GeneralSettings = () => {
   return (
     <div className='p-6'>
       <h3 className='text-xl font-bold mb-4'>General</h3>
@@ -39,3 +39,5 @@ export function GeneralSettings() {
     </div>
   )
 }
+
+export { GeneralSettings }

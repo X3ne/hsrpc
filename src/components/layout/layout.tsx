@@ -1,4 +1,7 @@
 import React from 'react'
+
+import { Toaster } from '@/components/ui/sonner'
+
 import { SideBar } from './sidebar'
 import { TopBar } from './topbar'
 
@@ -6,7 +9,7 @@ type LayoutProps = {
   children: React.ReactNode
 }
 
-export function Layout({ children }: LayoutProps) {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <div className='flex min-h-screen flex-col'>
       <TopBar />
@@ -14,6 +17,9 @@ export function Layout({ children }: LayoutProps) {
         <SideBar />
         <div className='mx-auto flex w-full'>{children}</div>
       </main>
+      <Toaster />
     </div>
   )
 }
+
+export { Layout, type LayoutProps }

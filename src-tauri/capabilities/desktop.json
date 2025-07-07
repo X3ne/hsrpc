@@ -10,6 +10,22 @@
   ],
   "permissions": [
     "updater:default",
-    "autostart:default"
+    "autostart:default",
+    {
+      "identifier": "opener:allow-open-path",
+      "allow": [
+        {
+          "path": "$APPCONFIG/**/*"
+        }
+      ]
+    },
+    {
+      "identifier": "opener:allow-reveal-item-in-dir",
+      "allow": [
+        {
+          "path": "$APPCONFIG/**/*"
+        }
+      ]
+    }
   ]
 }

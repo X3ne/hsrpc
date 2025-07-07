@@ -10,7 +10,7 @@ import { GeneralSettings } from '@/components/modals/settings/pages/general'
 import { AboutSettings } from '@/components/modals/settings/pages/about'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
-export type SettingsPageKey = 'general' | 'about'
+type SettingsPageKey = 'general' | 'about'
 
 const settingsPageComponents: Record<SettingsPageKey, React.ComponentType> = {
   general: GeneralSettings,
@@ -45,4 +45,4 @@ const SettingsModal = () => {
   )
 }
 
-export { SettingsModal }
+export { SettingsModal, type SettingsPageKey }

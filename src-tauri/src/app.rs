@@ -71,10 +71,6 @@ impl App {
                         .set_game_window(&self.config.window_name)
                         .is_err()
                     {
-                        log::info!(
-                            "Game window not found, retrying in {} seconds",
-                            LOOP_RETRY_TIMEOUT / 1000
-                        );
                         self.handle_window_closed();
                         sleep(Duration::from_millis(LOOP_RETRY_TIMEOUT)).await;
                         continue;
