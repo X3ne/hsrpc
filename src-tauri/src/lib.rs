@@ -177,7 +177,8 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             crate::commands::open_log_file,
-            crate::commands::check_for_updates
+            crate::commands::check_for_updates,
+            crate::commands::download_and_install_update,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
