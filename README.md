@@ -23,37 +23,53 @@
 
 This program works with [tesseract](https://github.com/tesseract-ocr/tesseract), an open source text recognition software. hsrpc extracts no data from the game and is based solely on what tesseract recognizes on the window (so some results may be wrong)
 
+<h2>🦀 Why a rust rewrite:</h2>
+
+Honestly, the legacy code in Go was a bit messy and didn't allow me to release new features quickly and cleanly. I also wanted to improve the user experience by offering a pleasant, easy-to-use application. Now it's just a click to install the application with tesseract directly bundled.
+
+Tauri gives me the right balance between performance, bundle size, user and developer experience.
+
 <h2>🛠️ Installation Steps:</h2>
 
 <p>1. Install hsrpc installer</p>
 
-Download the file named `hsrpc_windows_amd64.zip` and extract the executable (.exe) to the desired location
+Get an installer from the [latest release](https://github.com/X3ne/hsrpc/releases/latest) (choose between `.exe` or `.msi` no need to download both)
 
-[Latest release](https://github.com/X3ne/hsrpc/releases/latest)
+<p>2. Launch installer</p>
 
-<p>3. Launch</p>
-
-Just run the executable and off you go
+Just run the installer and install hsrpc
 
 <h2>🏗️ Build Steps:</h2>
 
-<h2>⚙️ Configuration:</h2>
+This project uses [tauri](https://github.com/tauri-apps/tauri) you need to follow the [prerequisites](https://v2.tauri.app/fr/start/prerequisites/) to get started
 
-When you launch the `.exe` file you can configure some settings with the GUI app. To open the GUI just go to your **windows systray** and **right click** to open the config.
+<p>1. Clone this project</p>
 
-<h3>Settings:</h3>
+```
+git clone https://github.com/X3ne/hsrpc
+```
 
-**Player UID**: Enter your hsr UID to display your level and player name (you can disable both with the 2 checkboxes). If no **Player Name** is entered, this value is used to detect whether your Trailblazer is the currently selected character.
+<p>2. Install npm packages</p>
 
-**Player name**: Enter your player name to activate Trailblazer detection (this value is optional if you've entered your UID).
+```
+pnpm install
+```
 
-**Loop time**: This is the time that elapses between two loop executions. If you're experiencing performance issues, you can increase this value (in milliseconds).
+<p>3. Build the app for development</p>
 
-**Preprocess treshold**: You can adjust this value by checking screenshots inside `C:\Users\<user>\AppData\Roaming\hsrpc\tmp` (you need to see the text on the images when using the app). If you have `Lost in the space-time continuum` status this means you may need to lower this value.
+```
+pnpm tauri dev
+```
 
-**Tesseract path**: You can change the path to tesseract.exe if the default path does not match your tesseract installation.
+<p>3.5 Build the app for production</p>
 
-**Window class** and **Window name**: These values should only be changed if your game window is not found (you can check that the loop time is 20s in the `Presence` tab, or simply by checking the application logs). To find these values, you need to :
+```
+pnpm tauri build
+```
+
+<h2>⚙️ How to get <strong>Window Class</strong> and <strong>Window Name</strong>:</h2>
+
+These values should only be changed if your game window is not found. To find these values, you need to :
 - Install [WinSpy++](https://github.com/strobejb/winspy) and launch the .exe
 - Enlarge window
 - Launch your task manager, right-click on `Name` and activate `PID` if it's not already activated
