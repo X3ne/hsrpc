@@ -82,6 +82,7 @@ These values should only be changed if your game window is not found. To find th
 
 <h2>⚒️ Improvements:</h2>
 
+- [ ] Create a community based db for menus with a simple way in the ui to add entries
 - [ ] Add support for the forgotten hall (add some data to detect the current level)
 - [ ] Add support for cut scenes
 - [ ] Add support for the Trailblazer
@@ -92,6 +93,6 @@ These values should only be changed if your game window is not found. To find th
 
 The assets and data for the discord presence come from the [Honkai Star Rail wiki](https://honkai-star-rail.fandom.com/wiki/Honkai:_Star_Rail_Wiki)
 
-The [app icon](https://www.deviantart.com/mhesagnta/art/Chibi-Silver-Wolf-Honkai-StarRail-Render-965316702) by mhesagnta
+The [app icon](https://x.com/SuonikoArt/status/1801902328108507275) by Suoniko
 
 Image assets are intellectual property of HoYoverse, © All rights reserved by miHoYo
