@@ -1,3 +1,5 @@
+use std::sync::{Arc, Mutex};
+
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
 use serde::Serialize;
 use tauri::Emitter;
@@ -11,7 +13,7 @@ use crate::ocr::{GameOcrJob, Lang, OcrManager};
 use crate::utils::{find_closest_correspondence, find_current_character};
 
 pub struct App {
-    pub config: Config,
+    pub config: Arc<Mutex<Config>>,
     pub ocr_manager: WindowsOcrManager,
     pub state: State,
     pub app_started: chrono::DateTime<chrono::Utc>,
@@ -39,7 +41,7 @@ pub enum State {
 
 impl App {
     pub fn new(
-        config: Config,
+        config: Arc<Mutex<Config>>,
         game_data: GameData,
         tesseract_path: &str,
         tessdata_path: &str,
@@ -64,18 +66,31 @@ impl App {
 
     pub async fn start_loop(&mut self) {
         loop {
+            let config;
+            {
+                let config_guard = self
+                    .config
+                    .lock()
+                    .map_err(|e| {
+                        log::error!("Failed to lock config: {}", e);
+                        return;
+                    })
+                    .unwrap();
+                config = config_guard.clone();
+            }
+
             match self.ocr_manager.is_initialized() {
                 false => {
                     if self
                         .ocr_manager
-                        .set_game_window(&self.config.window_name)
+                        .set_game_window(&config.window_name)
                         .is_err()
                     {
                         self.handle_window_closed();
                         sleep(Duration::from_millis(LOOP_RETRY_TIMEOUT)).await;
                         continue;
                     }
-                    log::info!("Game window found: '{}'", self.config.window_name);
+                    log::info!("Game window found: '{}'", config.window_name);
                     self.app_started = chrono::Utc::now();
                 }
                 true => {
@@ -88,7 +103,7 @@ impl App {
                     self.set_game_resolution();
 
                     let old_state = self.state.clone();
-                    if let Some(new_state) = self.capture_game_data() {
+                    if let Some(new_state) = self.capture_game_data(&config) {
                         self.state = new_state;
                     }
 
@@ -102,7 +117,7 @@ impl App {
                             .emit("app-state", &self.state)
                             .unwrap_or_else(|e| log::error!("Failed to emit app-state: {}", e));
 
-                        if let Err(err) = self.update_discord_presence() {
+                        if let Err(err) = self.update_discord_presence(&config) {
                             self.discord_ipc_client = None;
                             log::error!("Failed to update Discord presence: {}", err);
                         }
@@ -110,7 +125,7 @@ impl App {
                         log::trace!("No state change and Discord IPC not connected. Skipping presence update");
                     }
 
-                    tokio::time::sleep(Duration::from_millis(self.config.loop_time)).await;
+                    tokio::time::sleep(Duration::from_millis(config.loop_time)).await;
                 }
             }
         }
@@ -135,41 +150,51 @@ impl App {
             }
         };
 
-        if self.config.resolution.width == res.width && self.config.resolution.height == res.height
+        let mut config_guard = self
+            .config
+            .lock()
+            .map_err(|e| {
+                log::error!("Failed to lock config: {}", e);
+                return;
+            })
+            .unwrap();
+
+        if config_guard.resolution.width == res.width
+            && config_guard.resolution.height == res.height
         {
             return;
         }
 
-        self.config.resolution.width = res.width;
-        self.config.resolution.height = res.height;
+        config_guard.resolution.width = res.width;
+        config_guard.resolution.height = res.height;
 
-        self.config.ui_coords = get_gui_coords(self.config.resolution.clone(), 0, 0);
+        config_guard.ui_coords = get_gui_coords(config_guard.resolution.clone(), 0, 0);
 
-        if let Err(e) = self.config.save() {
+        if let Err(e) = config_guard.save() {
             log::error!("Failed to save config: {}", e);
         }
     }
 
-    fn capture_game_data(&mut self) -> Option<State> {
-        if let Some(location_state) = self.capture_location() {
+    fn capture_game_data(&mut self, config: &Config) -> Option<State> {
+        if let Some(location_state) = self.capture_location(config) {
             return Some(location_state);
         }
 
-        if let Some(menu_state) = self.capture_game_menu() {
+        if let Some(menu_state) = self.capture_game_menu(config) {
             return Some(menu_state);
         }
 
-        if let Some(combat_state) = self.capture_combat() {
+        if let Some(combat_state) = self.capture_combat(config) {
             return Some(combat_state);
         }
 
         None
     }
 
-    fn capture_location(&self) -> Option<State> {
+    fn capture_location(&self, config: &Config) -> Option<State> {
         match self
             .ocr_manager
-            .game_ocr(self.config.ui_coords.location, GameOcrJob::Location, false)
+            .game_ocr(config.ui_coords.location, GameOcrJob::Location, false)
         {
             Ok(text) => {
                 log::debug!("Location OCR raw result: '{}'", text);
@@ -196,7 +221,7 @@ impl App {
                     }
                 };
 
-                let mut character_data = self.capture_character();
+                let mut character_data = self.capture_character(config);
                 if character_data.is_none() && location.sub_region == "Astral Express" {
                     let char_name = "Trailblazer".to_string();
                     character_data = Some(Data {
@@ -222,9 +247,9 @@ impl App {
         }
     }
 
-    fn capture_character(&self) -> Option<Data> {
+    fn capture_character(&self, config: &Config) -> Option<Data> {
         let current_character_index =
-            find_current_character(&self.ocr_manager, &self.config.ui_coords.characters_box);
+            find_current_character(&self.ocr_manager, &config.ui_coords.characters_box);
 
         log::debug!("Current character index: {}", current_character_index);
 
@@ -233,8 +258,7 @@ impl App {
             return None;
         }
 
-        let char_rect = self
-            .config
+        let char_rect = config
             .ui_coords
             .characters
             .get(current_character_index as usize)?;
@@ -275,13 +299,13 @@ impl App {
         }
     }
 
-    fn capture_game_menu(&self) -> Option<State> {
+    fn capture_game_menu(&self, config: &Config) -> Option<State> {
         let esc_text_result =
             self.ocr_manager
-                .game_ocr(self.config.ui_coords.esc, GameOcrJob::Menu, false);
+                .game_ocr(config.ui_coords.esc, GameOcrJob::Menu, false);
         let menu_text_result =
             self.ocr_manager
-                .game_ocr(self.config.ui_coords.menu, GameOcrJob::Menu, true);
+                .game_ocr(config.ui_coords.menu, GameOcrJob::Menu, true);
 
         let mut menu_data: Option<Data> = None;
 
@@ -332,11 +356,9 @@ impl App {
         }
 
         if let Some(mut menu) = menu_data {
-            let sub_menu_text_result = self.ocr_manager.game_ocr(
-                self.config.ui_coords.sub_menu,
-                GameOcrJob::SubMenu,
-                true,
-            );
+            let sub_menu_text_result =
+                self.ocr_manager
+                    .game_ocr(config.ui_coords.sub_menu, GameOcrJob::SubMenu, true);
             if let Ok(sub_menu_text) = sub_menu_text_result {
                 log::debug!("Sub-Menu OCR raw result: '{}'", sub_menu_text);
                 if !sub_menu_text.is_empty() {
@@ -363,10 +385,10 @@ impl App {
         }
     }
 
-    fn capture_combat(&self) -> Option<State> {
+    fn capture_combat(&self, config: &Config) -> Option<State> {
         let combat_text_result =
             self.ocr_manager
-                .game_ocr(self.config.ui_coords.combat, GameOcrJob::Combat, false);
+                .game_ocr(config.ui_coords.combat, GameOcrJob::Combat, false);
 
         let started = match &self.state {
             State::Combat { started, .. } => *started,
@@ -375,7 +397,7 @@ impl App {
 
         if let Ok(combat_text) = combat_text_result {
             log::debug!("Combat OCR raw result: '{}'", combat_text);
-            if !combat_text.is_empty() && combat_text.len() > 5 {
+            if !combat_text.is_empty() && combat_text.replace(" ", "").len() > 5 {
                 return Some(State::Combat {
                     started,
                     boss: None,
@@ -383,7 +405,7 @@ impl App {
             } else {
                 let boss_text_result =
                     self.ocr_manager
-                        .game_ocr(self.config.ui_coords.boss, GameOcrJob::Boss, true);
+                        .game_ocr(config.ui_coords.boss, GameOcrJob::Boss, true);
 
                 if let Ok(boss_text) = boss_text_result {
                     log::debug!("Boss OCR raw result: '{}'", boss_text);
@@ -426,19 +448,25 @@ impl App {
         None
     }
 
-    fn connect_to_discord_gateway(&mut self) -> Result<(), Box<dyn std::error::Error>> {
+    fn connect_to_discord_gateway(
+        &mut self,
+        config: &Config,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         log::info!("Attempting to connect to Discord IPC Gateway...");
-        let mut ipc = DiscordIpcClient::new(&self.config.discord_app_id)?;
+        let mut ipc = DiscordIpcClient::new(&config.discord_app_id)?;
         ipc.connect()?;
         self.discord_ipc_client = Some(ipc);
         log::info!("Successfully connected to Discord IPC Gateway");
         Ok(())
     }
 
-    fn update_discord_presence(&mut self) -> Result<(), Box<dyn std::error::Error>> {
+    fn update_discord_presence(
+        &mut self,
+        config: &Config,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         if self.discord_ipc_client.is_none() {
             log::debug!("Discord IPC client not connected, attempting to connect...");
-            if let Err(e) = self.connect_to_discord_gateway() {
+            if let Err(e) = self.connect_to_discord_gateway(config) {
                 log::error!("Failed to connect to Discord Gateway during update: {}", e);
                 return Err(e);
             }

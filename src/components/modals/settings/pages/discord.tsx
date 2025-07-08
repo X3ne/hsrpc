@@ -6,10 +6,22 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import { Refresh } from 'iconsax-reactjs'
+import { Config } from '@/types'
+import useConfigField from '@/hooks/use-config-fields'
 
-const DiscordSettings = () => {
+interface DiscordSettingsProps {
+  config: Config
+  onConfigChange: React.Dispatch<React.SetStateAction<Config | null>>
+}
+
+const DiscordSettings: React.FC<DiscordSettingsProps> = ({ config, onConfigChange }) => {
   const [isReconnecting, setIsReconnecting] = useState(false)
-  const [discordAppId, setDiscordAppId] = useState('1208212792574869544')
+
+  const { value: discordAppId, onChange: handleDiscordAppIdChange } = useConfigField(
+    config,
+    onConfigChange,
+    'discord_app_id'
+  )
 
   const handleDiscordReconnect = () => {
     setIsReconnecting(true)
@@ -53,7 +65,7 @@ const DiscordSettings = () => {
                     type='number'
                     placeholder='1208212792574869544'
                     value={discordAppId}
-                    onChange={e => setDiscordAppId(e.target.value)}
+                    onChange={e => handleDiscordAppIdChange(e.target.value || null)}
                     aria-label='Discord App ID'
                   />
                 }

@@ -135,15 +135,30 @@ impl Default for UiCoordsConfig {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "snake_case")]
+pub enum ClosingBehavior {
+    Exit,
+    Minimize,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Config {
     pub window_name: String,
     pub window_class: String,
     pub resolution: Resolution,
     pub loop_time: u64,
     pub autostart: bool,
+    pub tray_launch: bool,
+    pub closing_behavior: ClosingBehavior,
+    pub auto_update: bool,
+    pub enable_status: bool,
+    pub account_uid: Option<String>,
+    pub account_name: Option<String>,
+    pub display_name: bool,
+    pub display_level: bool,
+    pub preprocess_threshold: u32,
     pub discord_app_id: String,
     pub ui_coords: UiCoordsConfig,
-    #[serde(skip)]
     pub path: PathBuf,
 }
 
@@ -155,6 +170,15 @@ impl Default for Config {
             resolution: Resolution::new(1920, 1080),
             loop_time: 2000,
             autostart: false,
+            tray_launch: true,
+            closing_behavior: ClosingBehavior::Minimize,
+            auto_update: true,
+            enable_status: true,
+            account_uid: None,
+            account_name: None,
+            display_name: true,
+            display_level: true,
+            preprocess_threshold: 135,
             discord_app_id: "1208212792574869544".to_string(),
             ui_coords: UiCoordsConfig::default(),
             path: PathBuf::new(),

@@ -1,3 +1,5 @@
+use std::sync::{Arc, Mutex};
+
 use config::Config;
 use tauri::menu::{Menu, MenuItem};
 use tauri::path::BaseDirectory;
@@ -15,6 +17,10 @@ mod error;
 mod game;
 mod ocr;
 mod utils;
+
+pub struct AppState {
+    pub config: Arc<Mutex<Config>>,
+}
 
 async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
     if let Some(update) = app.updater()?.check().await? {
@@ -52,6 +58,12 @@ fn start_app_loop(app_handle: tauri::AppHandle) -> Result<(), Error> {
 
     let config = Config::load(config_dir.join("config.toml").to_str().unwrap())?;
 
+    let shared_config = Arc::new(Mutex::new(config));
+
+    app_handle.manage(AppState {
+        config: shared_config.clone(),
+    });
+
     let resources_path = app_handle
         .path()
         .resolve("game-data", BaseDirectory::Resource)
@@ -81,7 +93,7 @@ fn start_app_loop(app_handle: tauri::AppHandle) -> Result<(), Error> {
             tokio::runtime::Runtime::new().expect("Failed to create Tokio runtime for App loop");
         rt.block_on(async move {
             let mut app = app::App::new(
-                config,
+                shared_config,
                 game_data,
                 tesseract_path.to_str().unwrap(),
                 tessdata_path.to_str().unwrap(),
@@ -179,6 +191,8 @@ pub fn run() {
             crate::commands::open_log_file,
             crate::commands::check_for_updates,
             crate::commands::download_and_install_update,
+            crate::commands::load_config_command,
+            crate::commands::save_config_command,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

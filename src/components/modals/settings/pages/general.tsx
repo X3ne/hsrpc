@@ -1,19 +1,41 @@
-import { useState } from 'react'
-
 import { CardCta, CardCtaGroup } from '@/components/card-cta'
 import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Switch } from '@/components/ui/switch'
+import { ClosingBehavior, Config } from '@/types'
+import useConfigField from '@/hooks/use-config-fields'
 
-type CloseAction = 'tray' | 'quit'
+interface GeneralSettingsProps {
+  config: Config
+  onConfigChange: React.Dispatch<React.SetStateAction<Config | null>>
+}
 
-const GeneralSettings = () => {
-  const [autoLaunch, setAutoLaunch] = useState(false)
-  const [launchInTray, setLaunchInTray] = useState(false)
-  const [closeAction, setCloseAction] = useState<CloseAction>('tray')
-  const [autoUpdate, setAutoUpdate] = useState(false)
+const GeneralSettings: React.FC<GeneralSettingsProps> = ({ config, onConfigChange }) => {
+  const { value: autostart, onChange: handleAutostartChange } = useConfigField(
+    config,
+    onConfigChange,
+    'autostart'
+  )
+
+  const { value: trayLaunch, onChange: handleTrayLaunchChange } = useConfigField(
+    config,
+    onConfigChange,
+    'tray_launch'
+  )
+
+  const { value: closingBehavior, onChange: handleClosingBehaviorChange } = useConfigField(
+    config,
+    onConfigChange,
+    'closing_behavior'
+  )
+
+  const { value: autoUpdate, onChange: handleAutoUpdateChange } = useConfigField(
+    config,
+    onConfigChange,
+    'auto_update'
+  )
 
   return (
     <>
@@ -27,7 +49,9 @@ const GeneralSettings = () => {
             <CardCtaGroup>
               <CardCta
                 title='Auto Launch on Startup'
-                actionComponent={<Switch checked={autoLaunch} onCheckedChange={setAutoLaunch} />}
+                actionComponent={
+                  <Switch checked={autostart} onCheckedChange={handleAutostartChange} />
+                }
               />
               <CardCta
                 title={
@@ -38,7 +62,7 @@ const GeneralSettings = () => {
                 }
                 description='Launch the application in the system tray.'
                 actionComponent={
-                  <Switch checked={launchInTray} onCheckedChange={setLaunchInTray} />
+                  <Switch checked={trayLaunch} onCheckedChange={handleTrayLaunchChange} />
                 }
               />
             </CardCtaGroup>
@@ -50,16 +74,16 @@ const GeneralSettings = () => {
                 title='Close App'
                 content={
                   <RadioGroup
-                    value={closeAction}
-                    onValueChange={value => setCloseAction(value as CloseAction)}
+                    value={closingBehavior}
+                    onValueChange={value => handleClosingBehaviorChange(value as ClosingBehavior)}
                   >
                     <div className='flex items-center space-x-2'>
-                      <RadioGroupItem value='tray' id='tray' />
+                      <RadioGroupItem value='minimize' id='minimize' />
                       <Label htmlFor='tray'>Minimize to Tray</Label>
                       <Badge variant='secondary'>Recommended</Badge>
                     </div>
                     <div className='flex items-center space-x-2'>
-                      <RadioGroupItem value='quit' id='quit' />
+                      <RadioGroupItem value='exit' id='exit' />
                       <Label htmlFor='quit'>Quit Application</Label>
                     </div>
                   </RadioGroup>
@@ -73,7 +97,9 @@ const GeneralSettings = () => {
               <CardCta
                 title='Auto Update App on Start'
                 description='Automatically check for updates and install them on application start.'
-                actionComponent={<Switch checked={autoUpdate} onCheckedChange={setAutoUpdate} />}
+                actionComponent={
+                  <Switch checked={autoUpdate} onCheckedChange={handleAutoUpdateChange} />
+                }
               />
             </CardCtaGroup>
           </div>

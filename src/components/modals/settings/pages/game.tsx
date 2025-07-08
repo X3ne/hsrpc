@@ -1,21 +1,71 @@
-import { useState } from 'react'
-
 import { CardCta, CardCtaGroup } from '@/components/card-cta'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Slider } from '@/components/ui/slider'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
+import { Config } from '@/types'
+import useConfigField from '@/hooks/use-config-fields'
 
-const GameSettings = () => {
-  const [statusGrabbingEnabled, setStatusGrabbingEnabled] = useState(true)
-  const [loopTime, setLoopTime] = useState(2000)
-  const [accountUid, setAccountUid] = useState('')
-  const [accountName, setAccountName] = useState('')
-  const [displayAccountName, setDisplayAccountName] = useState(true)
-  const [displayAccountLevel, setDisplayAccountLevel] = useState(true)
-  const [preprocessThreshold, setPreprocessThreshold] = useState(135)
-  const [windowName, setWindowName] = useState('Star Rail')
-  const [windowClass, setWindowClass] = useState('UnityWndClass')
+interface GameSettingsProps {
+  config: Config
+  onConfigChange: React.Dispatch<React.SetStateAction<Config | null>>
+}
+
+const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) => {
+  const { value: statusEnabled, onChange: handleStatusEnabledChange } = useConfigField(
+    config,
+    onConfigChange,
+    'enable_status'
+  )
+
+  const { value: loopTime, onChange: handleLoopTimeChange } = useConfigField(
+    config,
+    onConfigChange,
+    'loop_time'
+  )
+
+  const { value: accountUid, onChange: handleAccountUidChange } = useConfigField(
+    config,
+    onConfigChange,
+    'account_uid'
+  )
+
+  const { value: accountName, onChange: handleAccountNameChange } = useConfigField(
+    config,
+    onConfigChange,
+    'account_name'
+  )
+
+  const { value: displayAccountName, onChange: handleDisplayAccountNameChange } = useConfigField(
+    config,
+    onConfigChange,
+    'display_name'
+  )
+
+  const { value: displayAccountLevel, onChange: handleDisplayAccountLevelChange } = useConfigField(
+    config,
+    onConfigChange,
+    'display_level'
+  )
+
+  const { value: preprocessThreshold, onChange: handlePreprocessThresholdChange } = useConfigField(
+    config,
+    onConfigChange,
+    'preprocess_threshold',
+    { type: 'number' }
+  )
+
+  const { value: windowName, onChange: handleWindowNameChange } = useConfigField(
+    config,
+    onConfigChange,
+    'window_name'
+  )
+
+  const { value: windowClass, onChange: handleWindowClassChange } = useConfigField(
+    config,
+    onConfigChange,
+    'window_class'
+  )
 
   return (
     <>
@@ -30,10 +80,7 @@ const GameSettings = () => {
                 title='Enable Status Grabbing'
                 description='If you want to disable the status grabbing feature, you can do so here. This will stop the app from fetching your game status.'
                 actionComponent={
-                  <Switch
-                    checked={statusGrabbingEnabled}
-                    onCheckedChange={setStatusGrabbingEnabled}
-                  />
+                  <Switch checked={statusEnabled} onCheckedChange={handleStatusEnabledChange} />
                 }
               />
               <CardCta
@@ -47,13 +94,13 @@ const GameSettings = () => {
                       min={100}
                       step={100}
                       value={[loopTime]}
-                      onValueChange={value => setLoopTime(value[0])}
+                      onValueChange={value => handleLoopTimeChange(value[0])}
                       className='w-full'
                     />
                     <Input
                       type='number'
                       value={loopTime}
-                      onChange={e => setLoopTime(Number(e.target.value))}
+                      onChange={e => handleLoopTimeChange(Number(e.target.value))}
                       className='w-20'
                       min={100}
                       max={20000}
@@ -77,8 +124,8 @@ const GameSettings = () => {
                     type='number'
                     placeholder='700008442'
                     aria-label='Account UID'
-                    value={accountUid}
-                    onChange={e => setAccountUid(e.target.value)}
+                    value={accountUid || ''}
+                    onChange={e => handleAccountUidChange(e.target.value || null)}
                   />
                 }
               />
@@ -90,8 +137,8 @@ const GameSettings = () => {
                     type='text'
                     placeholder='Account Name'
                     aria-label='Account Name'
-                    value={accountName}
-                    onChange={e => setAccountName(e.target.value)}
+                    value={accountName || ''}
+                    onChange={e => handleAccountNameChange(e.target.value || null)}
                   />
                 }
               />
@@ -99,14 +146,20 @@ const GameSettings = () => {
                 title='Display Account Name'
                 description='Enable this to show your account name in the Discord presence.'
                 actionComponent={
-                  <Switch checked={displayAccountName} onCheckedChange={setDisplayAccountName} />
+                  <Switch
+                    checked={displayAccountName}
+                    onCheckedChange={handleDisplayAccountNameChange}
+                  />
                 }
               />
               <CardCta
                 title='Display Account Level'
                 description='Enable this to show your account level in the Discord presence.'
                 actionComponent={
-                  <Switch checked={displayAccountLevel} onCheckedChange={setDisplayAccountLevel} />
+                  <Switch
+                    checked={displayAccountLevel}
+                    onCheckedChange={handleDisplayAccountLevelChange}
+                  />
                 }
               />
             </CardCtaGroup>
@@ -114,33 +167,33 @@ const GameSettings = () => {
           <div>
             <h4 className='text-md text-muted-foreground mb-2'>Advanced</h4>
 
-            <CardCta
-              title='Preprocess Threshold'
-              description='Set the threshold for preprocessing ocr images. If you experience issues with the ocr, try tweaking this value.'
-              content={
-                <div className='flex items-center gap-2'>
-                  <Slider
-                    defaultValue={[135]}
-                    max={1000}
-                    min={0}
-                    value={[preprocessThreshold]}
-                    onValueChange={value => setPreprocessThreshold(value[0])}
-                    className='w-full'
-                  />
-                  <Input
-                    type='number'
-                    value={preprocessThreshold}
-                    onChange={e => setPreprocessThreshold(Number(e.target.value))}
-                    className='w-20'
-                    min={0}
-                    max={1000}
-                    aria-label='Preprocess Threshold'
-                  />
-                </div>
-              }
-            />
-
             <CardCtaGroup>
+              <CardCta
+                title='Preprocess Threshold'
+                description='Set the threshold for preprocessing ocr images. If you experience issues with the ocr, try tweaking this value.'
+                content={
+                  <div className='flex items-center gap-2'>
+                    <Slider
+                      defaultValue={[135]}
+                      max={1000}
+                      min={0}
+                      value={[preprocessThreshold]}
+                      onValueChange={value => handlePreprocessThresholdChange(value[0])}
+                      className='w-full'
+                    />
+                    <Input
+                      type='number'
+                      value={preprocessThreshold}
+                      onChange={e => handlePreprocessThresholdChange(Number(e.target.value))}
+                      className='w-20'
+                      min={0}
+                      max={1000}
+                      aria-label='Preprocess Threshold'
+                    />
+                  </div>
+                }
+              />
+
               <CardCta
                 title='Window Name'
                 description='Set the window name for the game. This is used to identify the game window. Check the README on the GitHub repository for more information.'
@@ -151,7 +204,7 @@ const GameSettings = () => {
                     defaultValue={'Star Rail'}
                     aria-label='Window Name'
                     value={windowName}
-                    onChange={e => setWindowName(e.target.value)}
+                    onChange={e => handleWindowNameChange(e.target.value)}
                   />
                 }
               />
@@ -165,7 +218,7 @@ const GameSettings = () => {
                     defaultValue={'UnityWndClass'}
                     aria-label='Window Class'
                     value={windowClass}
-                    onChange={e => setWindowClass(e.target.value)}
+                    onChange={e => handleWindowClassChange(e.target.value)}
                   />
                 }
               />
