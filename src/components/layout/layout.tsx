@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Toaster } from '@/components/ui/sonner'
 
-import { SideBar } from './sidebar'
+// import { SideBar } from './sidebar'
 import { TopBar } from './topbar'
 
 type LayoutProps = {
@@ -14,7 +14,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className='flex min-h-screen flex-col'>
       <TopBar />
       <main className='flex w-full flex-1 bg-background overflow-hidden'>
-        <SideBar />
+        {/* <SideBar /> */}
         <div className='mx-auto flex w-full'>{children}</div>
       </main>
       <Toaster />

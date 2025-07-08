@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "hsrpc",
-        "width": 1280,
-        "height": 720,
+        "width": 958,
+        "height": 538,
         "resizable": false,
         "decorations": false,
         "transparent": true,

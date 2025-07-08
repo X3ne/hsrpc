@@ -1,83 +1,96 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { listen } from '@tauri-apps/api/event'
+import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
+import { invoke } from '@tauri-apps/api/core'
+
+import { Config } from '@/types'
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { SettingsSidebar } from '@/components/modals/settings/sidebar'
+import { GeneralSettings } from '@/components/modals/settings/pages/general'
+import { AboutSettings } from '@/components/modals/settings/pages/about'
+import { GameSettings } from '@/components/modals/settings/pages/game'
+import { DiscordSettings } from '@/components/modals/settings/pages/discord'
+
+type SettingsPageKey = 'general' | 'game' | 'discord' | 'about'
+
+const settingsPageComponents: Record<
+  SettingsPageKey,
+  React.ComponentType<{
+    config: Config
+    onConfigChange: React.Dispatch<React.SetStateAction<Config | null>>
+  }>
+> = {
+  general: GeneralSettings,
+  game: GameSettings,
+  discord: DiscordSettings,
+  about: AboutSettings
+}
 
 export const Route = createFileRoute('/')({
-  component: Index
+  component: RouteComponent
 })
 
-type AppState = {
-  location: State
-  character: State
-  menu: State
-  combat: State
-}
+function RouteComponent() {
+  const [activePage, setActivePage] = useState<SettingsPageKey>('general')
+  const [config, setConfig] = useState<Config | null>(null)
 
-type State = {
-  location: Data
-  character: Data
-  menu: Data
-  combat: Combat
-}
-
-type Combat = {
-  started: string
-  is_boss: boolean
-  boss: Data
-}
-
-type Data = {
-  asset_id: string
-  value: string
-  message: string
-  region: string
-  sub_region: string
-}
-
-function Index() {
-  const [appState, setAppState] = useState<AppState | null>(null)
+  const isInitialLoad = useRef(true)
 
   useEffect(() => {
-    const unlisten = listen<AppState>('app-state', event => {
-      console.log('app-state event received', event)
-      setAppState(event.payload)
-    })
-
-    return () => {
-      unlisten.then(f => f())
+    const loadConfig = async () => {
+      try {
+        const loadedConfig = await invoke<Config>('load_config_command')
+        setConfig(loadedConfig)
+        console.log('Config loaded:', loadedConfig)
+      } catch (err) {
+        console.error('Failed to load config:', err)
+      }
     }
+    loadConfig()
   }, [])
 
+  useEffect(() => {
+    if (config === null) {
+      return
+    }
+
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false
+      return
+    }
+
+    const handler = setTimeout(async () => {
+      try {
+        await invoke('save_config_command', { newConfig: config })
+        console.log('Config autosaved:', config)
+      } catch (err) {
+        console.error('Autosave failed:', err)
+        toast.error('Failed to autosave settings. Please report this issue.')
+      }
+    }, 1000)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [config])
+
+  const renderActivePageContent = () => {
+    const ComponentToRender = settingsPageComponents[activePage]
+
+    // TODO: refactor this
+    if (!config) {
+      return <div className='flex items-center justify-center h-full'>Loading...</div>
+    }
+
+    return <ComponentToRender config={config} onConfigChange={setConfig} />
+  }
+
   return (
-    <div className='flex items-center justify-center h-screen overflow-hidden'>
-      {/* <pre>{JSON.stringify(appState?.character, null, 2)}</pre> */}
-      {appState && appState.location && (
-        <div className='flex bg-secondary rounded-md overflow-hidden p-4'>
-          <div className='relative pb-2 pr-2'>
-            <img
-              className='w-24 aspect-square rounded-md'
-              src={'/assets/locations/${appState.location.location.asset_id}.png'}
-            />
-            <img
-              className='absolute right-0 bottom-0 w-8 rounded-full'
-              src={'/assets/characters/${appState.location.character.asset_id}.png'}
-            />
-          </div>
-          <div>
-            <h1 className='text-lg font-bold'>Honkai Star Rail</h1>
-            <p>{appState.location.location.region}</p>
-            <p>{appState.location.location.value}</p>
-            {/* <p>
-                {
-                  // duration since appState.app_started
-                  new Date(Date.now() - new Date(appState.app_started).getTime())
-                    .toISOString()
-                    .substr(11, 8)
-                }
-              </p> */}
-          </div>
-        </div>
-      )}
+    <div className='p-0 h-full w-full'>
+      <SidebarProvider className='min-h-0'>
+        <SettingsSidebar activePage={activePage} onPageChange={setActivePage} className='h-full' />
+        <SidebarInset className='h-screen'>{renderActivePageContent()}</SidebarInset>
+      </SidebarProvider>
     </div>
   )
 }

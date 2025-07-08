@@ -27,6 +27,16 @@
         }
       ]
     },
-    "autostart:default"
+    {
+      "identifier": "opener:allow-open-url",
+      "allow": [
+        {
+          "url": "https://github.com/X3ne/hsrpc"
+        },
+        {
+          "url": "https://github.com/X3ne/hsrpc/blob/rust/LICENSE"
+        }
+      ]
+    }
   ]
 }

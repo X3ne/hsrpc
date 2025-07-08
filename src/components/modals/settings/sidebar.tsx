@@ -46,8 +46,8 @@ interface SettingsSidebarProps extends React.ComponentProps<typeof Sidebar> {
 const SettingsSidebar = ({ activePage, onPageChange, ...props }: SettingsSidebarProps) => {
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
-        <h2 className='text-xl px-6 pt-4 text-muted-foreground'>Settings</h2>
+      <SidebarHeader className='p-0'>
+        <h2 className='text-xl px-6 py-5 text-muted-foreground'>Settings</h2>
       </SidebarHeader>
       <SidebarContent>
         <SettingsModalNav

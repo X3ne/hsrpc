@@ -1,7 +1,8 @@
 import { invoke } from '@tauri-apps/api/core'
+import { openPath } from '@tauri-apps/plugin-opener'
 import { ArrowRight2 } from 'iconsax-reactjs'
 import { useState } from 'react'
-import { Loader2, Search } from 'lucide-react'
+import { Loader2, Search, SquareArrowOutUpRight } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -78,9 +79,26 @@ const AboutSettings = () => {
               <p>v{version}</p>
             </div>
           </div>
-          <div className='flex flex-col space-y-2'>
-            <p>MIT License</p>
-            <p>For more information, visit our GitHub repository.</p>
+          <div className='w-fit'>
+            <Button
+              variant={'link'}
+              className='!p-0 text-sm'
+              onClick={async () => await openPath('https://github.com/X3ne/hsrpc')}
+            >
+              <p>AGPL-3.0 License</p>
+              <SquareArrowOutUpRight size={14} />
+            </Button>
+            <p className='text-sm'>
+              For more information, visit our{' '}
+              <Button
+                variant={'link'}
+                className='!p-0 text-sm'
+                onClick={() => openPath('https://github.com/X3ne/hsrpc')}
+              >
+                <span>GitHub repository.</span>
+                <SquareArrowOutUpRight size={14} />
+              </Button>
+            </p>
           </div>
 
           <div>
