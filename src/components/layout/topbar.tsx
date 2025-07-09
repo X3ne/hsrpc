@@ -1,8 +1,22 @@
-import { Button } from '@/components/ui/button'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { Minus, X } from 'lucide-react'
 
+import { Button } from '@/components/ui/button'
+import { useConfig } from '@/hooks/use-config'
+
 const TopBar = () => {
+  const { config } = useConfig()
+
+  const handleClose = async () => {
+    if (config?.closing_behavior === 'exit') {
+      const window = getCurrentWindow()
+      await window.close()
+    } else {
+      const window = getCurrentWindow()
+      await window.hide()
+    }
+  }
+
   return (
     <div
       data-tauri-drag-region
@@ -20,7 +34,7 @@ const TopBar = () => {
         variant='ghost'
         className='w-6 h-6 rounded-[6px]'
         size='icon'
-        onClick={() => getCurrentWindow().hide()}
+        onClick={() => handleClose()}
       >
         <X color='white' className='w-4' />
       </Button>

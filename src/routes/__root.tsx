@@ -1,6 +1,7 @@
 import React from 'react'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { error } from '@tauri-apps/plugin-log'
+import { getCurrentWindow } from '@tauri-apps/api/window'
 
 import { Layout } from '@/components/layout/layout'
 import { useConfig } from '@/hooks/use-config'
@@ -11,7 +12,7 @@ export const Route = createRootRoute({
 })
 
 function Root() {
-  const { loadConfig } = useConfig()
+  const { config, loadConfig } = useConfig()
 
   React.useEffect(() => {
     const load = async () => {
@@ -28,6 +29,22 @@ function Root() {
     }
     load()
   }, [loadConfig])
+
+  React.useEffect(() => {
+    if (config === null) {
+      return
+    }
+    const handler = setTimeout(async () => {
+      if (!config?.tray_launch) {
+        const window = getCurrentWindow()
+        await window.show()
+        await window.setFocus()
+      }
+    }, 0)
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [config])
 
   return (
     <>

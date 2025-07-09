@@ -2,7 +2,6 @@ import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { getCurrentWindow } from '@tauri-apps/api/window'
 
 import { ConfigProvider } from '@/providers/config-provider'
 import { ThemeProvider } from '@/components/theme-provider'
@@ -40,10 +39,4 @@ if (!rootElement.innerHTML) {
       </QueryClientProvider>
     </StrictMode>
   )
-
-  setTimeout(async () => {
-    const window = getCurrentWindow()
-    await window.show()
-    await window.setFocus()
-  }, 0)
 }
