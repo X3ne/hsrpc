@@ -93,6 +93,6 @@ These values should only be changed if your game window is not found. To find th
 
 The assets and data for the discord presence come from the [Honkai Star Rail wiki](https://honkai-star-rail.fandom.com/wiki/Honkai:_Star_Rail_Wiki)
 
-The [app icon](https://x.com/SuonikoArt/status/1801902328108507275) by Suoniko
+[App icon](https://x.com/SuonikoArt/status/1801902328108507275) by Suoniko
 
 Image assets are intellectual property of HoYoverse, © All rights reserved by miHoYo
