@@ -104,7 +104,8 @@ pub trait OcrManager {
     }
 
     fn perform_dynamic_ocr(&self, image: DynamicImage) -> Result<String, Error> {
-        let img = Image::from_dynamic_image(&image).unwrap();
+        let img = Image::from_dynamic_image(&image)
+            .map_err(|e| Error::Custom(format!("Failed to convert DynamicImage: {}", e)))?;
 
         self.perform_ocr(img)
     }
