@@ -73,33 +73,45 @@ impl App {
                     .lock()
                     .map_err(|e| {
                         log::error!("Failed to lock config: {}", e);
-                        return;
                     })
                     .unwrap();
                 config = config_guard.clone();
             }
 
+            if !config.enable_status {
+                sleep(Duration::from_millis(config.loop_time)).await;
+                continue;
+            }
+
+            if self
+                .ocr_manager
+                .set_game_window(&config.window_name)
+                .is_err()
+            {
+                self.handle_window_closed();
+                sleep(Duration::from_millis(LOOP_RETRY_TIMEOUT)).await;
+                continue;
+            }
+
+            if let Some(ref account_name) = config.account_name {
+                let display_name = match config.display_name {
+                    true => account_name.clone(),
+                    false => "Trailblazer".to_string(),
+                };
+                self.game_data.characters.push(Data {
+                    asset_id: "char_trailblazer".to_string(),
+                    value: display_name,
+                    message: "char_trailblazer".to_string(), // Only used to find entry in dataset
+                    ..Default::default()
+                });
+            }
+
             match self.ocr_manager.is_initialized() {
                 false => {
-                    if self
-                        .ocr_manager
-                        .set_game_window(&config.window_name)
-                        .is_err()
-                    {
-                        self.handle_window_closed();
-                        sleep(Duration::from_millis(LOOP_RETRY_TIMEOUT)).await;
-                        continue;
-                    }
                     log::info!("Game window found: '{}'", config.window_name);
                     self.app_started = chrono::Utc::now();
                 }
                 true => {
-                    self.ocr_manager
-                        .refresh_current_window()
-                        .unwrap_or_else(|e| {
-                            log::error!("Failed to refresh current window: {}", e);
-                            self.handle_window_closed();
-                        });
                     self.set_game_resolution();
 
                     let old_state = self.state.clone();
@@ -155,7 +167,6 @@ impl App {
             .lock()
             .map_err(|e| {
                 log::error!("Failed to lock config: {}", e);
-                return;
             })
             .unwrap();
 
@@ -278,9 +289,9 @@ impl App {
             return None;
         }
 
-        let all_characters = self.game_data.characters.clone();
+        // let all_characters = self.game_data.characters.clone();
 
-        match find_closest_correspondence(&text, &all_characters) {
+        match find_closest_correspondence(&text, &self.game_data.characters) {
             Some(char_data) => {
                 log::debug!(
                     "Character OCR matched: '{}' (distance: {})",

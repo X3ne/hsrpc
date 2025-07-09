@@ -195,15 +195,6 @@ impl Config {
 
         let auto_start_enabled = autostart_manager.is_enabled().unwrap_or(false);
 
-        log::info!(
-            "Autostart is currently {}",
-            if auto_start_enabled {
-                "enabled"
-            } else {
-                "disabled"
-            }
-        );
-
         if !config_path.exists() {
             let mut default_config = Config {
                 autostart: auto_start_enabled,

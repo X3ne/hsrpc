@@ -115,10 +115,7 @@ pub fn run() {
         .plugin(
             tauri_plugin_log::Builder::new()
                 .max_file_size(50_000)
-                .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
-                .target(tauri_plugin_log::Target::new(
-                    tauri_plugin_log::TargetKind::Stdout,
-                ))
+                .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepOne)
                 .build(),
         )
         .plugin(tauri_plugin_updater::Builder::new().build())
