@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import { Refresh } from 'iconsax-reactjs'
-import { Config } from '@/types'
+import { Config } from '@/providers/config-provider'
 import useConfigField from '@/hooks/use-config-fields'
 
 interface DiscordSettingsProps {

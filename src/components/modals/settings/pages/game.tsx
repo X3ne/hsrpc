@@ -3,7 +3,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Slider } from '@/components/ui/slider'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
-import { Config } from '@/types'
+import { Config } from '@/providers/config-provider'
 import useConfigField from '@/hooks/use-config-fields'
 
 interface GameSettingsProps {
@@ -61,11 +61,11 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
     'window_name'
   )
 
-  const { value: windowClass, onChange: handleWindowClassChange } = useConfigField(
-    config,
-    onConfigChange,
-    'window_class'
-  )
+  // const { value: windowClass, onChange: handleWindowClassChange } = useConfigField(
+  //   config,
+  //   onConfigChange,
+  //   'window_class'
+  // )
 
   return (
     <>
@@ -208,7 +208,7 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
                   />
                 }
               />
-              <CardCta
+              {/* <CardCta
                 title='Window Class'
                 description='Set the window class for the game. This is used to identify the game window. Check the README on the GitHub repository for more information.'
                 content={
@@ -221,7 +221,7 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
                     onChange={e => handleWindowClassChange(e.target.value)}
                   />
                 }
-              />
+              /> */}
             </CardCtaGroup>
           </div>
         </div>
