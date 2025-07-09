@@ -1,8 +1,8 @@
 use std::sync::{Arc, Mutex};
 
-use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
+use discord_rich_presence::{activity, DiscordIpc};
 use serde::Serialize;
-use tauri::Emitter;
+use tauri::{Emitter, Manager};
 use tokio::time::{sleep, Duration};
 
 use crate::config::{get_gui_coords, Config};
@@ -11,6 +11,7 @@ use crate::game::data::{Data, GameData};
 use crate::ocr::windows::WindowsOcrManager;
 use crate::ocr::{GameOcrJob, Lang, OcrManager, PreprocessOptions};
 use crate::utils::{find_closest_correspondence, find_current_character};
+use crate::AppState;
 
 pub struct App {
     pub config: Arc<Mutex<Config>>,
@@ -18,7 +19,6 @@ pub struct App {
     pub state: State,
     pub app_started: chrono::DateTime<chrono::Utc>,
     pub game_data: GameData,
-    pub discord_ipc_client: Option<DiscordIpcClient>,
     pub app_handle: tauri::AppHandle,
 }
 
@@ -59,7 +59,6 @@ impl App {
             state: State::Idle,
             app_started: chrono::Utc::now(),
             game_data,
-            discord_ipc_client: None,
             app_handle,
         }
     }
@@ -117,7 +116,7 @@ impl App {
                         self.state = new_state;
                     }
 
-                    if old_state != self.state || self.discord_ipc_client.is_some() {
+                    if old_state != self.state {
                         log::info!(
                             "App state changed or Discord client connected: {:?} -> {:?}",
                             old_state,
@@ -127,12 +126,11 @@ impl App {
                             .emit("app-state", &self.state)
                             .unwrap_or_else(|e| log::error!("Failed to emit app-state: {}", e));
 
-                        if let Err(err) = self.update_discord_presence(&config) {
-                            self.discord_ipc_client = None;
+                        if let Err(err) = self.update_discord_presence() {
                             log::error!("Failed to update Discord presence: {}", err);
                         }
                     } else {
-                        log::trace!("No state change and Discord IPC not connected. Skipping presence update");
+                        log::trace!("No state change. Skipping presence update");
                     }
 
                     tokio::time::sleep(Duration::from_millis(config.loop_time)).await;
@@ -145,7 +143,17 @@ impl App {
         if self.ocr_manager.is_initialized() {
             self.ocr_manager.pause_ocr();
             self.state = State::Idle;
-            self.discord_ipc_client = None;
+
+            let state = self.app_handle.state::<AppState>();
+            let mut discord_ipc_state = state.discord_ipc_state.lock().unwrap();
+
+            discord_ipc_state
+                .ipc_client
+                .clear_activity()
+                .unwrap_or_else(|e| {
+                    log::error!("Failed to clear Discord activity: {}", e);
+                });
+
             log::info!("Game window closed");
         }
     }
@@ -483,96 +491,74 @@ impl App {
         None
     }
 
-    fn connect_to_discord_gateway(
-        &mut self,
-        config: &Config,
-    ) -> Result<(), Box<dyn std::error::Error>> {
-        log::info!("Attempting to connect to Discord IPC Gateway...");
-        let mut ipc = DiscordIpcClient::new(&config.discord_app_id)?;
-        ipc.connect()?;
-        self.discord_ipc_client = Some(ipc);
-        log::info!("Successfully connected to Discord IPC Gateway");
-        Ok(())
-    }
+    fn update_discord_presence(&mut self) -> Result<(), Box<dyn std::error::Error>> {
+        let state = self.app_handle.state::<AppState>();
+        let mut discord_ipc_state = state.discord_ipc_state.lock().unwrap();
 
-    fn update_discord_presence(
-        &mut self,
-        config: &Config,
-    ) -> Result<(), Box<dyn std::error::Error>> {
-        if self.discord_ipc_client.is_none() {
-            log::debug!("Discord IPC client not connected, attempting to connect...");
-            if let Err(e) = self.connect_to_discord_gateway(config) {
-                log::error!("Failed to connect to Discord Gateway during update: {}", e);
-                return Err(e);
-            }
+        if !discord_ipc_state.connected {
+            log::info!("Discord IPC not connected, trying to connect...");
+            discord_ipc_state.ipc_client.connect()?;
+            discord_ipc_state.connected = true;
+            log::info!("Discord IPC connected successfully");
         }
 
-        if let Some(ipc) = self.discord_ipc_client.as_mut() {
-            match &self.state {
-                State::Idle => {
-                    log::debug!("Discord presence Idle");
-                }
-                State::Location {
-                    location,
-                    character,
-                } => {
-                    let activity = activity::Activity::new()
-                        .state(&location.sub_region)
-                        .details(&location.value)
-                        .assets(
-                            activity::Assets::new()
-                                .large_image(&location.asset_id)
-                                .small_image(&character.asset_id)
-                                .small_text(&character.value),
-                        )
-                        .timestamps(
-                            activity::Timestamps::new().start(self.app_started.timestamp()),
-                        );
-                    ipc.set_activity(activity)?;
-                    log::debug!("Discord presence updated: Location - {}", location.value);
-                }
-                State::Menu { menu } => {
-                    let mut activity = activity::Activity::new()
-                        .state(&menu.message)
-                        .details(&menu.value)
-                        .assets(activity::Assets::new().large_image(&menu.asset_id))
-                        .timestamps(
-                            activity::Timestamps::new().start(self.app_started.timestamp()),
-                        );
-
-                    if menu.value == "Trailblaze Level" {
-                        activity = activity.details("")
-                    }
-
-                    if !menu.sub_region.is_empty() {
-                        activity = activity.details(&menu.sub_region);
-                    }
-
-                    ipc.set_activity(activity)?;
-                    log::debug!("Discord presence updated: Menu - {}", menu.value);
-                }
-                State::Combat { started, boss } => {
-                    let mut activity = activity::Activity::new()
-                        .state("In Combat")
-                        .timestamps(activity::Timestamps::new().start(started.timestamp()));
-
-                    if let Some(boss_data) = boss {
-                        activity = activity.details(&boss_data.value);
-                        activity = activity.assets(
-                            activity::Assets::new()
-                                .large_image("menu_combat")
-                                .small_image(&boss_data.asset_id),
-                        );
-                    } else {
-                        activity =
-                            activity.assets(activity::Assets::new().large_image("menu_combat"));
-                    }
-                    ipc.set_activity(activity)?;
-                    log::debug!("Discord presence updated: Combat");
-                }
+        match &self.state {
+            State::Idle => {
+                log::debug!("Discord presence Idle");
             }
-        } else {
-            log::warn!("Discord IPC client not connected, cannot update presence");
+            State::Location {
+                location,
+                character,
+            } => {
+                let activity = activity::Activity::new()
+                    .state(&location.sub_region)
+                    .details(&location.value)
+                    .assets(
+                        activity::Assets::new()
+                            .large_image(&location.asset_id)
+                            .small_image(&character.asset_id)
+                            .small_text(&character.value),
+                    )
+                    .timestamps(activity::Timestamps::new().start(self.app_started.timestamp()));
+                discord_ipc_state.ipc_client.set_activity(activity)?;
+                log::debug!("Discord presence updated: Location - {}", location.value);
+            }
+            State::Menu { menu } => {
+                let mut activity = activity::Activity::new()
+                    .state(&menu.message)
+                    .details(&menu.value)
+                    .assets(activity::Assets::new().large_image(&menu.asset_id))
+                    .timestamps(activity::Timestamps::new().start(self.app_started.timestamp()));
+
+                if menu.value == "Trailblaze Level" {
+                    activity = activity.details("")
+                }
+
+                if !menu.sub_region.is_empty() {
+                    activity = activity.details(&menu.sub_region);
+                }
+
+                discord_ipc_state.ipc_client.set_activity(activity)?;
+                log::debug!("Discord presence updated: Menu - {}", menu.value);
+            }
+            State::Combat { started, boss } => {
+                let mut activity = activity::Activity::new()
+                    .state("In Combat")
+                    .timestamps(activity::Timestamps::new().start(started.timestamp()));
+
+                if let Some(boss_data) = boss {
+                    activity = activity.details(&boss_data.value);
+                    activity = activity.assets(
+                        activity::Assets::new()
+                            .large_image("menu_combat")
+                            .small_image(&boss_data.asset_id),
+                    );
+                } else {
+                    activity = activity.assets(activity::Assets::new().large_image("menu_combat"));
+                }
+                discord_ipc_state.ipc_client.set_activity(activity)?;
+                log::debug!("Discord presence updated: Combat");
+            }
         }
 
         Ok(())

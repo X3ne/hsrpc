@@ -1,6 +1,7 @@
 use std::sync::{Arc, Mutex};
 
 use config::Config;
+use discord_rich_presence::DiscordIpcClient;
 use tauri::menu::{Menu, MenuItem};
 use tauri::path::BaseDirectory;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
@@ -18,8 +19,13 @@ mod game;
 mod ocr;
 mod utils;
 
+pub struct IpcState {
+    pub ipc_client: DiscordIpcClient,
+    pub connected: bool,
+}
 pub struct AppState {
     pub config: Arc<Mutex<Config>>,
+    pub discord_ipc_state: Arc<Mutex<IpcState>>,
 }
 
 async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
@@ -61,10 +67,18 @@ fn start_app_loop(app_handle: tauri::AppHandle) -> Result<(), Error> {
         &app_handle,
     )?;
 
+    let discord_app_id = config.discord_app_id.clone();
     let shared_config = Arc::new(Mutex::new(config));
+
+    let discord_ipc_client = DiscordIpcClient::new(&discord_app_id)
+        .map_err(|e| Error::Custom(format!("Failed to create Discord IPC client: {}", e)))?;
 
     app_handle.manage(AppState {
         config: shared_config.clone(),
+        discord_ipc_state: Arc::new(Mutex::new(IpcState {
+            ipc_client: discord_ipc_client,
+            connected: false,
+        })),
     });
 
     let resources_path = app_handle
@@ -193,6 +207,8 @@ pub fn run() {
             crate::commands::download_and_install_update,
             crate::commands::load_config_command,
             crate::commands::save_config_command,
+            crate::commands::reconnect_to_discord,
+            crate::commands::is_ipc_connected,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

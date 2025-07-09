@@ -6,3 +6,6 @@ pub use update::*;
 
 mod config;
 pub use config::*;
+
+mod discord;
+pub use discord::*;

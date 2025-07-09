@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 
 import { CardCta, CardCtaGroup } from '@/components/card-cta'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -8,14 +8,19 @@ import { Loader2 } from 'lucide-react'
 import { Refresh } from 'iconsax-reactjs'
 import { Config } from '@/providers/config-provider'
 import useConfigField from '@/hooks/use-config-fields'
+import { invoke } from '@tauri-apps/api/core'
+import { cn } from '@/lib/utils'
 
 interface DiscordSettingsProps {
   config: Config
   onConfigChange: React.Dispatch<React.SetStateAction<Config | null>>
 }
 
+type ReconnectionStatus = 'reconnecting' | 'error' | 'connected'
+
 const DiscordSettings: React.FC<DiscordSettingsProps> = ({ config, onConfigChange }) => {
-  const [isReconnecting, setIsReconnecting] = useState(false)
+  const [reconnectionStatus, setReconnectionStatus] =
+    React.useState<ReconnectionStatus>('connected')
 
   const { value: discordAppId, onChange: handleDiscordAppIdChange } = useConfigField(
     config,
@@ -23,12 +28,45 @@ const DiscordSettings: React.FC<DiscordSettingsProps> = ({ config, onConfigChang
     'discord_app_id'
   )
 
-  const handleDiscordReconnect = () => {
-    setIsReconnecting(true)
-    // TODO: Implement actual reconnection logic
-    setTimeout(() => {
-      setIsReconnecting(false)
-    }, 2000)
+  React.useEffect(() => {
+    const checkDiscordConnection = async () => {
+      try {
+        const isConnected = await invoke<boolean>('is_ipc_connected')
+        if (isConnected) {
+          setReconnectionStatus('connected')
+        } else {
+          setReconnectionStatus('error')
+        }
+      } catch (e) {
+        console.error('Failed to check Discord connection:', e)
+        setReconnectionStatus('error')
+      }
+    }
+    checkDiscordConnection()
+  }, [])
+
+  const handleDiscordReconnect = async () => {
+    try {
+      setReconnectionStatus('reconnecting')
+      await invoke('reconnect_to_discord')
+      setTimeout(() => {
+        setReconnectionStatus('connected')
+      }, 1000)
+    } catch (e) {
+      console.error('Failed to reconnect to Discord:', e)
+      setReconnectionStatus('error')
+    }
+  }
+
+  const renderReconnectionStatusIcon = (status: ReconnectionStatus) => {
+    switch (status) {
+      case 'connected':
+        return <Refresh />
+      case 'reconnecting':
+        return <Loader2 className='animate-spin' />
+      case 'error':
+        return <Refresh />
+    }
   }
 
   return (
@@ -44,10 +82,15 @@ const DiscordSettings: React.FC<DiscordSettingsProps> = ({ config, onConfigChang
               <Button
                 variant='outline'
                 size='sm'
-                className='w-full h-full flex items-center justify-center text-[12px] px-0.5 py-1'
+                className={cn(
+                  'w-full h-full flex items-center justify-center text-[12px] px-0.5 py-1',
+                  reconnectionStatus === 'error' &&
+                    '!border-destructive !text-destructive-foreground !bg-destructive/20 hover:!bg-destructive/30'
+                )}
+                disabled={reconnectionStatus === 'reconnecting'}
                 onClick={() => handleDiscordReconnect()}
               >
-                {isReconnecting ? <Loader2 className='animate-spin' /> : <Refresh />}
+                {renderReconnectionStatusIcon(reconnectionStatus)}
                 Reconnect
               </Button>
             }
