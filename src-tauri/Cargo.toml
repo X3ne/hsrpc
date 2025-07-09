@@ -1,0 +1,51 @@
+[package]
+name = "hsrpc"
+version = "2.0.0"
+description = "Add Honkai Star Rail status to Discord with locations, characters, bosses, simulated universe, forgotten hall, 130+ menus supported and more."
+authors = ["X3ne"]
+edition = "2021"
+
+[features]
+debug = []
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "hsrpc_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+figment = { version = "0.10", features = ["toml"] }
+lazy_static = "1.5.0"
+toml = "0.8.16"
+thiserror = "2.0.11"
+xcap = "0.2.2"
+log = "0.4.22"
+csv = "1.3.0"
+rusty-tesseract = { git = "https://github.com/X3ne/rusty-tesseract.git", branch = "main" }
+tokio = { version = "1.0", features = ["full"] }
+strsim = "0.11.1"
+chrono = { version = "0.4.38", features = ["serde"] }
+discord-rich-presence = "0.2.4"
+async-trait = "0.1.85"
+tauri-plugin-log = "2"
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-autostart = "2"
+tauri-plugin-single-instance = "2"
+tauri-plugin-updater = "2"

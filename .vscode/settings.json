@@ -1,7 +1,0 @@
-{
-  "conventionalCommits.scopes": [
-    "GUI",
-    "config",
-    "game data"
-  ]
-}
