@@ -158,7 +158,7 @@ pub struct Config {
     pub account_name: Option<String>,
     pub display_name: bool,
     pub display_level: bool,
-    pub preprocess_threshold: u32,
+    pub preprocess_threshold: u8,
     pub discord_app_id: String,
     pub ui_coords: UiCoordsConfig,
     pub path: PathBuf,

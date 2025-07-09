@@ -175,7 +175,7 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
                   <div className='flex items-center gap-2'>
                     <Slider
                       defaultValue={[135]}
-                      max={1000}
+                      max={255}
                       min={0}
                       value={[preprocessThreshold]}
                       onValueChange={value => handlePreprocessThresholdChange(value[0])}
@@ -187,7 +187,7 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
                       onChange={e => handlePreprocessThresholdChange(Number(e.target.value))}
                       className='w-20'
                       min={0}
-                      max={1000}
+                      max={255}
                       aria-label='Preprocess Threshold'
                     />
                   </div>

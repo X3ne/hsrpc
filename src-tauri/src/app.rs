@@ -9,7 +9,7 @@ use crate::config::{get_gui_coords, Config};
 use crate::constants::LOOP_RETRY_TIMEOUT;
 use crate::game::data::{Data, GameData};
 use crate::ocr::windows::WindowsOcrManager;
-use crate::ocr::{GameOcrJob, Lang, OcrManager};
+use crate::ocr::{GameOcrJob, Lang, OcrManager, PreprocessOptions};
 use crate::utils::{find_closest_correspondence, find_current_character};
 
 pub struct App {
@@ -203,7 +203,7 @@ impl App {
     fn capture_location(&self, config: &Config) -> Option<State> {
         match self
             .ocr_manager
-            .game_ocr(config.ui_coords.location, GameOcrJob::Location, false)
+            .game_ocr(config.ui_coords.location, GameOcrJob::Location, None)
         {
             Ok(text) => {
                 log::debug!("Location OCR raw result: '{}'", text);
@@ -278,7 +278,7 @@ impl App {
 
         let text = match self
             .ocr_manager
-            .game_ocr(*char_rect, GameOcrJob::Character, false)
+            .game_ocr(*char_rect, GameOcrJob::Character, None)
         {
             Ok(t) => t,
             Err(e) => {
@@ -324,10 +324,14 @@ impl App {
     fn capture_game_menu(&self, config: &Config) -> Option<State> {
         let esc_text_result =
             self.ocr_manager
-                .game_ocr(config.ui_coords.esc, GameOcrJob::Menu, false);
-        let menu_text_result =
-            self.ocr_manager
-                .game_ocr(config.ui_coords.menu, GameOcrJob::Menu, true);
+                .game_ocr(config.ui_coords.esc, GameOcrJob::Menu, None);
+        let menu_text_result = self.ocr_manager.game_ocr(
+            config.ui_coords.menu,
+            GameOcrJob::Menu,
+            Some(PreprocessOptions {
+                threshold: config.preprocess_threshold,
+            }),
+        );
 
         let mut menu_data: Option<Data> = None;
 
@@ -378,9 +382,13 @@ impl App {
         }
 
         if let Some(mut menu) = menu_data {
-            let sub_menu_text_result =
-                self.ocr_manager
-                    .game_ocr(config.ui_coords.sub_menu, GameOcrJob::SubMenu, true);
+            let sub_menu_text_result = self.ocr_manager.game_ocr(
+                config.ui_coords.sub_menu,
+                GameOcrJob::SubMenu,
+                Some(PreprocessOptions {
+                    threshold: config.preprocess_threshold,
+                }),
+            );
             if let Ok(sub_menu_text) = sub_menu_text_result {
                 log::debug!("Sub-Menu OCR raw result: '{}'", sub_menu_text);
                 if !sub_menu_text.is_empty() {
@@ -411,7 +419,7 @@ impl App {
     fn capture_combat(&self, config: &Config) -> Option<State> {
         let combat_text_result =
             self.ocr_manager
-                .game_ocr(config.ui_coords.combat, GameOcrJob::Combat, false);
+                .game_ocr(config.ui_coords.combat, GameOcrJob::Combat, None);
 
         let started = match &self.state {
             State::Combat { started, .. } => *started,
@@ -426,9 +434,13 @@ impl App {
                     boss: None,
                 });
             } else {
-                let boss_text_result =
-                    self.ocr_manager
-                        .game_ocr(config.ui_coords.boss, GameOcrJob::Boss, true);
+                let boss_text_result = self.ocr_manager.game_ocr(
+                    config.ui_coords.boss,
+                    GameOcrJob::Boss,
+                    Some(PreprocessOptions {
+                        threshold: config.preprocess_threshold,
+                    }),
+                );
 
                 if let Ok(boss_text) = boss_text_result {
                     log::debug!("Boss OCR raw result: '{}'", boss_text);

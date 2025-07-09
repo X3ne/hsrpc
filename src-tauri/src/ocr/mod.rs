@@ -33,6 +33,17 @@ impl Display for GameOcrJob {
     }
 }
 
+#[derive(Debug, Copy, Clone)]
+pub struct PreprocessOptions {
+    pub threshold: u8,
+}
+
+impl Default for PreprocessOptions {
+    fn default() -> Self {
+        PreprocessOptions { threshold: 135 }
+    }
+}
+
 #[derive(Debug)]
 pub enum Lang {
     Eng,
@@ -77,11 +88,16 @@ pub trait OcrManager {
         DynamicImage::ImageLuma8(denoised)
     }
 
-    fn game_ocr(&self, rect: Rect, job: GameOcrJob, preprocess: bool) -> Result<String, Error> {
+    fn game_ocr(
+        &self,
+        rect: Rect,
+        job: GameOcrJob,
+        preprocess_opts: Option<PreprocessOptions>,
+    ) -> Result<String, Error> {
         let mut image = self.make_window_screenshot(rect)?;
 
-        if preprocess {
-            image = self.preprocess_image(image, 128);
+        if let Some(opts) = preprocess_opts {
+            image = self.preprocess_image(image, opts.threshold);
         }
 
         self.perform_dynamic_ocr(image)
