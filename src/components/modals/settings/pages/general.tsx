@@ -116,7 +116,12 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ config, onConfigChang
             <h4 className='text-md text-muted-foreground mb-2'>Updates</h4>
             <CardCtaGroup>
               <CardCta
-                title='Auto Update App on Start'
+                title={
+                  <div className='flex items-center gap-2'>
+                    <p>Auto Update App on Start</p>
+                    <Badge variant='secondary'>In development</Badge>
+                  </div>
+                }
                 description='Automatically check for updates and install them on application start.'
                 actionComponent={
                   <Switch checked={autoUpdate} onCheckedChange={handleAutoUpdateChange} />

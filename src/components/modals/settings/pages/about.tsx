@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core'
-import { openPath } from '@tauri-apps/plugin-opener'
+import { openUrl } from '@tauri-apps/plugin-opener'
 import { ArrowRight2 } from 'iconsax-reactjs'
 import { useState } from 'react'
 import { Loader2, Search, SquareArrowOutUpRight } from 'lucide-react'
@@ -87,7 +87,7 @@ const AboutSettings = () => {
             <Button
               variant={'link'}
               className='!p-0 text-sm'
-              onClick={async () => await openPath('https://github.com/X3ne/hsrpc')}
+              onClick={async () => await openUrl('https://github.com/X3ne/hsrpc/blob/main/LICENSE')}
             >
               <p>AGPL-3.0 License</p>
               <SquareArrowOutUpRight size={14} />
@@ -97,9 +97,20 @@ const AboutSettings = () => {
               <Button
                 variant={'link'}
                 className='!p-0 text-sm'
-                onClick={() => openPath('https://github.com/X3ne/hsrpc')}
+                onClick={() => openUrl('https://github.com/X3ne/hsrpc')}
               >
                 <span>GitHub repository.</span>
+                <SquareArrowOutUpRight size={14} />
+              </Button>
+            </p>
+            <p className='text-sm'>
+              If you like this app and you can, please consider supporting me.{' '}
+              <Button
+                variant={'link'}
+                className='!p-0 text-sm'
+                onClick={() => openUrl('https://ko-fi.com/ncrl_')}
+              >
+                <span>Ko-Fi</span>
                 <SquareArrowOutUpRight size={14} />
               </Button>
             </p>

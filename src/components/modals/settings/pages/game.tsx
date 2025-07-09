@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Config } from '@/providers/config-provider'
 import useConfigField from '@/hooks/use-config-fields'
+import { Badge } from '@/components/ui/badge'
 
 interface GameSettingsProps {
   config: Config
@@ -117,7 +118,12 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
 
             <CardCtaGroup>
               <CardCta
-                title='Account UID'
+                title={
+                  <div className='flex items-center gap-2'>
+                    <p>Account UID</p>
+                    <Badge variant='secondary'>In development</Badge>
+                  </div>
+                }
                 description='Set your hsr account UID to enable features like displaying your in-game level.'
                 content={
                   <Input
@@ -153,7 +159,12 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
                 }
               />
               <CardCta
-                title='Display Account Level'
+                title={
+                  <div className='flex items-center gap-2'>
+                    <p>Display Account Level</p>
+                    <Badge variant='secondary'>In development</Badge>
+                  </div>
+                }
                 description='Enable this to show your account level in the Discord presence.'
                 actionComponent={
                   <Switch

@@ -11,6 +11,7 @@
   "permissions": [
     "updater:default",
     "autostart:default",
+    "opener:allow-open-url",
     {
       "identifier": "opener:allow-open-path",
       "allow": [
@@ -24,17 +25,6 @@
       "allow": [
         {
           "path": "$APPCONFIG/**/*"
-        }
-      ]
-    },
-    {
-      "identifier": "opener:allow-open-url",
-      "allow": [
-        {
-          "url": "https://github.com/X3ne/hsrpc"
-        },
-        {
-          "url": "https://github.com/X3ne/hsrpc/blob/rust/LICENSE"
         }
       ]
     }
