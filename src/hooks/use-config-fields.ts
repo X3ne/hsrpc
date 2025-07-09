@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 
-import { Config } from '@/types'
+import { Config } from '@/providers/config-provider'
 
 /**
  * A custom hook to manage individual fields within the Config object

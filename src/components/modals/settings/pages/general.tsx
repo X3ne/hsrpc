@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Switch } from '@/components/ui/switch'
-import { ClosingBehavior, Config } from '@/types'
+import { ClosingBehavior, Config } from '@/providers/config-provider'
 import useConfigField from '@/hooks/use-config-fields'
 
 interface GeneralSettingsProps {
@@ -26,10 +26,8 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ config, onConfigChang
       try {
         if (await isEnabled()) {
           await disable()
-          console.debug('Autostart disabled')
         } else {
           await enable()
-          console.log('Autostart enabled')
         }
       } catch (e) {
         error('Failed to toggle autostart:', {

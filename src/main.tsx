@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { getCurrentWindow } from '@tauri-apps/api/window'
+
+import { ConfigProvider } from '@/providers/config-provider'
 import { ThemeProvider } from '@/components/theme-provider'
 import './index.css'
 
@@ -31,7 +33,9 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme='dark' storageKey='ui-theme'>
-          <RouterProvider router={router} />
+          <ConfigProvider>
+            <RouterProvider router={router} />
+          </ConfigProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>
