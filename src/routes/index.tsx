@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { invoke } from '@tauri-apps/api/core'
+import { error } from '@tauri-apps/plugin-log'
 
 import { Config } from '@/types'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
@@ -41,9 +42,13 @@ function RouteComponent() {
       try {
         const loadedConfig = await invoke<Config>('load_config_command')
         setConfig(loadedConfig)
-        console.log('Config loaded:', loadedConfig)
+        console.debug('Config loaded:', loadedConfig)
       } catch (err) {
-        console.error('Failed to load config:', err)
+        error('Failed to load config:', {
+          keyValues: {
+            error: err instanceof Error ? err.message : String(err)
+          }
+        })
       }
     }
     loadConfig()
@@ -62,10 +67,14 @@ function RouteComponent() {
     const handler = setTimeout(async () => {
       try {
         await invoke('save_config_command', { newConfig: config })
-        console.log('Config autosaved:', config)
-      } catch (err) {
-        console.error('Autosave failed:', err)
-        toast.error('Failed to autosave settings. Please report this issue.')
+        console.debug('Config autosaved:', config)
+      } catch (e) {
+        error('Autosave failed:', {
+          keyValues: {
+            error: e instanceof Error ? e.message : String(e)
+          }
+        })
+        toast.error('Failed to autosave settings. Please check logs and report this issue.')
       }
     }, 1000)
 

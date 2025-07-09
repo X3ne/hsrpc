@@ -11,13 +11,15 @@ import { Config } from '@/types'
  * @param onConfigChange The state setter from the parent (e.g., setConfig)
  * @param fieldName The key of the field in the Config object to manage
  * @param options Optional settings for type conversion (e.g., 'number' for string to number parsing)
+ * @param callback Optional callback to run after the field value changes
  * @returns An object containing the field's `value` and an `onChange` handler
  */
 function useConfigField<K extends keyof Config>(
   config: Config,
   onConfigChange: React.Dispatch<React.SetStateAction<Config | null>>,
   fieldName: K,
-  options?: { type?: 'number' }
+  options?: { type?: 'number' },
+  callback: () => void = () => {}
 ) {
   const value = config[fieldName]
 
@@ -34,13 +36,15 @@ function useConfigField<K extends keyof Config>(
           finalValue = (isNaN(parsed) ? 0 : parsed) as Config[K]
         }
 
+        callback()
+
         return {
           ...prevConfig,
           [fieldName]: finalValue
         }
       })
     },
-    [fieldName, onConfigChange, options?.type]
+    [fieldName, onConfigChange, options?.type, callback]
   )
 
   return {

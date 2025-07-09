@@ -1,3 +1,7 @@
+import { enable, isEnabled, disable } from '@tauri-apps/plugin-autostart'
+import { error } from '@tauri-apps/plugin-log'
+import { toast } from 'sonner'
+
 import { CardCta, CardCtaGroup } from '@/components/card-cta'
 import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
@@ -16,7 +20,26 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ config, onConfigChang
   const { value: autostart, onChange: handleAutostartChange } = useConfigField(
     config,
     onConfigChange,
-    'autostart'
+    'autostart',
+    undefined,
+    async () => {
+      try {
+        if (await isEnabled()) {
+          await disable()
+          console.debug('Autostart disabled')
+        } else {
+          await enable()
+          console.log('Autostart enabled')
+        }
+      } catch (e) {
+        error('Failed to toggle autostart:', {
+          keyValues: {
+            error: e instanceof Error ? e.message : String(e)
+          }
+        })
+        toast.error('Failed to toggle autostart. Please check logs and report this issue.')
+      }
+    }
   )
 
   const { value: trayLaunch, onChange: handleTrayLaunchChange } = useConfigField(

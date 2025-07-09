@@ -4,15 +4,15 @@ import { ArrowRight2 } from 'iconsax-reactjs'
 import { useState } from 'react'
 import { Loader2, Search, SquareArrowOutUpRight } from 'lucide-react'
 import { toast } from 'sonner'
+import { error } from '@tauri-apps/plugin-log'
 
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-
-import packageJson from '@/../package.json'
 import { CardCta, CardCtaGroup } from '@/components/card-cta'
 import { Button } from '@/components/ui/button'
 import { ChangelogModal } from '@/components/modals/changelog/modal'
 import { NewUpdateModal, Update } from '@/components/modals/update/modal'
+import packageJson from '@/../package.json'
 
 const AboutSettings = () => {
   const [checkingForUpdates, setCheckingForUpdates] = useState(false)
@@ -46,9 +46,13 @@ const AboutSettings = () => {
         setUpdate(null)
         setIsUpdateModalOpen(true)
       }
-    } catch (error) {
-      console.error('Error checking for updates:', error)
-      toast.error('Failed to check for updates. Please try again later.')
+    } catch (e) {
+      error('Error checking for updates:', {
+        keyValues: {
+          error: e instanceof Error ? e.message : String(e)
+        }
+      })
+      toast.error('Failed to check for updates. Please check logs and report this issue.')
     } finally {
       setCheckingForUpdates(false)
     }

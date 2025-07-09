@@ -1,13 +1,14 @@
+import { useState } from 'react'
 import { DialogTitle } from '@radix-ui/react-dialog'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { error } from '@tauri-apps/plugin-log'
+import { Channel, invoke } from '@tauri-apps/api/core'
+import { toast } from 'sonner'
 
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
-import { Channel, invoke } from '@tauri-apps/api/core'
-import { toast } from 'sonner'
-import { useState } from 'react'
 import { Progress } from '@/components/ui/progress'
 
 type DownloadEvent =
@@ -47,7 +48,7 @@ const NewUpdateModal = ({ update, open = false, onOpenChange }: NewUpdateModalPr
   }>({ downloaded: 0, content_length: null, percent: 0 })
 
   onEvent.onmessage = message => {
-    console.log('Download event received:', message)
+    console.debug('Download event received:', message)
     if (message.event === 'started') {
       setProgress({ state: 'started', downloaded: 0, content_length: null, percent: 0 })
     } else if (message.event === 'progress') {
@@ -69,7 +70,7 @@ const NewUpdateModal = ({ update, open = false, onOpenChange }: NewUpdateModalPr
       toast.success('Update downloaded successfully!')
     }
 
-    console.log(progress)
+    console.debug(progress)
   }
 
   return (
@@ -103,9 +104,15 @@ const NewUpdateModal = ({ update, open = false, onOpenChange }: NewUpdateModalPr
                     .then(() => {
                       onOpenChange?.(false)
                     })
-                    .catch(error => {
-                      console.error('Failed to install update:', error)
-                      toast.error('Failed to install update. Please try again later.')
+                    .catch(e => {
+                      error('Failed to install update:', {
+                        keyValues: {
+                          error: e instanceof Error ? e.message : String(e)
+                        }
+                      })
+                      toast.error(
+                        'Failed to install update. Please check logs and report this issue.'
+                      )
                     })
                 }}
               >

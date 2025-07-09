@@ -56,7 +56,10 @@ fn start_app_loop(app_handle: tauri::AppHandle) -> Result<(), Error> {
             .map_err(|e| Error::AppFolderCreation(format!("Failed to create config dir: {}", e)))?;
     }
 
-    let config = Config::load(config_dir.join("config.toml").to_str().unwrap())?;
+    let config = Config::load(
+        config_dir.join("config.toml").to_str().unwrap(),
+        &app_handle,
+    )?;
 
     let shared_config = Arc::new(Mutex::new(config));
 

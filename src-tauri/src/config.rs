@@ -6,6 +6,8 @@ use figment::{
     Figment,
 };
 use serde::{Deserialize, Serialize};
+use tauri::AppHandle;
+use tauri_plugin_autostart::ManagerExt;
 
 use crate::error::Error;
 use crate::utils::{adjust_size, Rect, Resolution};
@@ -187,11 +189,27 @@ impl Default for Config {
 }
 
 impl Config {
-    pub fn load(path_str: &str) -> Result<Self, Error> {
+    pub fn load(path_str: &str, app: &AppHandle) -> Result<Self, Error> {
         let config_path = PathBuf::from(path_str);
+        let autostart_manager = app.autolaunch();
+
+        let auto_start_enabled = autostart_manager.is_enabled().unwrap_or(false);
+
+        log::info!(
+            "Autostart is currently {}",
+            if auto_start_enabled {
+                "enabled"
+            } else {
+                "disabled"
+            }
+        );
 
         if !config_path.exists() {
-            let mut default_config = Config::default();
+            let mut default_config = Config {
+                autostart: auto_start_enabled,
+                ..Config::default()
+            };
+
             let serialized_config = toml::to_string_pretty(&default_config)
                 .map_err(|e| Error::Custom(format!("Failed to serialize default config: {}", e)))?;
             fs::write(&config_path, serialized_config).map_err(|e| {
@@ -214,7 +232,13 @@ impl Config {
             .extract()
             .map_err(|e| Error::Custom(format!("Failed to load config: {}", e)))?;
 
+        config.autostart = auto_start_enabled;
         config.path = config_path;
+
+        config
+            .save()
+            .map_err(|e| Error::Custom(format!("Failed to save config: {}", e)))?;
+
         Ok(config)
     }
 
