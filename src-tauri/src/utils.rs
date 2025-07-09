@@ -1,9 +1,7 @@
 use serde::{Deserialize, Serialize};
-use std::fs;
 use strsim::levenshtein;
 use xcap::image::{DynamicImage, GenericImageView};
 
-use crate::error::Error;
 use crate::game::data::Data;
 use crate::ocr::windows::WindowsOcrManager;
 use crate::ocr::OcrManager;
@@ -34,7 +32,10 @@ pub fn adjust_size(original_size: i32, scale: f64) -> u32 {
 
 // This function is useful to mitigate OCR errors by finding
 // the closest correspondence to the given text
-pub fn find_closest_correspondence(text: &str, candidates: &[Data]) -> Option<Data> {
+pub fn find_closest_correspondence<'a>(
+    text: &str,
+    candidates: impl IntoIterator<Item = &'a Data>,
+) -> Option<Data> {
     let threshold: usize = match text.len() {
         0..=3 => 1,
         4..=6 => 2,
@@ -42,21 +43,17 @@ pub fn find_closest_correspondence(text: &str, candidates: &[Data]) -> Option<Da
     };
 
     let mut min_distance = text.len();
-    let mut closest = Data::default();
+    let mut closest_data: Option<Data> = None;
 
     for candidate in candidates {
         let distance = levenshtein(text, &candidate.value);
         if distance < min_distance {
             min_distance = distance;
-            closest = candidate.clone();
+            closest_data = Some(candidate.clone());
         }
     }
 
-    if min_distance > threshold || closest.value.is_empty() {
-        return None;
-    }
-
-    Some(closest)
+    closest_data.filter(|_| min_distance <= threshold)
 }
 
 pub fn find_current_character(ocr_manager: &WindowsOcrManager, coords: &[Rect]) -> i32 {

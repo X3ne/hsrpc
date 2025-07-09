@@ -94,16 +94,14 @@ impl App {
             }
 
             if let Some(ref account_name) = config.account_name {
-                let display_name = match config.display_name {
-                    true => account_name.clone(),
-                    false => "Trailblazer".to_string(),
-                };
-                self.game_data.characters.push(Data {
-                    asset_id: "char_trailblazer".to_string(),
-                    value: display_name,
-                    message: "char_trailblazer".to_string(), // Only used to find entry in dataset
-                    ..Default::default()
-                });
+                self.game_data.characters.insert(
+                    "char_trailblazer".to_owned(),
+                    Data {
+                        asset_id: "char_trailblazer".to_string(),
+                        value: account_name.clone(),
+                        ..Default::default()
+                    },
+                );
             }
 
             match self.ocr_manager.is_initialized() {
@@ -214,27 +212,31 @@ impl App {
                     return None;
                 }
 
-                let location = match find_closest_correspondence(&text, &self.game_data.locations) {
-                    Some(loc) => {
-                        log::debug!(
-                            "Location OCR matched: '{}' (distance: {})",
-                            loc.value,
-                            strsim::levenshtein(&text, &loc.value)
-                        );
-                        loc
-                    }
-                    None => {
-                        log::debug!(
-                            "No sufficiently close correspondence found for location: '{}'",
-                            text
-                        );
-                        return None;
-                    }
-                };
+                let location =
+                    match find_closest_correspondence(&text, self.game_data.locations.values()) {
+                        Some(loc) => {
+                            log::debug!(
+                                "Location OCR matched: '{}' (distance: {})",
+                                loc.value,
+                                strsim::levenshtein(&text, &loc.value)
+                            );
+                            loc
+                        }
+                        None => {
+                            log::debug!(
+                                "No sufficiently close correspondence found for location: '{}'",
+                                text
+                            );
+                            return None;
+                        }
+                    };
 
                 let mut character_data = self.capture_character(config);
                 if character_data.is_none() && location.sub_region == "Astral Express" {
-                    let char_name = "Trailblazer".to_string();
+                    let char_name = match config.account_name.clone() {
+                        Some(name) if config.display_name => name,
+                        _ => "Trailblazer".to_string(),
+                    };
                     character_data = Some(Data {
                         asset_id: "char_trailblazer".to_string(),
                         value: char_name,
@@ -289,15 +291,24 @@ impl App {
             return None;
         }
 
-        // let all_characters = self.game_data.characters.clone();
-
-        match find_closest_correspondence(&text, &self.game_data.characters) {
-            Some(char_data) => {
+        match find_closest_correspondence(&text, self.game_data.characters.values()) {
+            Some(mut char_data) => {
                 log::debug!(
                     "Character OCR matched: '{}' (distance: {})",
                     char_data.value,
                     strsim::levenshtein(&text, &char_data.value)
                 );
+
+                if char_data.asset_id == "char_trailblazer" {
+                    if let Some(account_name) = &config.account_name {
+                        char_data.value = if config.display_name {
+                            account_name.clone()
+                        } else {
+                            "Trailblazer".to_string()
+                        };
+                    }
+                }
+
                 Some(char_data)
             }
             None => {
@@ -324,7 +335,7 @@ impl App {
             log::debug!("ESC Menu OCR raw result: '{}'", esc_text);
             if !esc_text.is_empty() {
                 if let Some(prediction) =
-                    find_closest_correspondence(&esc_text, &self.game_data.menus)
+                    find_closest_correspondence(&esc_text, self.game_data.menus.values())
                 {
                     log::debug!(
                         "ESC Menu OCR matched: '{}' (distance: {})",
@@ -348,7 +359,7 @@ impl App {
                 log::debug!("Main Menu OCR raw result: '{}'", menu_text);
                 if !menu_text.is_empty() {
                     if let Some(prediction) =
-                        find_closest_correspondence(&menu_text, &self.game_data.menus)
+                        find_closest_correspondence(&menu_text, self.game_data.menus.values())
                     {
                         log::debug!(
                             "Main Menu OCR matched: '{}' (distance: {})",
@@ -373,9 +384,10 @@ impl App {
             if let Ok(sub_menu_text) = sub_menu_text_result {
                 log::debug!("Sub-Menu OCR raw result: '{}'", sub_menu_text);
                 if !sub_menu_text.is_empty() {
-                    if let Some(sub_menu_prediction) =
-                        find_closest_correspondence(&sub_menu_text, &self.game_data.sub_menus)
-                    {
+                    if let Some(sub_menu_prediction) = find_closest_correspondence(
+                        &sub_menu_text,
+                        self.game_data.sub_menus.values(),
+                    ) {
                         log::debug!(
                             "Sub-Menu OCR matched: '{}' (distance: {})",
                             sub_menu_prediction.value,
@@ -422,7 +434,7 @@ impl App {
                     log::debug!("Boss OCR raw result: '{}'", boss_text);
                     if !boss_text.is_empty() {
                         let boss_data =
-                            find_closest_correspondence(&boss_text, &self.game_data.bosses);
+                            find_closest_correspondence(&boss_text, self.game_data.bosses.values());
                         if let Some(boss) = boss_data {
                             log::debug!(
                                 "Boss OCR matched: '{}' (distance: {})",

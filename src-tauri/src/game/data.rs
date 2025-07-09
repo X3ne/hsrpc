@@ -1,8 +1,10 @@
-use csv::ReaderBuilder;
-use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::path::{Path, PathBuf};
 use std::{error::Error, io::Read};
+
+use csv::ReaderBuilder;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, Eq, PartialEq, Default)]
 pub struct Data {
@@ -18,25 +20,25 @@ pub struct Data {
 
 #[derive(Debug)]
 pub struct GameData {
-    pub characters: Vec<Data>,
-    pub locations: Vec<Data>,
-    pub menus: Vec<Data>,
-    pub sub_menus: Vec<Data>,
-    pub bosses: Vec<Data>,
+    pub characters: BTreeMap<String, Data>,
+    pub locations: BTreeMap<String, Data>,
+    pub menus: BTreeMap<String, Data>,
+    pub sub_menus: BTreeMap<String, Data>,
+    pub bosses: BTreeMap<String, Data>,
 }
 
 impl GameData {
-    fn load_data<P: AsRef<Path>>(file_path: P) -> Result<Vec<Data>, Box<dyn Error>> {
+    fn load_data<P: AsRef<Path>>(file_path: P) -> Result<BTreeMap<String, Data>, Box<dyn Error>> {
         let mut file = File::open(file_path)?;
         let mut contents = String::new();
         file.read_to_string(&mut contents)?;
 
         let mut reader = ReaderBuilder::new().from_reader(contents.as_bytes());
-        let mut data = Vec::new();
+        let mut data = BTreeMap::new();
 
         for result in reader.deserialize() {
             let record: Data = result?;
-            data.push(record);
+            data.insert(record.value.clone(), record);
         }
 
         Ok(data)

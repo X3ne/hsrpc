@@ -1,7 +1,4 @@
 value,region,sub_region,asset_id
-Parlor Car,Parlor Car,Astral Express,loc_parlor_car
-Passenger Cabin,Passenger Cabin,Astral Express,loc_parlor_car
-Party Car,Party Car,Astral Express,loc_parlor_car
 Master Control Zone,Master Control Zone,Herta Space Station,loc_herta_space_station
 Master Control Zone,Master Control Zone,Herta Space Station,loc_herta_space_station
 Central Passage,Master Control Zone,Herta Space Station,loc_herta_space_station
@@ -643,3 +640,6 @@ Domain - Occurrence,Domain - Occurrence,Simulated universe,loc_su
 Domain - Encounter,Domain - Encounter,Simulated universe,loc_su
 Domain - Boss,Domain - Boss,Simulated universe,loc_su
 Domain - Transaction,Domain - Transaction,Simulated universe,loc_su
+Parlor Car,Parlor Car,Astral Express,loc_parlor_car
+Passenger Cabin,Passenger Cabin,Astral Express,loc_parlor_car
+Party Car,Party Car,Astral Express,loc_parlor_car
