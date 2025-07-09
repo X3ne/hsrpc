@@ -1,4 +1,4 @@
-<!-- <p align="center"><img src="https://socialify.git.ci/X3ne/hsrpc_v2/image?description=1&font=Inter&language=1&logo=https%3A%2F%2Fgithub.com%2FX3ne%2Fhsrpc%2Fblob%2Fmain%2Fassets%2Ficon.png%3Fraw%3Dtrue&name=1&owner=1&stargazers=1&theme=Auto" alt="project-image"></p> -->
+<p align="center"><img src="https://socialify.git.ci/X3ne/hsrpc/image?custom_language=Rust&description=1&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FX3ne%2Fhsrpc%2Frefs%2Fheads%2Frust%2Fpublic%2Ficon.png&name=1&owner=1&pattern=Plus&stargazers=1&theme=Auto" alt="hsrpc" width="640" height="320" /></p>
 
 <p id="description">Add Honkai Star Rail status to Discord with locations, characters, bosses, simulated universe, forgotten hall, 130+ menus supported and more.</p>
 
