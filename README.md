@@ -88,6 +88,9 @@ These values should only be changed if your game window is not found. To find th
 - [ ] Add support for the Trailblazer
 - [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
 - [ ] Reimplement the personalization of coordinates in GUI
+- [ ] Add missing new content like divergent universe
+- [ ] In combat status is misstrigger
+- [ ] Sometimes different status are mixed
 
 <h2>🎨 Credits:</h2>
 
