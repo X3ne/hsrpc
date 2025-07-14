@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.1](https://github.com/X3ne/hsrpc/compare/v2.0.0...v2.0.1) (2025-07-14)
+
+
+### Features
+
+* add fate collab game data ([8f642a0](https://github.com/X3ne/hsrpc/commit/8f642a0cf72d057c0c2769ae78ec49930fa61b22))
+
+
+### Miscellaneous Chores
+
+* release 2.0.1 ([910c668](https://github.com/X3ne/hsrpc/commit/910c668ccc3264e71b59a8cc6d5230ef653bcfb6))
+
 ## [2.0.0](https://github.com/X3ne/hsrpc/compare/v1.8.0...v2.0.0) (2025-07-09)
 
 
