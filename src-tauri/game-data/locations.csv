@@ -630,16 +630,27 @@ Outworld,Outworld,Amphoreus,loc_amphoreus
 Outworld,Outworld,Amphoreus,loc_amphoreus
 Vortex of Genesis,Outworld,Amphoreus,loc_amphoreus
 World Breeding Meridian,Outworld,Amphoreus,loc_amphoreus
+Aedes Elysiae,Outworld,Amphoreus,loc_amphoreus
+Membrance Maze,Outworld,Amphoreus,loc_amphoreus
+Sacrament Courtyard,Outworld,Amphoreus,loc_amphoreus
+Voyager's Wharf,Outworld,Amphoreus,loc_amphoreus
+Wondrous Woods,Outworld,Amphoreus,loc_amphoreus
 Vortex of Genesis,Vortex of Genesis,Amphoreus,loc_amphoreus
 Vortex of Genesis,Vortex of Genesis,Amphoreus,loc_amphoreus
 World Breeding Meridian,Vortex of Genesis,Amphoreus,loc_amphoreus
-Domain - Combat,Domain - Combat,Simulated universe,loc_su
-Domain - Elite,Domain - Elite,Simulated universe,loc_su
-Domain - Respite,Domain - Respite,Simulated universe,loc_su
-Domain - Occurrence,Domain - Occurrence,Simulated universe,loc_su
-Domain - Encounter,Domain - Encounter,Simulated universe,loc_su
-Domain - Boss,Domain - Boss,Simulated universe,loc_su
-Domain - Transaction,Domain - Transaction,Simulated universe,loc_su
+Aedes Elysiae,Aedes Elysiae,Amphoreus,loc_amphoreus
+Aedes Elysiae,Aedes Elysiae,Amphoreus,loc_amphoreus
+Membrance Maze,Aedes Elysiae,Amphoreus,loc_amphoreus
+Sacrament Courtyard,Aedes Elysiae,Amphoreus,loc_amphoreus
+Voyager's Wharf,Aedes Elysiae,Amphoreus,loc_amphoreus
+Wondrous Woods,Aedes Elysiae,Amphoreus,loc_amphoreus
+Domain - Combat,Domain - Combat,Simulated universe,loc_domain__combat
+Domain - Elite,Domain - Elite,Simulated universe,loc_domain__elite
+Domain - Respite,Domain - Respite,Simulated universe,loc_domain__respite
+Domain - Occurrence,Domain - Occurrence,Simulated universe,loc_domain__occurrence
+Domain - Encounter,Domain - Encounter,Simulated universe,loc_domain__encounter
+Domain - Boss,Domain - Boss,Simulated universe,loc_domain__boss
+Domain - Transaction,Domain - Transaction,Simulated universe,loc_domain__transaction
 Parlor Car,Parlor Car,Astral Express,loc_parlor_car
-Passenger Cabin,Passenger Cabin,Astral Express,loc_parlor_car
-Party Car,Party Car,Astral Express,loc_parlor_car
+Passenger Cabin,Passenger Cabin,Astral Express,loc_passenger_cabin
+Party Car,Party Car,Astral Express,loc_party_car

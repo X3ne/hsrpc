@@ -1,8 +1,8 @@
 value,asset_id
-
 Acheron,char_acheron
 Aglaea,char_aglaea
 Anaxa,char_anaxa
+Archer,char_archer
 Argenti,char_argenti
 Arlan,char_arlan
 Asta,char_asta
@@ -52,6 +52,7 @@ Qingque,char_qingque
 Rappa,char_rappa
 Robin,char_robin
 Ruan Mei,char_ruan_mei
+Saber,char_saber
 Sampo,char_sampo
 Seele,char_seele
 Serval,char_serval
