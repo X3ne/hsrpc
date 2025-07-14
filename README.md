@@ -31,7 +31,7 @@ Tauri gives me the right balance between performance, bundle size, user and deve
 
 <h2>🛠️ Installation Steps:</h2>
 
-<p>1. Install hsrpc installer</p>
+<p>1. Download hsrpc installer</p>
 
 Get an installer from the [latest release](https://github.com/X3ne/hsrpc/releases/latest) (choose between `.exe` or `.msi` no need to download both)
 
@@ -79,18 +79,21 @@ These values should only be changed if your game window is not found. To find th
 <h2>🪲 Known issues:</h2>
 
 - [ ] I don't have these characters, but `Dan Heng Imbibitor Lunae` and `Topaz and Numby` seem broken with ocr detection (due to their long name)
+- [ ] In combat status is misstrigger
+- [ ] Sometimes different status are mixed
+- [ ] After an update there is an tesseract error 0xc0000135
+- [ ] Update popup overflow
 
 <h2>⚒️ Improvements:</h2>
 
 - [ ] Create a community based db for menus with a simple way in the ui to add entries
 - [ ] Add support for the forgotten hall (add some data to detect the current level)
 - [ ] Add support for cut scenes
-- [ ] Add support for the Trailblazer
+- [x] Add support for the Trailblazer
 - [ ] I want to add more infos for the selected character in the character tab (like the character name, level...)
 - [ ] Reimplement the personalization of coordinates in GUI
 - [ ] Add missing new content like divergent universe
-- [ ] In combat status is misstrigger
-- [ ] Sometimes different status are mixed
+- [ ] when a new update is detected spawn the window at startup with a popup to update
 
 <h2>🎨 Credits:</h2>
 
