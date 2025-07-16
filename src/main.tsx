@@ -8,6 +8,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import './index.css'
 
 import { routeTree } from './routeTree.gen'
+import { UpdateProvider } from './providers/update-provider'
 
 const router = createRouter({ routeTree })
 
@@ -33,7 +34,9 @@ if (!rootElement.innerHTML) {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme='dark' storageKey='ui-theme'>
           <ConfigProvider>
-            <RouterProvider router={router} />
+            <UpdateProvider>
+              <RouterProvider router={router} />
+            </UpdateProvider>
           </ConfigProvider>
         </ThemeProvider>
       </QueryClientProvider>

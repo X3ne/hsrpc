@@ -5,7 +5,7 @@ use discord_rich_presence::DiscordIpcClient;
 use tauri::menu::{Menu, MenuItem};
 use tauri::path::BaseDirectory;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
-use tauri::Manager;
+use tauri::{Emitter, Manager};
 use tauri_plugin_updater::UpdaterExt;
 
 use crate::error::Error;
@@ -28,25 +28,61 @@ pub struct AppState {
     pub discord_ipc_state: Arc<Mutex<IpcState>>,
 }
 
-async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug)]
+struct Update {
+    version: String,
+    notes: String,
+    pub_date: String,
+}
+
+async fn search_update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
     if let Some(update) = app.updater()?.check().await? {
-        let mut downloaded = 0;
+        log::info!(
+            "Current version: {}, Update version: {}",
+            update.current_version,
+            update.version
+        );
+        if update.current_version == update.version {
+            log::info!(
+                "No updates available. Current version: {}",
+                update.current_version
+            );
+            return Ok(());
+        }
 
-        update
-            .download_and_install(
-                |chunk_length, content_length| {
-                    downloaded += chunk_length;
-                    println!("downloaded {downloaded} from {content_length:?}");
-                },
-                || {
-                    println!("download finished");
-                },
-            )
-            .await?;
+        log::info!("Update found: {}", update.version);
 
-        println!("update installed");
-        app.restart();
+        let update_info = serde_json::from_value::<Update>(update.raw_json).map_err(|e| {
+            log::error!("Failed to parse update info: {}", e);
+            tauri_plugin_updater::Error::from(e)
+        })?;
+
+        app.emit(
+            "update-available",
+            Update {
+                version: update_info.version,
+                notes: update_info.notes,
+                pub_date: update_info.pub_date,
+            },
+        )
+        .map_err(tauri_plugin_updater::Error::Tauri)?;
+    } else {
+        log::info!("No updates available.");
     }
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn ready(app_handle: tauri::AppHandle) -> Result<(), String> {
+    tauri::async_runtime::spawn(async move {
+        search_update(app_handle)
+            .await
+            .map_err(|e| {
+                log::error!("Failed to search for update: {}", e);
+            })
+            .ok();
+    });
 
     Ok(())
 }
@@ -171,8 +207,6 @@ pub fn run() {
                 })
                 .build(app)?;
 
-            let handle = app.handle().clone();
-
             #[cfg(desktop)]
             {
                 use tauri_plugin_autostart::MacosLauncher;
@@ -182,15 +216,6 @@ pub fn run() {
                     None,
                 ));
             }
-
-            // tauri::async_runtime::spawn(async move {
-            //     update(handle)
-            //         .await
-            //         .map_err(|e| {
-            //             log::error!("Failed to update: {}", e);
-            //         })
-            //         .ok();
-            // });
 
             start_app_loop(app.handle().clone())
                 .map_err(|e| {
@@ -202,6 +227,7 @@ pub fn run() {
         })
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
+            ready,
             crate::commands::open_log_file,
             crate::commands::check_for_updates,
             crate::commands::download_and_install_update,

@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/sonner'
 
 // import { SideBar } from './sidebar'
 import { TopBar } from './topbar'
+import { NewUpdateModal } from '../modals/update/modal'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -17,6 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
         {/* <SideBar /> */}
         <div className='mx-auto flex w-full'>{children}</div>
       </main>
+      <NewUpdateModal />
       <Toaster />
     </div>
   )

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DialogTitle } from '@radix-ui/react-dialog'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -10,6 +10,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import { useUpdate } from '@/hooks/use-update'
 
 type DownloadEvent =
   | {
@@ -26,26 +27,26 @@ type DownloadEvent =
       event: 'finished'
     }
 
-interface Update {
-  version: string
-  notes: string
-  pub_date: string
-}
+const NewUpdateModal = () => {
+  const { update, isUpdateModalOpen, closeUpdateModal } = useUpdate()
 
-interface NewUpdateModalProps {
-  update: Update | null
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-}
-
-const NewUpdateModal = ({ update, open = false, onOpenChange }: NewUpdateModalProps) => {
   const onEvent = new Channel<DownloadEvent>()
   const [progress, setProgress] = useState<{
     state?: 'started' | 'progress' | 'finished'
     downloaded: number
     content_length: number | null
     percent: number
-  }>({ downloaded: 0, content_length: null, percent: 0 })
+  }>({ downloaded: 2e6, content_length: 1e7, percent: 0 })
+
+  useEffect(() => {
+    if (isUpdateModalOpen) {
+      setProgress({ downloaded: 2e6, content_length: 1e7, percent: 0 })
+    }
+  }, [isUpdateModalOpen, update])
+
+  const bytesToMB = (bytes: number) => {
+    return (bytes / 1024 / 1024).toFixed(2)
+  }
 
   onEvent.onmessage = message => {
     console.debug('Download event received:', message)
@@ -69,13 +70,11 @@ const NewUpdateModal = ({ update, open = false, onOpenChange }: NewUpdateModalPr
       })
       toast.success('Update downloaded successfully!')
     }
-
-    console.debug(progress)
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className='flex flex-col h-[250px] w-[450px] overflow-hidden'>
+    <Dialog open={isUpdateModalOpen} onOpenChange={closeUpdateModal}>
+      <DialogContent className='flex flex-col h-[280px] w-[450px] overflow-hidden'>
         {update ? (
           <>
             <DialogTitle className='text-lg'>New Update Available: {update.version}</DialogTitle>
@@ -90,8 +89,8 @@ const NewUpdateModal = ({ update, open = false, onOpenChange }: NewUpdateModalPr
               <div className='w-full mt-4'>
                 <Progress value={progress.percent} className='w-full' />
                 <p className='text-sm text-muted-foreground mt-2'>
-                  Downloading update... {progress.downloaded} bytes downloaded
-                  {progress.content_length ? ` / ${progress.content_length} bytes` : ''}
+                  Downloading update... {bytesToMB(progress.downloaded)} MB
+                  {progress.content_length ? ` / ${bytesToMB(progress.content_length)} MB` : ''}
                 </p>
               </div>
             ) : (
@@ -100,20 +99,16 @@ const NewUpdateModal = ({ update, open = false, onOpenChange }: NewUpdateModalPr
                 onClick={() => {
                   invoke('download_and_install_update', {
                     onDownload: onEvent
+                  }).catch(e => {
+                    error('Failed to install update:', {
+                      keyValues: {
+                        error: e instanceof Error ? e.message : String(e)
+                      }
+                    })
+                    toast.error(
+                      'Failed to install update. Please check logs and report this issue.'
+                    )
                   })
-                    .then(() => {
-                      onOpenChange?.(false)
-                    })
-                    .catch(e => {
-                      error('Failed to install update:', {
-                        keyValues: {
-                          error: e instanceof Error ? e.message : String(e)
-                        }
-                      })
-                      toast.error(
-                        'Failed to install update. Please check logs and report this issue.'
-                      )
-                    })
                 }}
               >
                 Install Update
@@ -133,4 +128,4 @@ const NewUpdateModal = ({ update, open = false, onOpenChange }: NewUpdateModalPr
   )
 }
 
-export { NewUpdateModal, type NewUpdateModalProps, type Update }
+export { NewUpdateModal }

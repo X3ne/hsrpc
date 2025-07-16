@@ -6,6 +6,10 @@ import { getCurrentWindow } from '@tauri-apps/api/window'
 import { Layout } from '@/components/layout/layout'
 import { useConfig } from '@/hooks/use-config'
 import { toast } from 'sonner'
+import { listen } from '@tauri-apps/api/event'
+import { invoke } from '@tauri-apps/api/core'
+import { useUpdate } from '@/hooks/use-update'
+import { Update } from '@/providers/update-provider'
 
 export const Route = createRootRoute({
   component: Root
@@ -13,6 +17,20 @@ export const Route = createRootRoute({
 
 function Root() {
   const { config, loadConfig } = useConfig()
+  const { setUpdate } = useUpdate()
+  const ready = React.useRef(false)
+
+  const showWindow = async () => {
+    const window = getCurrentWindow()
+    await window.show()
+    await window.setFocus()
+  }
+
+  listen<Update>('update-available', e => {
+    console.log('Update available event received', e.payload)
+    showWindow()
+    setUpdate(e.payload)
+  })
 
   React.useEffect(() => {
     const load = async () => {
@@ -31,19 +49,17 @@ function Root() {
   }, [loadConfig])
 
   React.useEffect(() => {
-    if (config === null) {
+    if (config === null || ready.current) {
       return
     }
-    const handler = setTimeout(async () => {
-      if (!config?.tray_launch) {
-        const window = getCurrentWindow()
-        await window.show()
-        await window.setFocus()
-      }
-    }, 0)
-    return () => {
-      clearTimeout(handler)
+
+    invoke('ready')
+
+    if (!config?.tray_launch) {
+      showWindow()
     }
+
+    ready.current = true
   }, [config])
 
   return (

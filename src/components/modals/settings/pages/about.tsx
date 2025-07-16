@@ -11,14 +11,14 @@ import { Separator } from '@/components/ui/separator'
 import { CardCta, CardCtaGroup } from '@/components/card-cta'
 import { Button } from '@/components/ui/button'
 import { ChangelogModal } from '@/components/modals/changelog/modal'
-import { NewUpdateModal, Update } from '@/components/modals/update/modal'
 import packageJson from '@/../package.json'
+import { Update } from '@/providers/update-provider'
+import { useUpdate } from '@/hooks/use-update'
 
 const AboutSettings = () => {
   const [checkingForUpdates, setCheckingForUpdates] = useState(false)
   const [isChangelogOpen, setIsChangelogOpen] = useState(false)
-  const [update, setUpdate] = useState<Update | null>(null)
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const { setUpdate } = useUpdate()
 
   const version = packageJson.version
   const appName = packageJson.name
@@ -41,10 +41,8 @@ const AboutSettings = () => {
       const update = await invoke('check_for_updates')
       if (update) {
         setUpdate(update as Update)
-        setIsUpdateModalOpen(true)
       } else {
         setUpdate(null)
-        setIsUpdateModalOpen(true)
       }
     } catch (e) {
       error('Error checking for updates:', {
@@ -64,11 +62,6 @@ const AboutSettings = () => {
         changelogUrl='https://raw.githubusercontent.com/X3ne/hsrpc/refs/heads/main/CHANGELOG.md'
         open={isChangelogOpen}
         onOpenChange={setIsChangelogOpen}
-      />
-      <NewUpdateModal
-        update={update}
-        open={isUpdateModalOpen}
-        onOpenChange={setIsUpdateModalOpen}
       />
       <div className='h-fit p-6'>
         <h3 className='text-xl'>About</h3>
