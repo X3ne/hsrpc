@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.0.2](https://github.com/X3ne/hsrpc/compare/v2.0.1...v2.0.2) (2025-07-16)
+
+
+### Features
+
+* add new shop menus ([8b20bf9](https://github.com/X3ne/hsrpc/commit/8b20bf90dac9a27493bae49a653e523ca524004e))
+* add update popup on app launch ([30a6001](https://github.com/X3ne/hsrpc/commit/30a6001142f92414584b38e62e44182631cc62a2))
+* remove preprocess threshold setting ([d2f5aa2](https://github.com/X3ne/hsrpc/commit/d2f5aa202f3cec646ac921f2d1a137fd26dd31bf))
+* tweak threshold values for better text filtering ([3dac03c](https://github.com/X3ne/hsrpc/commit/3dac03c7ce16a806b77cb14f8c062953635d81af))
+
+
+### Miscellaneous Chores
+
+* release 2.0.2 ([483780d](https://github.com/X3ne/hsrpc/commit/483780d2980a0bd9141bd83f7e01a50a0eea57ff))
+
 ## [2.0.1](https://github.com/X3ne/hsrpc/compare/v2.0.0...v2.0.1) (2025-07-14)
 
 
