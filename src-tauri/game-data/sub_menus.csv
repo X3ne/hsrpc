@@ -31,11 +31,13 @@ Synthesizing Consumables,Synthesizing Consumables,menu_synthesize
 Material Synthesis,Synthesizing Material,menu_synthesize
 Material Exchange,Material Exchange,menu_synthesize
 Relic Crafting,Crafting Relics,menu_synthesize
-Starlight Exchange,Starlight Exchange,menu_shop
-Embers Exchange,Embers Exchange,menu_shop
+Recommended,Recommended,menu_shop
+Express Supply,Express Supply,menu_shop
+Exchange Shop,Exchange Shop,menu_shop
+Stellar Convergence,Stellar Convergence,menu_shop
 Contract Shop,Contract Shop,menu_shop
 Oneiric Pouch,Oneiric Pouch,menu_shop
-Stellar Trade,Stellar Trade,menu_shop
+Stellar Purchase,Stellar Purchase,menu_shop
 Herta's Store,Herta's Store,menu_shop
 Upgrade Materials,Upgrade Materials,menu_inventory
 Light Cone,Light Cone,menu_inventory
