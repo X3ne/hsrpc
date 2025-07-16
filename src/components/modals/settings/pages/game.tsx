@@ -49,12 +49,12 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
     'display_level'
   )
 
-  const { value: preprocessThreshold, onChange: handlePreprocessThresholdChange } = useConfigField(
-    config,
-    onConfigChange,
-    'preprocess_threshold',
-    { type: 'number' }
-  )
+  // const { value: preprocessThreshold, onChange: handlePreprocessThresholdChange } = useConfigField(
+  //   config,
+  //   onConfigChange,
+  //   'preprocess_threshold',
+  //   { type: 'number' }
+  // )
 
   const { value: windowName, onChange: handleWindowNameChange } = useConfigField(
     config,
@@ -179,7 +179,7 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
             <h4 className='text-md text-muted-foreground mb-2'>Advanced</h4>
 
             <CardCtaGroup>
-              <CardCta
+              {/* <CardCta
                 title='Preprocess Threshold'
                 description='Set the threshold for preprocessing ocr images. If you experience issues with the ocr, try tweaking this value.'
                 content={
@@ -203,7 +203,7 @@ const GameSettings: React.FC<GameSettingsProps> = ({ config, onConfigChange }) =
                     />
                   </div>
                 }
-              />
+              /> */}
 
               <CardCta
                 title='Window Name'

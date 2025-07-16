@@ -7,7 +7,7 @@ use crate::config::{get_gui_coords, Config};
 use crate::constants::LOOP_RETRY_TIMEOUT;
 use crate::game::data::{Data, GameData};
 use crate::ocr::windows::WindowsOcrManager;
-use crate::ocr::{GameOcrJob, Lang, OcrManager, PreprocessOptions};
+use crate::ocr::{GameOcrJob, Lang, OcrManager};
 use crate::utils::{find_closest_correspondence, find_current_character};
 use crate::AppState;
 
