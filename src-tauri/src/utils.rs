@@ -38,8 +38,8 @@ pub fn find_closest_correspondence<'a>(
 ) -> Option<Data> {
     let threshold: usize = match text.len() {
         0..=3 => 1,
-        4..=6 => 2,
-        _ => 5,
+        4..=10 => 2,
+        _ => 4,
     };
 
     let mut min_distance = text.len();
