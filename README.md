@@ -83,6 +83,7 @@ These values should only be changed if your game window is not found. To find th
 - [ ] Sometimes different status are mixed
 - [ ] After an update there is an tesseract error 0xc0000135
 - [ ] Update popup overflow
+- [ ] Pause menu is not detected
 
 <h2>⚒️ Improvements:</h2>
 

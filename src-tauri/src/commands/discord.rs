@@ -1,7 +1,7 @@
 use discord_rich_presence::DiscordIpc;
 use tauri::{AppHandle, Manager};
 
-use crate::{commands::discord, AppState};
+use crate::AppState;
 
 #[tauri::command]
 pub async fn reconnect_to_discord(app_handle: AppHandle) -> Result<(), String> {
