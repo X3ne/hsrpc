@@ -1,5 +1,3 @@
-use std::sync::{Arc, Mutex};
-
 use discord_rich_presence::{activity, DiscordIpc};
 use serde::Serialize;
 use tauri::{Emitter, Manager};
@@ -14,7 +12,6 @@ use crate::utils::{find_closest_correspondence, find_current_character};
 use crate::AppState;
 
 pub struct App {
-    pub config: Arc<Mutex<Config>>,
     pub ocr_manager: WindowsOcrManager,
     pub state: State,
     pub app_started: chrono::DateTime<chrono::Utc>,
@@ -41,7 +38,6 @@ pub enum State {
 
 impl App {
     pub fn new(
-        config: Arc<Mutex<Config>>,
         game_data: GameData,
         tesseract_path: &str,
         tessdata_path: &str,
@@ -54,7 +50,6 @@ impl App {
         panic!("Unsupported OS");
 
         App {
-            config,
             ocr_manager,
             state: State::Idle,
             app_started: chrono::Utc::now(),
@@ -67,13 +62,8 @@ impl App {
         loop {
             let config;
             {
-                let config_guard = self
-                    .config
-                    .lock()
-                    .map_err(|e| {
-                        log::error!("Failed to lock config: {}", e);
-                    })
-                    .unwrap();
+                let state = self.app_handle.state::<AppState>();
+                let config_guard = state.config.lock().unwrap();
                 config = config_guard.clone();
             }
 
@@ -168,13 +158,8 @@ impl App {
             }
         };
 
-        let mut config_guard = self
-            .config
-            .lock()
-            .map_err(|e| {
-                log::error!("Failed to lock config: {}", e);
-            })
-            .unwrap();
+        let state = self.app_handle.state::<AppState>();
+        let mut config_guard = state.config.lock().unwrap();
 
         if config_guard.resolution.width == res.width
             && config_guard.resolution.height == res.height
@@ -333,13 +318,9 @@ impl App {
         let esc_text_result =
             self.ocr_manager
                 .game_ocr(config.ui_coords.esc, GameOcrJob::Menu, None);
-        let menu_text_result = self.ocr_manager.game_ocr(
-            config.ui_coords.menu,
-            GameOcrJob::Menu,
-            Some(PreprocessOptions {
-                threshold: config.preprocess_threshold,
-            }),
-        );
+        let menu_text_result =
+            self.ocr_manager
+                .game_ocr(config.ui_coords.menu, GameOcrJob::Menu, None);
 
         let mut menu_data: Option<Data> = None;
 
@@ -390,13 +371,9 @@ impl App {
         }
 
         if let Some(mut menu) = menu_data {
-            let sub_menu_text_result = self.ocr_manager.game_ocr(
-                config.ui_coords.sub_menu,
-                GameOcrJob::SubMenu,
-                Some(PreprocessOptions {
-                    threshold: config.preprocess_threshold,
-                }),
-            );
+            let sub_menu_text_result =
+                self.ocr_manager
+                    .game_ocr(config.ui_coords.sub_menu, GameOcrJob::SubMenu, None);
             if let Ok(sub_menu_text) = sub_menu_text_result {
                 log::debug!("Sub-Menu OCR raw result: '{}'", sub_menu_text);
                 if !sub_menu_text.is_empty() {
@@ -436,19 +413,15 @@ impl App {
 
         if let Ok(combat_text) = combat_text_result {
             log::debug!("Combat OCR raw result: '{}'", combat_text);
-            if !combat_text.is_empty() && combat_text.replace(" ", "").len() > 5 {
+            if !combat_text.is_empty() && combat_text.replace(" ", "").len() > 6 {
                 return Some(State::Combat {
                     started,
                     boss: None,
                 });
             } else {
-                let boss_text_result = self.ocr_manager.game_ocr(
-                    config.ui_coords.boss,
-                    GameOcrJob::Boss,
-                    Some(PreprocessOptions {
-                        threshold: config.preprocess_threshold,
-                    }),
-                );
+                let boss_text_result =
+                    self.ocr_manager
+                        .game_ocr(config.ui_coords.boss, GameOcrJob::Boss, None);
 
                 if let Ok(boss_text) = boss_text_result {
                     log::debug!("Boss OCR raw result: '{}'", boss_text);
